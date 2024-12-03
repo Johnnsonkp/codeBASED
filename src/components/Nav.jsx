@@ -5,6 +5,17 @@ import { useTheme } from './theme-provider'
 
 function Nav({userInfo}) {
   const { theme, setTheme } = useTheme();
+
+  const handleLogout = async (code) => {
+    const response = await fetch('http://localhost:3001/logout', {
+      method: 'GET',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+    })
+    const codeChallenge = await response;
+    console.log("logout", response)
+    return codeChallenge;    
+  };
   
   return (
     <div 
@@ -30,6 +41,8 @@ function Nav({userInfo}) {
           >
             <hr></hr>
           </div>
+
+          {/* <button onClick={() => handleLogout()}>Logout</button> */}
           
           <UserBadge userInfo={userInfo}/>
         </div>

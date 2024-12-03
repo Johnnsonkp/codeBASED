@@ -35,14 +35,14 @@ const OutputWindow = ({ outputDetails, title }) => {
   };
   return (
     <>
-      <h1 style={{fontWeight: 'semi-bold', marginBottom: '5px', fontSize: '14px'}}>
+      <h1 style={{fontWeight: 'semi-bold', marginBottom: '10px', fontSize: '13px'}}>
         {title}:
       </h1>
       <div 
         style={{
           backgroundColor: '#1e293b', 
-          minWidth: '250px',
-          maxWidth: '250px',
+          minWidth: '200px',
+          maxWidth: '200px',
           height: '140px', 
           borderRadius: '10px', 
           color: "#fff", 

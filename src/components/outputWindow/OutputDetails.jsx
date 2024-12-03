@@ -1,12 +1,13 @@
 import React from "react";
 
-const OutputDetails = ({ outputDetails }) => {
+const OutputDetails = ({ outputDetails, title }) => {
   return (
     <div 
       style={{
-        border: `1px solid ${outputDetails?.status?.description == 'Accepted'? "green" : "red"}`, 
+        border: `2px solid ${outputDetails?.status?.description == 'Accepted'? "lightgreen" : "red"}`, 
         marginTop: '15px', borderRadius: '5px', padding: '3px'}}
       className="metrics-container mt-4 flex flex-col space-y-3">
+      <h5 style={{marginBottom: '0px', marginTop: '0px'}}>{title}:</h5>
       <p
         style={{fontSize: '12px'}} 
         className="text-sm">

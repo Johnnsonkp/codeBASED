@@ -1,8 +1,9 @@
 .tab-container {
   display: inline-flex;
   width: 300px;
-  width: 70%;
+  width: 75%;
   margin: auto;
+  margin-left: 10px;
   border: 2px solid #EBEBEB;
   border-radius: 5px;
   overflow: hidden;
@@ -22,14 +23,16 @@
   border: 1px solid #CCCCCC !important;
   transition: 0.3s;
   transform: translateX(15px);
+  color: #111 !important;
 }
 
 
 .tab-button.active {
   font-weight: bold;
   border-left: 15px solid #111;
-  background-color: #111 !important;
-  color: #fff;
+  /* background-color: #111 !important; */
+  background-color: #282C34 !important;
+  color: #fff !important;
   border: none;
   cursor: pointer;
   text-align: center;
@@ -81,5 +84,129 @@
   font-size: 16px;
   padding: 10px;
   border: 0.1px solid darkgray;
+  min-height: 725px;
   border-radius: 5px;
 }
+
+
+/* Mobile (up to 480px wide) */
+@media (max-width: 480px) {
+
+}
+
+/* Tablets (Portrait mode up to 768px wide) */
+@media (max-width: 768px) {
+  
+}
+
+/* Tablets (Landscape mode and small laptops: 768px to 1024px) */
+@media (max-width: 1024px) {
+  .tab-panel.activePanel{
+    /* width: 300px; */
+  }
+}
+
+/* Laptops and Small Desktops (1024px to 1280px) */
+@media (max-width: 1440px) {
+  .tab-content{
+    max-width: 440px;
+    min-height: 750px;
+    box-sizing: border-box;
+    margin: 10px;
+  }
+  .tab-panel.activePanel{
+    width: 100%;
+  }
+}
+
+/* Desktops (Large screens 1280px and above) */
+@media (min-width: 1500px) {
+  .tab-content{
+    max-width: 650px;
+    min-height: 750px;
+    box-sizing: border-box;
+    margin-Left: 10px;
+    margin-right: 10px;
+  }
+  .tab-panel.activePanel{
+    /* max-width: 500px; */
+    width: 100%;
+  }
+}
+
+/* Large Desktop or Wide Screens (1920px and above) */
+@media (min-width: 1920px) {
+ 
+}
+
+
+/* #include <unistd.h>
+#include <stdio.h> */
+/**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+
+//** putchar function **/ 
+/* int _putchar(char c)
+{
+	return (write(1, &c, 1));
+} */
+
+//** count the number of digits **/
+/* int digit_count(int n)
+{
+  int count_digit = 0;
+
+  if (n == 0){ return (1);}
+  if (n < 0){ n = -n;}
+  
+  while (n != 0)
+  {
+    n = n / 10;
+    count_digit++;
+  }
+  _putchar(count_digit + '0');
+  
+  return (count_digit);
+} */
+
+//** Print number function **/
+/* int print_number(int n)
+{
+  char num_to_str;
+  bool negative_num = false;
+  
+  // number of digits 
+  num_of_digits = digit_count(n);
+  if (num_of_digits == NULL)
+  {
+    return (1);
+  }
+  
+  // convert negative num
+  if (n < 0){
+    n = -n;
+    negative_num = true;
+  };
+
+  while (num_of_digits != 0)
+  {
+      n[]
+  }
+  
+} */
+
+/* int main(void)
+{
+  int negative_num = -20;
+  int positive_num = 20;
+  
+  printf("negative number %d\n", negative_num);
+  printf("positive number %d\n", positive_num);
+  
+  return (0);
+} */

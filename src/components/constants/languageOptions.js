@@ -59,5 +59,58 @@ export const languageOptions = [
     value: "python",
     image: "python.png",
     // extension: python
-  }
+  },
+  {
+    id: 60,
+    name: "Go (1.13.5)",
+    label: "Go (1.13.5)",
+    value: "go",
+    image: "vite.svg",
+    // extension: goLanguage
+  },
+  {
+    id: 45,
+    name: "Assembly (NASM 2.14.02)",
+    label: "Assembly (NASM 2.14.02)",
+    value: "assembly",
+    image: "vite.svg"
+  },
+  {
+    id: 82,
+    name: "SQL (SQLite 3.27.2)",
+    label: "SQL (SQLite 3.27.2)",
+    value: "sql",
+    image: "vite.svg",
+    // extension: SQL
+  },
+  {
+    id: 73,
+    name: "Rust (1.40.0)",
+    label: "Rust (1.40.0)",
+    value: "rust",
+    image: "vite.svg",
+    // extension: rust
+  },
+  {
+    id: 73,
+    name: "Rust (1.40.0)",
+    label: "Rust (1.40.0)",
+    value: "rust",
+    image: "vite.svg"
+  },
+  {
+    id: 73,
+    name: "Rust (1.40.0)",
+    label: "Rust (1.40.0)",
+    value: "rust",
+    image: "vite.svg"
+  },
+  {
+    id: 73,
+    name: "Rust (1.40.0)",
+    label: "Rust (1.40.0)",
+    value: "rust",
+    image: "vite.svg"
+  },
+  
 ]

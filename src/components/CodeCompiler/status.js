@@ -63,3 +63,10 @@ export const checkSolutionStatus = async (token, axios) => {
     alert(err)
   }
 };
+
+export const compareOutputs = ({outputDetails, solutionOutputDetails, setScore}) => {
+  if (atob(outputDetails?.compile_output) == atob(solutionOutputDetails?.compile_output)){
+    setScore((score) => score + 1);
+    alert("Yayy!");
+  }
+}

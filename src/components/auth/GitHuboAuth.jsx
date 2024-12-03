@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 
 import AuthTemplatePage from './AuthTemplatePage';
+import DemoButton from './DemoButton';
 import GithubButton from './GithubButton';
 import axios from "axios";
 
@@ -15,8 +16,11 @@ const GitHubOAuth = ({setAuthorized}) => {
   const handleLogin = async (code) => {
     const response = await fetch('http://localhost:3001/api/auth/github', {
       method: 'GET',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
+      // mode: 'cors',
+      headers: { 
+        'Content-Type': 'application/json',
+        "Accept": "application/vnd.github+json"
+      },
     })
     const codeChallenge = await response.json();
     return codeChallenge;    
@@ -36,8 +40,7 @@ const GitHubOAuth = ({setAuthorized}) => {
     // handleGitHubCallback();
 
     handleLogin()
-      .then(data => console.log("frontend", data))
-      // .then(data => setFetchData(data))
+      .then(data => setFetchData(data))
   }, []);
 
   return (
@@ -49,6 +52,7 @@ const GitHubOAuth = ({setAuthorized}) => {
 
     <AuthTemplatePage 
       GithubButton={<GithubButton onClick={() => setAuthorized(true)}/>}
+      DemoButton={<DemoButton onClick={() => setAuthorized(true)}/>}
     />
   );
 };

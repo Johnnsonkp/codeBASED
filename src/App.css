@@ -4,7 +4,10 @@
   margin: 0 auto;
   padding: 0rem 1rem;
   text-align: center;
+  /* scrollbar-gutter: stable; */
+  /* overflow-y: auto; */
 }
+
 
 .logo {
   height: 2em;
