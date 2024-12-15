@@ -1,5 +1,6 @@
 import React from 'react'
 import SwitchBtn from './CustomButtons/SwitchBtn';
+import UnknownUser from './userData/UnknownUser';
 import UserBadge from './userData/userBadge';
 import { useTheme } from './theme-provider'
 
@@ -43,8 +44,11 @@ function Nav({userInfo}) {
           </div>
 
           {/* <button onClick={() => handleLogout()}>Logout</button> */}
-          
-          <UserBadge userInfo={userInfo}/>
+          {
+            !userInfo?
+              <UnknownUser /> : 
+              <UserBadge userInfo={userInfo}/>
+          }
         </div>
     </div>
   )

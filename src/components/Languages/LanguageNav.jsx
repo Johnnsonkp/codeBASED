@@ -1,22 +1,20 @@
 import React from 'react'
+import { useTheme } from '../theme-provider'
 
 function LanguageNav({languageOptions, style, setLanguage, language }) {
+  const {theme} = useTheme();
+  
   return (
     <div 
       style={{
-        border: '0.1px solid #606266', 
-        width: '52px',
-        marginLeft: '20px',
-        marginRight: '0px',
-        // marginLeft: 'auto', 
-        // marginRight: 'auto', 
+        // border: '0.1px solid #606266', 
+        width: '40px',
         borderRadius: '5px',
         height: '100%',
         maxHeight: '785px',
         minHeight: '785px',
         style
       }}
-      // style={style}
     >
       {languageOptions.map((lang, index) => (
           <button 
@@ -31,7 +29,8 @@ function LanguageNav({languageOptions, style, setLanguage, language }) {
               display: 'flex', 
               justifyContent: 'center',
               background: `${language[0].value == lang.value? "#51FA7B" : "transparent" }`,
-              border: '0.1px solid #606266'
+              // border: '0.1px solid #606266',
+              border: `1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
 
             }}
           >

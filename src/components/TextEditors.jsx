@@ -1,7 +1,8 @@
+import React, {useCallback} from 'react';
+
 import CodeMirror from '@uiw/react-codemirror';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LanguageNav from './Languages/LanguageNav';
-import React from 'react'
 import ShowHideSolution from './CustomButtons/ShowHideSolution'
 import TabSlide from './Tabs/TabSlide';
 import { cppLanguage } from '@codemirror/lang-cpp';

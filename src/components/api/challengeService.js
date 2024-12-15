@@ -7,7 +7,7 @@ export async function getSelectedCodeChallenge(codingChallengeName, selected) {
       })
   );
   const codeChallenge = await response.text();
-  return codeChallenge; // Avoid directly manipulating state here
+  return codeChallenge; 
 }
 
 export async function getSelectedRepo(repo) {

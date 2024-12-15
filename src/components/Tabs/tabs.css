@@ -68,7 +68,7 @@
 }
 
 .tab-content {
-  margin-top: 5px;
+  margin-top: 2px !important;
 }
 
 .tab-panel {

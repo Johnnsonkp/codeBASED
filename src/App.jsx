@@ -1,24 +1,25 @@
 import './App.css'
+import './components/Tabs/tabs.css'
 
+import { LeftPanel, RightPanel } from './components/Panels/Panels.jsx';
 import {checkSolutionStatus, checkStatus, compareOutputs} from './components/CodeCompiler/status.js'
 import { fetchAllRepos, getSelectedCodeChallenge, getSelectedRepo } from './components/api/challengeService';
+import { postDataToAPI, postSolutionDataToAPI } from './Service/CompileAPI.js';
 import { useCallback, useEffect, useState } from 'react'
 
 import Auth from './components/auth/Auth.jsx';
 import CodeMirror from '@uiw/react-codemirror';
-import CompileBtn from './components/CustomButtons/CompileBtn';
 import Divider from './components/Divider';
-import Dropdown from './components/DropdownMenu/DropDownMenu.jsx';
 import Footer from './components/Footer';
 import GitHubOAuth from './components/auth/GitHuboAuth.jsx';
 import LanguageNav from './components/Languages/LanguageNav.jsx';
 import Nav from './components/Nav';
-import OpenAI from "openai";
-import OutputDetails from './components/outputWindow/OutputDetails';
-import OutputWindow from './components/outputWindow/OutputWindow';
 import OutputWindows from './components/CodeCompiler/OutputWindows.jsx';
+import ShowHideSolution from './components/CustomButtons/ShowHideSolution.jsx';
 import SidePanel from './components/SidePanel';
 import SidePanelComb from './components/SidePanelComb.jsx';
+import TabSlide from './components/Tabs/TabSlide.jsx';
+import TextAreaComp from './components/TextInputs/TextAreaComp.jsx';
 import TextEditors from './components/TextEditors';
 import { ThemeProvider } from './components/theme-provider';
 import TopBanner from './components/TopBanner';
@@ -26,6 +27,8 @@ import Topicbutton from './components/Topics';
 import axios from "axios";
 import { cppLanguage } from '@codemirror/lang-cpp';
 import { dummyCode } from './components/PlaceHolder';
+import { dummyTopicTitles } from './helpers/DummyData.js';
+import { extractCodeInstructions } from './helpers/CodeExtract.js';
 import { fetchUserInfo } from './components/api/userService';
 import { languageOptions } from './helpers/Language';
 import { statuses } from './helpers/statusCodes';
@@ -34,16 +37,13 @@ function App() {
   const [count, setCount] = useState('')
   const [userInput, setUserInput] = useState()
   const [selected, setSelected] = useState()
-  const [dirName, setDirName] = useState([])
   const [compare, setCompare] = useState()
   const [userInformation, setUserInformation] = useState()
   const [sideNavTitles, setSideNavTitles] = useState()
   const [loading, setLoading] = useState(false);
-  const [aiAnswer, setAIAnswer] = useState()
   const [language, setLanguage] = useState(languageOptions.filter((lang) => lang.value == 'c'))
   const [outputDetails, setOutputDetails] = useState(null);
   const [solutionOutputDetails, setSolutionOutputDetails] = useState(null);
-  const [customInput, setCustomInput] = useState("");
   const [processing, setProcessing] = useState(null);
   const [solutionProcessing, setSolutionProcessing] = useState(null);
   const [blur, setBlur] = useState(true);
@@ -52,8 +52,12 @@ function App() {
   const [processingChecker, setProcessingChecker] = useState(false);
   const [processingChecker2, setProcessingChecker2] = useState(false);
   const [authorized, setAuthorized] = useState(false)
-  const [toggleLargeEditor, setToggleLargeEditor] = useState(false)
-  const [lang, setLang] = useState(cppLanguage)
+  const [lang, setLang] = useState(cppLanguage);
+  const tabs = ["Code Challenge", "Code Explaination"]
+  const tabs1 = ["Solution", "Solution Explaination"]
+  const [tabsContainer, setTabsContainer] = useState(tabs[0])
+  const [tabsContainer1, setTabsContainer1] = useState(tabs[0])
+  const [directories, setDirectories] = useState()
   const [returnData, setReturnData] = useState(
     {
       expected_output: null,
@@ -61,10 +65,7 @@ function App() {
     }
   );
 
-
-  const compareOutputs = () => {
-    alert("Clicked!");
-
+  const compareOutputs = ({outputDetails, solutionOutputDetails, setScore}) => {
     atob(outputDetails?.compile_output) == atob(solutionOutputDetails?.compile_output)? true : false
     
     if (atob(outputDetails?.compile_output) == atob(solutionOutputDetails?.compile_output)){
@@ -72,30 +73,13 @@ function App() {
       alert("Yayy!");
     }
   }
-
-  const LargeCodeEditor = (value, onChangeSolution) => {
-    return <CodeMirror 
-      value={value} 
-      extensions={[cppLanguage]} 
-      onChange={onChangeSolution} 
-      width={'100%'}
-      height={'80vh'}
-      minHeight={'725px'}
-      maxHeight="725px"
-      theme={'dark'}
-      style={{fontSize: '10px', flexWrap: 'wrap', filter: `${blur? 'blur(2px)' : ''}`, border: '1px solid red'}}
-    />
-  }
   
 //////////////////////////////////////////////////////////////////////////////////////////////////
   const handleCompile = (userInput) => {
-    console.log("handle compile:", userInput)
     setProcessing(true);
     setProcessingChecker2(true);
     const formData = {
-      language_id: language.id,
-      // encode source code in base64
-      // source_code: btoa(code),
+      language_id: language[0].id,
       source_code: btoa(userInput),
       stdin: btoa(''),
     };
@@ -111,42 +95,23 @@ function App() {
       },
       data: formData,
     };
-
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log("res.data", response.data);
-        const token = response.data.token;
-        
-        checkStatus(token, axios)
-        .then(data => {
-          setOutputDetails(data)
-          setReturnData({
-            expected_output: data.expected_output,
-            stdout: data.stdout,
-          });
-          setProcessing(false)
-          setProcessingChecker(false);
-          setProcessingChecker2(false);
-        })
-        
-      })
-      .catch((err) => {
-        let error = err.response ? err.response.data : err;
-        setProcessing(false);
-        console.log(error);
-      });
+    postDataToAPI({
+      axios,
+      checkStatus,
+      options, 
+      setOutputDetails, 
+      setReturnData, 
+      setProcessing, 
+      setProcessingChecker, 
+      setProcessingChecker2
+    })
   };
 
-
   const handleSolutionCompile = (userInput) => {
-    console.log("handle compile:", count)
     setSolutionProcessing(true);
     setProcessingChecker(true)
     const formData = {
-      language_id: language.id,
-      // encode source code in base64
-      // source_code: btoa(code),
+      language_id: language[0].id,
       source_code: btoa(count),
       stdin: btoa(''),
     };
@@ -162,37 +127,22 @@ function App() {
       },
       data: formData,
     };
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log("res.data", response.data);
-        const token = response.data.token;
-        // checkStatus(token);
-        checkSolutionStatus(token, axios)
-        .then(data => {
-          setSolutionOutputDetails(data)
-          setReturnData({
-            expected_output: data.expected_output,
-            stdout: data.stdout,
-          });
-          setSolutionProcessing(false)
-          setProcessingChecker(false);
-          setProcessingChecker2(false);
-        })
-      })
-      .catch((err) => {
-        let error = err.response ? err.response.data : err;
-        setProcessing(false);
-        console.log(error);
-      });
+    postSolutionDataToAPI({
+        axios,
+        checkSolutionStatus,
+        options, 
+        setSolutionOutputDetails,
+        setReturnData,
+        setProcessing,
+        setSolutionProcessing,
+        setProcessingChecker, 
+        setProcessingChecker2
+    });
   };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const dummyTopicTitles = ["C Basics", "Recursions", "Variables", "functions", "Nested Loops", "Pointers"]
-  const [directories, setDirectories] = useState()
-
-  const onChange = useCallback((val, viewUpdate) => {
+  const onChangeInput = useCallback((val, viewUpdate) => {
     setUserInput(val);
   }, []);
 
@@ -200,22 +150,11 @@ function App() {
     setCount(val);
   }, []);
 
-  const extractCodeInstructions = (str) => {
-    const endIndex = str.indexOf('*/');
-    if (endIndex !== -1) {
-      const extracted = str.slice(0, endIndex + 2); // Include `*/` in the result
-      return extracted;
-    } else {
-      console.log("End marker `*/` not found.");
-    }
-  }
-
   const nextChallenge = () => {
     sideNavTitles && sideNavTitles.map((title, index) => {
       if (title == currentChallengeTitle){
         
         let nextChallenge = sideNavTitles[index + 1] || sideNavTitles[0]
-        // return getSelectedCodeChallenge(nextChallenge, selected);
         return loadSelectedChallenge(nextChallenge, selected)
       }
     })
@@ -238,7 +177,6 @@ function App() {
 
     fetchAllRepos()
       .then(data => setDirectories(data))
-
   }, []);
 
   useEffect(() => {
@@ -277,43 +215,29 @@ function App() {
           currentChallengeTitle={currentChallengeTitle} 
           setSelected={setSelected}
         />
-
-        <div 
-          style={{
-            // marginLeft: '10px !important', 
-            display: 'flex', 
-            justifyContent: 'space-around',
-            position: 'relative', 
-            flex: '0.6', 
-            margin: 'auto'
-          }}
-        >
           <LanguageNav 
             languageOptions={languageOptions} 
             setLanguage={setLanguage} 
             language={language}
           />
-          {!toggleLargeEditor? 
-            <TextEditors 
-              processingChecker2={processingChecker2}
-              processingChecker={processingChecker} 
-              userInput={userInput} 
-              count={count}
-              dummyCode={dummyCode}
-              onChange={onChange} 
-              onChangeSolution={onChangeSolution}
-              blur={blur}
-              setBlur={setBlur}
-              setToggleLargeEditor={setToggleLargeEditor}
-              toggleLargeEditor={toggleLargeEditor}
-              setLang={setLang}
-              language={language}
-              setLanguage={setLanguage}
-              
-            /> :
-            <LargeCodeEditor value={count} onChangeSolution={onChangeSolution}/>
-          }
-        </div>
+          <LeftPanel 
+            language={language}
+            setTabsContainer={setTabsContainer}
+            tabsContainer={tabsContainer}
+            userInput={userInput}
+            onChangeInput={onChangeInput}
+            processingChecker1={processingChecker2}
+          />
+        
+          <RightPanel 
+            language={language}
+            setTabsContainer1={setTabsContainer1}
+            tabsContainer1={tabsContainer1}
+            count={count}
+            onChangeSolution={onChangeSolution}
+            processingChecker2={processingChecker2}
+          />
+        {/* </div> */}
         <OutputWindows 
           handleCompile={handleCompile} 
           userInput={userInput} 

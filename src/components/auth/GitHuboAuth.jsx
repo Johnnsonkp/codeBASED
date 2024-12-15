@@ -16,7 +16,6 @@ const GitHubOAuth = ({setAuthorized}) => {
   const handleLogin = async (code) => {
     const response = await fetch('http://localhost:3001/api/auth/github', {
       method: 'GET',
-      // mode: 'cors',
       headers: { 
         'Content-Type': 'application/json',
         "Accept": "application/vnd.github+json"
