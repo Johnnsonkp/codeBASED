@@ -1,5 +1,4 @@
 import React from 'react';
-// import TextEditor from '/assets/TextEditors.png'
 
 function AuthTemplatePage({GithubButton, DemoButton}) {
   const bgStyle = {
@@ -23,7 +22,6 @@ function AuthTemplatePage({GithubButton, DemoButton}) {
   };
 
   const aTag = {
-    // padding: "0.625rem 1rem",
     textAlign: "center",
     borderRadius: "9999px",
     transitionDuration: "150ms",
@@ -41,7 +39,6 @@ function AuthTemplatePage({GithubButton, DemoButton}) {
   const textCenter = {
     maxWidth: "36rem",
     margin: "0 auto",
-    textAlign: "center",
     textAlign: 'left'
   };
 

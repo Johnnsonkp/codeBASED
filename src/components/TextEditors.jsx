@@ -1,12 +1,6 @@
-import React, {useCallback} from 'react';
-
-import CodeMirror from '@uiw/react-codemirror';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import LanguageNav from './Languages/LanguageNav';
+import React from 'react';
 import ShowHideSolution from './CustomButtons/ShowHideSolution'
 import TabSlide from './Tabs/TabSlide';
-import { cppLanguage } from '@codemirror/lang-cpp';
-import { languageOptions } from './constants/languageOptions';
 
 function TextEditors({processingChecker2, processingChecker, userInput, count, dummyCode, onChange, onChangeSolution, blur, setBlur, setToggleLargeEditor, toggleLargeEditor, language, setLanguage}) {
   
@@ -37,7 +31,7 @@ function TextEditors({processingChecker2, processingChecker, userInput, count, d
               width: `${processingChecker2? "101%" : ""}`
             }}
           > 
-            <CodeMirror 
+            {/* <CodeMirror 
               value={userInput} 
               extensions={[cppLanguage]} 
               onChange={onChange} 
@@ -47,7 +41,7 @@ function TextEditors({processingChecker2, processingChecker, userInput, count, d
               maxHeight="725px"
               theme={'dark'}
               style={{fontSize: '10px', flexWrap: 'wrap'}}
-            />
+            /> */}
             {/* <ShowHideSolution blur={blur} setBlur={setBlur}/> */}
             <button 
               style={{position: 'absolute', top: '5px', left: '90%', fontSize: '12px', padding: "6px", borderRadius: '12px', 
@@ -79,7 +73,7 @@ function TextEditors({processingChecker2, processingChecker, userInput, count, d
           <div 
             key={3}
             style={{ position: 'relative', border: `${processingChecker? "2px solid red" : ""}`, width: `${processingChecker? "101%" : ""}` }}>
-            <CodeMirror 
+            {/* <CodeMirror 
               value={count || dummyCode} 
               extensions={[cppLanguage]} 
               onChange={onChangeSolution} 
@@ -89,7 +83,7 @@ function TextEditors({processingChecker2, processingChecker, userInput, count, d
               maxHeight="725px"
               theme={'dark'}
               style={{fontSize: '10px', flexWrap: 'wrap', filter: `${blur? 'blur(2px)' : ''}`}}
-            />
+            /> */}
             <ShowHideSolution blur={blur} setBlur={setBlur}/>
           </div>,
           <div 

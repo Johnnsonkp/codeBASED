@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import CodeMirror from '@uiw/react-codemirror';
 import ShowHideSolution from '../CustomButtons/ShowHideSolution';
@@ -7,8 +7,7 @@ import TextAreaComp from '../TextInputs/TextAreaComp';
 import { cppLanguage } from '@codemirror/lang-cpp';
 
 export function LeftPanel({language, setTabsContainer, tabsContainer, userInput, onChangeInput, processingChecker2}) {
-  const [blur, setBlur] = useState(true);
-
+  
   return (
     <div>
       <TabSlide

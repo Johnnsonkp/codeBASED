@@ -1,11 +1,3 @@
-// import { Clang } from '@codemirror/lang-cpp';
-// import {SQL} from '@codemirror/lang-sql'
-// import {goLanguage} from '@codemirror/lang-go'
-// import {javascript} from "@codemirror/lang-javascript"
-// import {php} from "@codemirror/lang-php"
-// import {python} from "@codemirror/lang-python"
-// import {rust} from "@codemirror/lang-rust"
-
 export const languageOptions = [
   {
     id: 63,

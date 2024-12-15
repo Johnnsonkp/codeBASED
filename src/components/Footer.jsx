@@ -32,7 +32,7 @@ function Footer({userInput, setCompare, AIChecker, compareOutputs, score, sideNa
                 >
                     Check Output
                 </button>
-                <button style={{margin: '5px'}} onClick={() => nextChallenge()}>Next -> </button>
+                <button style={{margin: '5px'}} onClick={() => nextChallenge()}>Next </button>
               </div>
           </div>
       </div>

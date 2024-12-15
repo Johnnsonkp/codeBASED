@@ -64,11 +64,9 @@ const Topicbutton = ({topicTitles, onClick, selected, setSelected}) => {
               marginTop: '0px',
               marginBottom: '2px',
               fontSize: '13px',
-              border: selected == title && '1px solid rgb(80, 250, 123)',
+              border: selected == title ? '1px solid rgb(80, 250, 123)' : `${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
               backgroundColor: selected == title && 'rgb(80, 250, 123)',
-              color: selected == title && '#333',
-              border: `1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
-              // marginBottom: '40px'
+              color: selected == title && '#333'
             }}
             onClick={() => setSelected(title)}
           >{title}

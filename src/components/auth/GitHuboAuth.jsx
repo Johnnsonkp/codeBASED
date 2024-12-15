@@ -43,12 +43,6 @@ const GitHubOAuth = ({setAuthorized}) => {
   }, []);
 
   return (
-    // <div>
-    //   <a href={githubOAuthURL}>Sign in with GitHub</a>
-    //   <button onClick={() => handleLogin()}>User Auth</button>
-    //   <GithubButton />
-    // </div>
-
     <AuthTemplatePage 
       GithubButton={<GithubButton onClick={() => setAuthorized(true)}/>}
       DemoButton={<DemoButton onClick={() => setAuthorized(true)}/>}

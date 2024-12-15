@@ -7,31 +7,22 @@ import { fetchAllRepos, getSelectedCodeChallenge, getSelectedRepo } from './comp
 import { postDataToAPI, postSolutionDataToAPI } from './Service/CompileAPI.js';
 import { useCallback, useEffect, useState } from 'react'
 
-import Auth from './components/auth/Auth.jsx';
-import CodeMirror from '@uiw/react-codemirror';
 import Divider from './components/Divider';
 import Footer from './components/Footer';
 import GitHubOAuth from './components/auth/GitHuboAuth.jsx';
 import LanguageNav from './components/Languages/LanguageNav.jsx';
 import Nav from './components/Nav';
 import OutputWindows from './components/CodeCompiler/OutputWindows.jsx';
-import ShowHideSolution from './components/CustomButtons/ShowHideSolution.jsx';
-import SidePanel from './components/SidePanel';
 import SidePanelComb from './components/SidePanelComb.jsx';
-import TabSlide from './components/Tabs/TabSlide.jsx';
-import TextAreaComp from './components/TextInputs/TextAreaComp.jsx';
-import TextEditors from './components/TextEditors';
 import { ThemeProvider } from './components/theme-provider';
 import TopBanner from './components/TopBanner';
 import Topicbutton from './components/Topics';
 import axios from "axios";
-import { cppLanguage } from '@codemirror/lang-cpp';
 import { dummyCode } from './components/PlaceHolder';
 import { dummyTopicTitles } from './helpers/DummyData.js';
 import { extractCodeInstructions } from './helpers/CodeExtract.js';
 import { fetchUserInfo } from './components/api/userService';
 import { languageOptions } from './helpers/Language';
-import { statuses } from './helpers/statusCodes';
 
 function App() {
   const [count, setCount] = useState('')
@@ -52,7 +43,6 @@ function App() {
   const [processingChecker, setProcessingChecker] = useState(false);
   const [processingChecker2, setProcessingChecker2] = useState(false);
   const [authorized, setAuthorized] = useState(false)
-  const [lang, setLang] = useState(cppLanguage);
   const tabs = ["Code Challenge", "Code Explaination"]
   const tabs1 = ["Solution", "Solution Explaination"]
   const [tabsContainer, setTabsContainer] = useState(tabs[0])

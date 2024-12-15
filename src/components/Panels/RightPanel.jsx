@@ -15,7 +15,7 @@ function RightPanel({language, setTabsContainer, tabsContainer, userInput, onCha
       <div className="tab-content" >
         {tabsContainer == "Code Challenge"?
           <>
-            <CodeMirror 
+            {/* <CodeMirror 
               value={userInput} 
               extensions={[cppLanguage]} 
               onChange={onChangeInput} 
@@ -26,7 +26,7 @@ function RightPanel({language, setTabsContainer, tabsContainer, userInput, onCha
               theme={'dark'}
               style={{fontSize: '10px', flexWrap: 'wrap', textAlign: 'left'}}
               className={`tab-panel ${tabsContainer == "Code Challenge"? 'activePanel' : ''} `}
-            /> 
+            />  */}
             <ShowHideSolution blur={blur} setBlur={setBlur}/>
           </>
           :
