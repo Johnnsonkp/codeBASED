@@ -37,7 +37,6 @@ function App() {
   const [solutionOutputDetails, setSolutionOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
   const [solutionProcessing, setSolutionProcessing] = useState(null);
-  const [blur, setBlur] = useState(true);
   const [score, setScore] = useState(0);
   const [currentChallengeTitle, setCurrentChallengeTitle] = useState(null);
   const [processingChecker, setProcessingChecker] = useState(false);
