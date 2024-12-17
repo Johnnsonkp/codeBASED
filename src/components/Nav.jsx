@@ -6,6 +6,7 @@ import { useTheme } from './theme-provider'
 
 function Nav({userInfo}) {
   const { theme, setTheme } = useTheme();
+  const userPresence = userInfo && userInfo? true : false;
 
   const handleLogout = async (code) => {
     const response = await fetch('http://localhost:3001/logout', {
@@ -33,21 +34,24 @@ function Nav({userInfo}) {
           style={{
             display: 'flex', 
             alignItems: 'center', 
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            position: 'relative'
           }}
         >
           <SwitchBtn theme={theme} onClick={() => theme == "dark"? setTheme("light") : setTheme("dark")}/>
           <div 
-            style={{border: '1px solid silver', background: 'silver', height: '100%', marginLeft: '10px', marginRight: '10px'}}
+            style={{
+              border: '1px solid silver', 
+              background: 'silver', 
+              height: '100%', 
+              marginLeft: '10px', 
+              marginRight: '10px'
+            }}
           >
             <hr></hr>
           </div>
-
-          {/* <button onClick={() => handleLogout()}>Logout</button> */}
-          {
-            !userInfo?
-              <UnknownUser /> : 
-              <UserBadge userInfo={userInfo}/>
+          {userPresence?  
+            <UserBadge userInfo={userInfo}/> : <UnknownUser />
           }
         </div>
     </div>
