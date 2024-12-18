@@ -8,6 +8,7 @@
 
 /* Hide the checkbox input */
 .switch input {
+  position: relative;
   opacity: 0;
   width: 0;
   height: 0;

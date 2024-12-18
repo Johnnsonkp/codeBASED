@@ -2,7 +2,7 @@ import React from 'react'
 
 function UserBadge({userInfo}) {
   return (
-    <>
+    <div>
     <img 
       style={{
         width: '35px', 
@@ -26,7 +26,7 @@ function UserBadge({userInfo}) {
         {userInfo && userInfo.login}
       </p>
     </div>
-    </>
+    </div>
   )
 }
 
