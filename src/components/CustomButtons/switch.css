@@ -1,5 +1,5 @@
 /* The switch container */
-.switch {
+label.switch {
   position: relative;
   display: inline-block;
   height: 25px;
