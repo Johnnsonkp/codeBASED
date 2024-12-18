@@ -3,7 +3,7 @@
   width: 300px;
   width: 75%;
   margin: auto;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   margin-left: 10px;
   border: 2px solid #EBEBEB;
   border-radius: 5px;
@@ -110,7 +110,10 @@
 /* Laptops and Small Desktops (1024px to 1280px) */
 @media (max-width: 1440px) {
   .tab-content{
-    max-width: 440px;
+    /* border: 1px solid red; */
+    /* max-width: 440px; */
+    max-width: 450px;
+    width: 435px;
     min-height: 750px;
     box-sizing: border-box;
     margin: 10px;
