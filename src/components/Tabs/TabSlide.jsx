@@ -3,7 +3,6 @@ import './tabs.css'
 import React, {useEffect, useState} from 'react'
 
 function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer}) {
-  // const [tabsContainer, setTabsContainer] = useState(tabs[0])
   const [activeTab, setActiveTab] = useState()
   let dateKey = Date.now();
   

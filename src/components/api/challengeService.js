@@ -18,6 +18,15 @@ export async function getSelectedRepo(repo) {
   return response.json();
 }
 
+export async function fetchDefaultRepos() {
+  const response = await fetch('http://localhost:3001/api/repos/default', {
+    method: 'GET',
+    mode: 'cors',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  return response.json();
+}
+
 export async function fetchAllRepos() {
   const response = await fetch('http://localhost:3001/api/repos/all', {
     method: 'GET',

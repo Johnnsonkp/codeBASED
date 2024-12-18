@@ -3,7 +3,7 @@ import './components/Tabs/tabs.css'
 
 import { LeftPanel, RightPanel } from './components/Panels/Panels.jsx';
 import {checkSolutionStatus, checkStatus, compareOutputs} from './components/CodeCompiler/status.js'
-import { fetchAllRepos, getSelectedCodeChallenge, getSelectedRepo } from './components/api/challengeService';
+import { fetchDefaultRepos, getSelectedCodeChallenge, getSelectedRepo } from './components/api/challengeService';
 import { postDataToAPI, postSolutionDataToAPI } from './Service/CompileAPI.js';
 import { useCallback, useEffect, useState } from 'react'
 
@@ -162,7 +162,7 @@ function App() {
     fetchUserInfo()
     .then(data => setUserInformation(data));
 
-    fetchAllRepos()
+    fetchDefaultRepos()
       .then(data => setDirectories(data))
   }, []);
 

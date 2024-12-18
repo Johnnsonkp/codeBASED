@@ -38,7 +38,10 @@ function Nav({userInfo}) {
             position: 'relative'
           }}
         >
-          <SwitchBtn theme={theme} onClick={() => theme == "dark"? setTheme("light") : setTheme("dark")}/>
+          <SwitchBtn 
+            theme={theme} 
+            onClick={() => theme == "dark"? setTheme("light") : setTheme("dark")}
+          />
           <div 
             style={{
               border: '1px solid silver', 

@@ -1,6 +1,6 @@
 export const LeftSlideButton = ({onClick}) => {
   return (
-    <button onClick={onClick} style={{padding: "0.3em 1em", margin: '2px', border: "1px solid #3C3C3C", borderRadius: '2px'}}>
+    <button onClick={onClick} style={{padding: "0.3em 0.6em", margin: '2px', border: "1px solid #3C3C3C", borderRadius: '2px'}}>
       <svg
         width="14"
         height="14"
@@ -20,7 +20,7 @@ export const LeftSlideButton = ({onClick}) => {
 export const RightSlideButton = ({onClick}) => {
   return (
     <button 
-      onClick={onClick} style={{padding: "0.3em 1em", margin: '2px', border: "1px solid #3C3C3C", borderRadius: '2px'}}>
+      onClick={onClick} style={{padding: "0.3em 0.6em", margin: '2px', border: "1px solid #3C3C3C", borderRadius: '2px'}}>
         <svg
           width="14"
           height="14"
