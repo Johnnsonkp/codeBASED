@@ -4,12 +4,20 @@ import React from 'react'
 
 function SwitchBtn({onClick, theme}) {
   return (
-    <div>
-      <label className="switch">
-        <input readOnly type="checkbox" checked={theme == 'light'? true : false} onClick={onClick}/>
+    <div style={{position: 'relative'}}>
+      <label 
+        className="switch"
+        style={{backgroundColor: theme == 'light'? '#2196f3' : '#ccc' }}
+      >
+        <input 
+          readOnly 
+          type="checkbox" 
+          checked={theme == 'light'? true : false} 
+          onClick={onClick}
+        />
         <span className="slider"></span>
       </label>
-    </div>
+   </div>
   )
 }
 

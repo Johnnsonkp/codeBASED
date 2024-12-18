@@ -2,13 +2,15 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 50px;
   height: 25px;
+  width: 45px;
+  background-color: #ccc;
+  border-radius: 34px;
 }
 
 /* Hide the checkbox input */
 .switch input {
-  position: relative;
+  /* position: relative; */
   opacity: 0;
   width: 0;
   height: 0;
@@ -16,7 +18,7 @@
 
 /* The slider */
 .slider {
-  position: absolute;
+  /* position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
@@ -24,7 +26,18 @@
   bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
-  border-radius: 34px;
+  border-radius: 34px; */
+
+  /* position: absolute; */
+  /* position: relative; */
+  cursor: pointer;
+  /* top: 6px; */
+  /* left: -40px; */
+  /* right: 80px; */
+  bottom: 0;
+  /* background-color: #ccc; */
+  transition: .4s;
+  /* border-radius: 34px; */
 }
 
 /* The slider when checked */
@@ -41,11 +54,14 @@
 }
 
 /* When the input is checked, change the background color */
-input:checked + .slider {
+input:checked + .slider + .switch{
   background-color: #2196f3;
 }
 
 /* Move the slider when checked */
 input:checked + .slider:before {
-  transform: translateX(26px);
+  transform: translateX(20px);
+}
+.switch::after {
+  background-color: #2196f3;
 }
