@@ -48,10 +48,8 @@ function App() {
   const [tabsContainer1, setTabsContainer1] = useState(tabs[0])
   const [directories, setDirectories] = useState()
   const [returnData, setReturnData] = useState(
-    {
-      expected_output: null,
-      stdout: null
-    }
+    {expected_output: null,
+      stdout: null}
   );
 
   const compareOutputs = ({outputDetails, solutionOutputDetails, setScore}) => {

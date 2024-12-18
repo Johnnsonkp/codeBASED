@@ -7,7 +7,14 @@ function SwitchBtn({onClick, theme}) {
     <div style={{position: 'relative'}}>
       <label 
         className="switch"
-        style={{backgroundColor: theme == 'light'? '#2196f3' : '#ccc' }}
+        style={{
+          position: "relative",
+          display: "inline-block",
+          height: "25px",
+          width: "45px",
+          borderRadius: "34px",
+          backgroundColor: theme == 'light'? '#2196f3' : '#ccc' 
+        }}
       >
         <input 
           readOnly 

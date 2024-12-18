@@ -31,7 +31,6 @@ function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer}) {
     >
     <div style={{display: 'flex'}}>
       <div className="tab-container">
-        {/* {tabs && tabs[0].map((tab, index) => ( */}
         {tabs && tabs.map((tab, index) => (
             <button
               style={{fontSize: '11px'}} 
@@ -46,7 +45,7 @@ function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer}) {
       </div>
       
       {language && language[0].value?
-        <button style={{fontSize: '14px', padding: '7px', minWidth: '80px'}}>
+        <button style={{fontSize: '10px', padding: '0px 8px', minWidth: '50px', borderRadius: '14px', fontWeight: 'bold'}}>
           {language && language[0].value}
         </button> : ''
       }

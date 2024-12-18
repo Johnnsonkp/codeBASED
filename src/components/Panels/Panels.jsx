@@ -32,7 +32,7 @@ export function LeftPanel({language, setTabsContainer, tabsContainer, userInput,
             /> :
           <TextAreaComp 
             processingChecker1={processingChecker2}
-            className={`tab-panel ${tabsContainer == "Code    Explaination"? 'activePanel' : ''} `}
+            className={`tab-panel ${tabsContainer == "Code Explaination"? 'activePanel' : ''} `}
           />
         }
       </div>

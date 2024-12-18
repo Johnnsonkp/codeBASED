@@ -13,6 +13,8 @@ function LanguageNav({languageOptions, style, setLanguage, language }) {
         height: '100%',
         maxHeight: '785px',
         minHeight: '785px',
+        marginRight: 'auto',
+        marginLeft: 'auto',
         style
       }}
     >
