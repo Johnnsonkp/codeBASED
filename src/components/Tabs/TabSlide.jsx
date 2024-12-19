@@ -11,7 +11,6 @@ function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer}) {
   }
 
   function handleActiveTabSelect(tab){
-    // alert("tab", tab);
     if(tab == tabs[0] || tabs[1]){
       setActiveTab(tab)
       setTabsContainer(tab);
@@ -22,7 +21,6 @@ function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer}) {
     <div 
       style={{
         display: 'flex !important', 
-        // height: '86vh', 
         maxHeight: '700px', 
         minWidth: '440px', 
         width: '50%'

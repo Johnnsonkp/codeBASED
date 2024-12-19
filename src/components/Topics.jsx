@@ -33,9 +33,6 @@ const Topicbutton = ({topicTitles, onClick, selected, setSelected}) => {
     setEndIndex(6)
   }
   
-  // useEffect(() => {
-  //   setStartIndex(endIndex - 6);
-  // }, [startIndex, endIndex])
   return (
     <div style={{ display: 'flex', alignItems: 'center', margin: '10px', marginBottom: '30px'}}>
       
@@ -81,11 +78,11 @@ const Topicbutton = ({topicTitles, onClick, selected, setSelected}) => {
             <span 
               style={{
                 borderRadius: '14px', 
-                border: '1px solid black', 
+                border: `1px solid ${theme == 'light'? '#333' : '#fff'}`, 
                 marginRight: '5px',
-                fontSize: '9px',
-                background: 'black',
-                padding: '0px 2px'
+                fontSize: '10px',
+                // background: 'black',
+                padding: '0px 3px',
               }}
             >
               {index + 1}

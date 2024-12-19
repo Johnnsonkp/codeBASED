@@ -4,6 +4,7 @@ import AuthTemplatePage from './AuthTemplatePage';
 import DemoButton from './DemoButton';
 import GithubButton from './GithubButton';
 import axios from "axios";
+import { handleLogin } from '../api/userService';
 
 const GITHUB_CLIENT_ID = import.meta.env.VITE_APP_GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = import.meta.env.VITE_APP_GITHUB_SECRET_KEY;
@@ -12,18 +13,6 @@ const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${GIT
 
 const GitHubOAuth = ({setAuthorized}) => {
   const [fecthData, setFetchData] = useState(null)
-  
-  const handleLogin = async (code) => {
-    const response = await fetch('http://localhost:3001/api/auth/github', {
-      method: 'GET',
-      headers: { 
-        'Content-Type': 'application/json',
-        "Accept": "application/vnd.github+json"
-      },
-    })
-    const codeChallenge = await response.json();
-    return codeChallenge;    
-  };
 
   const handleGitHubCallback = () => {
     const queryString = window.location.search;
@@ -38,8 +27,8 @@ const GitHubOAuth = ({setAuthorized}) => {
   React.useEffect(() => {
     // handleGitHubCallback();
 
-    handleLogin()
-      .then(data => setFetchData(data))
+    // handleLogin()
+    //   .then(data => setFetchData(data))
   }, []);
 
   return (
