@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
 import SwitchBtn from './CustomButtons/SwitchBtn';
+import TopBanner from './TopBanner';
 import UnknownUser from './userData/UnknownUser';
 import UserBadge from './userData/userBadge';
 import { useTheme } from './theme-provider'
 
-function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles}) {
+function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles, compare, dummyCode, count}) {
   const { theme, setTheme } = useTheme();
   const userPresence = userInfo && userInfo? true : false;
   const [signOutInitiated, setSignOutInitiated] = useState(false)
@@ -25,6 +26,8 @@ function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles}) {
   }, [signOutInitiated])
   
   return (
+    <>
+    <TopBanner compare={compare} dummyCode={dummyCode} count={count}/>
     <div 
       style={{
         display: 'flex', 
@@ -67,6 +70,7 @@ function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles}) {
           }
         </div>
     </div>
+    </>
   )
 }
 

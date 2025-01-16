@@ -6,7 +6,7 @@ function TopBanner({compare, dummyCode, count}) {
 
   return (
     <div style={{backgroundColor: '#51FA7B', color: '#333', fontWeight: 'semibold'}}>
-      {userCode == challengeCode && "YES!!!"}
+      {userCode == challengeCode && "Exact match!"}
     </div>
   )
 }

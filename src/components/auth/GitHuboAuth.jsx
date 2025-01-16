@@ -13,8 +13,8 @@ const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${GIT
 
 const GitHubOAuth = ({setAuthorized, setUserInformation}) => {
   const loginWithGitHub = () => {
-    const clientID = GITHUB_CLIENT_ID
-    const redirectURI = GITHUB_CALLBACK_URL
+    const clientID = GITHUB_CLIENT_ID;
+    const redirectURI = GITHUB_CALLBACK_URL;
     window.location.href = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&scope=user:email&client_id=${clientID}`
   };
   

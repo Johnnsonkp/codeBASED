@@ -2,7 +2,7 @@ import '../App.css'
 
 import React from 'react'
 
-function Footer({userInput, setCompare, AIChecker, compareOutputs, score, sideNavTitles, nextChallenge, setScore, outputDetails, solutionOutputDetails}) {
+function Footer({userInput, setCompare, AIChecker, compareOutputs, score, sideNavTitles, nextChallenge, outputDetails, solutionOutputDetails}) {
   return (
     <div 
         style={{
@@ -24,7 +24,6 @@ function Footer({userInput, setCompare, AIChecker, compareOutputs, score, sideNa
               <div style={{width: '40%', textAlign: 'left'}}>
                 <button 
                   style={{fontSize: '14px'}}
-                  onClick={() => setCompare(userInput)}
                 >Score: {score}
                 </button>
               </div>

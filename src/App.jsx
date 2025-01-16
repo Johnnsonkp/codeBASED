@@ -2,7 +2,7 @@ import './App.css'
 import './components/Tabs/tabs.css'
 
 import { LeftPanel, RightPanel } from './components/Panels/Panels.jsx';
-import {checkSolutionStatus, checkStatus, compareOutputs} from './components/CodeCompiler/status.js'
+import {checkSolutionStatus, checkStatus} from './components/CodeCompiler/status.js'
 import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRepo, getSelectedRepoOnDropDown } from './components/api/challengeService';
 import { postDataToAPI, postSolutionDataToAPI } from './Service/CompileAPI.js';
 import { useCallback, useEffect, useState } from 'react'
@@ -56,13 +56,19 @@ function App() {
     {expected_output: null,
       stdout: null}
   );
+  const [returnSolutionData, setReturnSolutionData] = useState(
+    {expected_output: null,
+      stdout: null}
+  );
 
-  const compareOutputs = ({outputDetails, solutionOutputDetails, setScore}) => {
-    atob(outputDetails?.compile_output) == atob(solutionOutputDetails?.compile_output)? true : false
+  const compareOutputs = ({outputDetails, solutionOutputDetails}) => {
+
+    const userOutput = btoa(outputDetails?.compile_output);
+    const solutionOutput = btoa(solutionOutputDetails?.compile_output);
     
-    if (atob(outputDetails?.compile_output) == atob(solutionOutputDetails?.compile_output)){
+    if (atob(userOutput) == atob(solutionOutput)){
       setScore((score) => score + 1);
-      alert("Yayy!");
+      alert("Your solution is correct!");
     }
   }
   
@@ -72,7 +78,7 @@ function App() {
     setProcessingChecker(true);
     const formData = {
       language_id: language[0].id,
-      source_code: btoa(count),
+      source_code: btoa(userInput),
       // source_code: btoa(userInput),
       stdin: btoa(''),
     };
@@ -125,7 +131,7 @@ function App() {
         checkSolutionStatus,
         options, 
         setSolutionOutputDetails,
-        setReturnData,
+        setReturnSolutionData,
         setProcessing,
         setSolutionProcessing,
         setProcessingChecker, 
@@ -240,12 +246,14 @@ function App() {
   
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <TopBanner compare={compare} dummyCode={dummyCode} count={count}/>
       <Nav 
         userInfo={userInformation} 
         setUserRepos={setUserRepos}
         setDirectories={setDirectories}
         dummyTopicTitles={dummyTopicTitles}
+        compare={compare} 
+        dummyCode={dummyCode} 
+        count={count}
       />
     {!authorized? 
       <GitHubOAuth 
@@ -331,7 +339,6 @@ function App() {
           sideNavTitles={sideNavTitles}
           solutionOutputDetails={solutionOutputDetails}
           outputDetails={outputDetails} 
-          setScore={setScore}
         /> 
         </>}
       </ThemeProvider>

@@ -28,7 +28,7 @@ export function postSolutionDataToAPI({
   checkSolutionStatus, 
   options, 
   setSolutionOutputDetails, 
-  setReturnData, 
+  setReturnSolutionData, 
   setProcessing, 
   setSolutionProcessing,
   setProcessingChecker, 
@@ -42,7 +42,7 @@ export function postSolutionDataToAPI({
       checkSolutionStatus(token, axios)
       .then(data => {
         setSolutionOutputDetails(data)
-        setReturnData({
+        setReturnSolutionData({
           expected_output: data.expected_output,
           stdout: data.stdout,
         });
