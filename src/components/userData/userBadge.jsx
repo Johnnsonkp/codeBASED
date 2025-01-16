@@ -1,8 +1,35 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-function UserBadge({userInfo}) {
+import UserBadgeDropDown from './UserBadgeDropDown';
+import { userLogout } from '../api/userService';
+
+function UserBadge({userInfo, theme, setSignOutInitiated}) {
+  const [showDropDown, setShowDropDown] = useState(false);
+  
+  const initiatUserSignOut = async () => {
+      console.log("handle logout")
+      userLogout()
+        .then((data) => {
+          if (data && data.status && data.status != 200){
+            console.log("data err", data);
+          } 
+          else{
+            setSignOutInitiated(true)
+          }
+        })
+  };
+
+
   return (
-    <div style={{display: 'flex'}}>
+    <>
+    <div 
+      onClick={() => setShowDropDown(!showDropDown)} 
+      style={{
+        display: 'flex',
+        cursor: 'pointer',
+        backgroundColor: 'inherit',
+      }}
+    >
       <img 
         style={{
           width: '35px', 
@@ -27,6 +54,13 @@ function UserBadge({userInfo}) {
         </p>
       </div>
     </div>
+    
+    <UserBadgeDropDown 
+      toggle={showDropDown}
+      theme={theme}
+      initiatUserSignOut={initiatUserSignOut}
+    />
+    </>
   )
 }
 

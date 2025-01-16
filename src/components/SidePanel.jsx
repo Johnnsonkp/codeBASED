@@ -12,11 +12,10 @@ export default function SidePanel({selected, sideNavTitles, onClick, topicTitles
     setBtnSelected(currentChallengeTitle)
   }, [currentChallengeTitle])
   return (
-    <SidePanelContainer>
       <>
         <H5Title 
           title={selected}
-          defaultTitle={"Repository"}
+          defaultTitle={"Files"}
         />
         <Divider />
         <SidePanelList 
@@ -26,6 +25,5 @@ export default function SidePanel({selected, sideNavTitles, onClick, topicTitles
           onClick={onClick}
         />
       </>
-    </SidePanelContainer>
   )
 }

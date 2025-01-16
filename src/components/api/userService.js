@@ -15,8 +15,11 @@ export async function fetchUserInfo() {
 }
 
 export const handleLogin = async (code) => {
+  console.log(`handle login: ${serverURL}/api/auth/github`)
+  
   const response = await fetch(`${serverURL}/api/auth/github`, {
     method: 'GET',
+    mode: 'cors',
     headers: { 
       'Content-Type': 'application/json',
       "Accept": "application/vnd.github+json",
@@ -24,5 +27,22 @@ export const handleLogin = async (code) => {
     },
   })
   const codeChallenge = await response.json();
+  // console.log("handleLogin response", codeChallenge);
   return codeChallenge;    
 };
+
+export const userLogout = async () => {
+  const response = await fetch(`${serverURL}/api/logout`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: { 
+      'Content-Type': 'application/json',
+      // "Accept": "application/vnd.github+json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  })
+  return response;
+  // const codeChallenge = await response.json();
+  // console.log("handleLogin response", codeChallenge);
+  // return codeChallenge; 
+}

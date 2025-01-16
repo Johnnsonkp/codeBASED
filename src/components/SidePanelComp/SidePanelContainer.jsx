@@ -1,18 +1,22 @@
 import React from 'react'
+import { useTheme } from '../theme-provider';
 
-function SidePanelContainer({children}) {
+function SidePanelContainer({children, className}) {
+  const theme = useTheme();
+  
   return (
     <div 
+      className={className}
       style={{
-        border: "0.1px solid #606266",
+        // border: "0.1px solid #606266",
+        border: `0.1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
         width: '180px', 
         overflow: 'scroll', 
         padding: '5px', 
         paddingTop: '0px', 
-        borderRadius: '10px', 
-        boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.1)",
+        borderRadius: '5px', 
         maxHeight: '785px',
-        minHeight: '785px',
+        minHeight: '330px',
       }}
     >
     {children}

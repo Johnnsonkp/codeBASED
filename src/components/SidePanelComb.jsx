@@ -1,21 +1,13 @@
 import React from 'react'
 import SidePanel from './SidePanel'
 
-function SidePanelComb({sideNavTitles, loadSelectedChallenge, selected, directories, currentChallengeTitle, setSelected}) {
+function SidePanelComb({sideNavTitles, loadSelectedChallenge, selected, directories, currentChallengeTitle, setSelected, dirUpdate}) {
+  
   return (
-    <div 
-      style={{
-        flex: '0.1', 
-        position: 'relative',
-        height: '100%',
-        maxHeight: '785px',
-        minHeight: '785px',
-        // overflowY: 'hidden'
-      }}
-    >
+    <>
       {sideNavTitles?
         <SidePanel 
-          onClick={(e) => loadSelectedChallenge(e.target.innerText, selected) } 
+          onClick={(e) => loadSelectedChallenge(e.target.innerText, selected, dirUpdate) } 
           selected={selected} 
           sideNavTitles={sideNavTitles}
           topicTitles={directories}
@@ -28,8 +20,8 @@ function SidePanelComb({sideNavTitles, loadSelectedChallenge, selected, director
           topicTitles={directories}
           currentChallengeTitle={currentChallengeTitle}
         />
-      }  
-    </div>
+      } 
+    </>
   )
 }
 

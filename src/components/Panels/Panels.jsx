@@ -5,8 +5,10 @@ import ShowHideSolution from '../CustomButtons/ShowHideSolution';
 import TabSlide from '../Tabs/TabSlide'
 import TextAreaComp from '../TextInputs/TextAreaComp';
 import { cppLanguage } from '@codemirror/lang-cpp';
+import { useTheme } from '../theme-provider';
 
-export function LeftPanel({language, setTabsContainer, tabsContainer, userInput, onChangeInput, processingChecker2}) {
+export function LeftPanel({language, setTabsContainer, tabsContainer, userInput, onChangeInput, processingChecker2, showSelectedLangOnly, processingChecker1}) {
+  const { theme } = useTheme();
   
   return (
     <div>
@@ -15,9 +17,18 @@ export function LeftPanel({language, setTabsContainer, tabsContainer, userInput,
         tabs={["Code Challenge", "Code Explaination"]}
         setTabsContainer={setTabsContainer}
         tabsContainer={tabsContainer}
+        showSelectedLangOnly={showSelectedLangOnly}
       />
       <div className="tab-content" >
         {tabsContainer == "Code Challenge"?
+          <div 
+            style={{ 
+              position: 'relative', 
+              border: `${processingChecker1? "1px solid red" : ""}`, 
+              width: `${processingChecker1? "102%" : ""}`,
+              overflow: `${processingChecker1? "hidden" : ""}`,
+            }}
+          >
             <CodeMirror 
               value={userInput} 
               extensions={[cppLanguage]} 
@@ -26,10 +37,12 @@ export function LeftPanel({language, setTabsContainer, tabsContainer, userInput,
               height={'80vh'}
               minHeight={'725px'}
               maxHeight="725px"
-              theme={'dark'}
+              theme={`${theme == 'light'? 'light' : 'dark'}`}
               style={{fontSize: '10px', flexWrap: 'wrap', textAlign: 'left'}}
               className={`tab-panel ${tabsContainer == "Code Challenge"? 'activePanel' : ''} `}
-            /> :
+            /> 
+            </div>
+            :
           <TextAreaComp 
             processingChecker1={processingChecker2}
             className={`tab-panel ${tabsContainer == "Code Explaination"? 'activePanel' : ''} `}
@@ -40,8 +53,9 @@ export function LeftPanel({language, setTabsContainer, tabsContainer, userInput,
   )
 }
 
-export function RightPanel({language, setTabsContainer1, tabsContainer1, count, onChangeSolution, processingChecker2}) {
+export function RightPanel({ language, setTabsContainer1, tabsContainer1, count, onChangeSolution, processingChecker2}) {
   const [blur, setBlur] = useState(true);
+  const { theme } = useTheme();
 
   return (
     <div>
@@ -54,7 +68,12 @@ export function RightPanel({language, setTabsContainer1, tabsContainer1, count, 
       <div className="tab-content" >
         {tabsContainer1 == "Solution"?
           <div 
-            style={{ position: 'relative', border: `${processingChecker2? "2px solid red" : ""}`, width: `${processingChecker2? "101%" : ""}` }}
+            style={{ 
+              position: 'relative', 
+              border: `${processingChecker2? "1px solid red" : ""}`, 
+              width: `${processingChecker2? "102%" : ""}`,
+              overflow: `${processingChecker2? "hidden" : ""}`,
+            }}
           >
             <CodeMirror 
               value={count} 
@@ -64,7 +83,7 @@ export function RightPanel({language, setTabsContainer1, tabsContainer1, count, 
               height={'80vh'}
               minHeight={'725px'}
               maxHeight="725px"
-              theme={'dark'}
+              theme={`${theme == 'light'? 'light' : 'dark'}`}
               style={{fontSize: '10px', flexWrap: 'wrap', textAlign: 'left', position: 'relative', filter: `${blur? 'blur(2px)' : ''}`}}
               className={`tab-panel ${tabsContainer1 == "Solution"? 'activePanel' : ''} `}
             />

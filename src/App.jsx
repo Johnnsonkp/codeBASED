@@ -3,7 +3,7 @@ import './components/Tabs/tabs.css'
 
 import { LeftPanel, RightPanel } from './components/Panels/Panels.jsx';
 import {checkSolutionStatus, checkStatus, compareOutputs} from './components/CodeCompiler/status.js'
-import { fetchDefaultRepos, getSelectedCodeChallenge, getSelectedRepo } from './components/api/challengeService';
+import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRepo, getSelectedRepoOnDropDown } from './components/api/challengeService';
 import { postDataToAPI, postSolutionDataToAPI } from './Service/CompileAPI.js';
 import { useCallback, useEffect, useState } from 'react'
 
@@ -14,6 +14,7 @@ import LanguageNav from './components/Languages/LanguageNav.jsx';
 import Nav from './components/Nav';
 import OutputWindows from './components/CodeCompiler/OutputWindows.jsx';
 import SidePanelComb from './components/SidePanelComb.jsx';
+import SidePanelContainer from './components/SidePanelComp/SidePanelContainer.jsx';
 import { ThemeProvider } from './components/theme-provider';
 import TopBanner from './components/TopBanner';
 import Topicbutton from './components/Topics';
@@ -23,6 +24,7 @@ import { dummyTopicTitles } from './helpers/DummyData.js';
 import { extractCodeInstructions } from './helpers/CodeExtract.js';
 import { fetchUserInfo } from './components/api/userService';
 import { languageOptions } from './helpers/Language';
+import { useTheme } from './components/theme-provider';
 
 function App() {
   const [count, setCount] = useState('')
@@ -47,6 +49,9 @@ function App() {
   const [tabsContainer, setTabsContainer] = useState(tabs[0])
   const [tabsContainer1, setTabsContainer1] = useState(tabs[0])
   const [directories, setDirectories] = useState()
+  const [userRepos, setUserRepos] = useState()
+  const [dirUpdate, setDirUpdate] = useState()
+  const theme = useTheme();
   const [returnData, setReturnData] = useState(
     {expected_output: null,
       stdout: null}
@@ -64,10 +69,11 @@ function App() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
   const handleCompile = (userInput) => {
     setProcessing(true);
-    setProcessingChecker2(true);
+    setProcessingChecker(true);
     const formData = {
       language_id: language[0].id,
-      source_code: btoa(userInput),
+      source_code: btoa(count),
+      // source_code: btoa(userInput),
       stdin: btoa(''),
     };
     const options = {
@@ -96,7 +102,7 @@ function App() {
 
   const handleSolutionCompile = (userInput) => {
     setSolutionProcessing(true);
-    setProcessingChecker(true)
+    setProcessingChecker2(true)
     const formData = {
       language_id: language[0].id,
       source_code: btoa(count),
@@ -147,44 +153,115 @@ function App() {
     })
   }
 
-  function loadSelectedChallenge(codingChallengeName, selected){
-    getSelectedCodeChallenge(codingChallengeName, selected)
+  function loadSelectedChallenge(codingChallengeName, selected, dirUpdate){
+    getSelectedCodeChallenge(codingChallengeName, selected, dirUpdate)
     .then(data => {
       let startingCodeBlock = extractCodeInstructions(data);
       setUserInput(startingCodeBlock);
       setCount(data);
       setCurrentChallengeTitle(codingChallengeName);
+    })
+  }
 
+  const handleUserContents = (data) => {
+    fetchDefaultRepos(data)
+    .then(response => {
+      if (response?.status && response.status !== 200) {
+        console.error("Data error:", response);
+        setDirectories(dummyTopicTitles);
+        return;
+      }
+
+      const directories = response?.directories?.length > 0 ? response.directories : null;
+      const files = response?.files?.length > 0 ? response.files : null;
+      
+      setDirectories(directories);
+      setSideNavTitles(files);
+    })
+    .catch(error => {
+      console.error("Fetch error:", error);
+    });
+  }
+
+  const loadUserContents = () => {
+    getAllRepos(userInformation)
+    .then((data) => {
+      if (data && data.status && data.status != 200){
+        console.log("data err", data);
+        setUserRepos(null);
+        return;
+      } 
+      setUserRepos(data);
+      handleUserContents(data);
     })
   }
 
   useEffect(() => {
-    fetchUserInfo()
-    .then(data => setUserInformation(data));
-
-    fetchDefaultRepos()
-      .then(data => setDirectories(data))
-  }, []);
+    if (userInformation && userInformation.id && authorized && !userRepos){
+      console.log("userInformation:", userInformation)
+      loadUserContents()
+    } 
+    else{
+      setUserRepos(null);
+      setDirectories(dummyTopicTitles);
+    }
+  }, [userInformation, authorized]);
 
   useEffect(() => {
-    if(selected){
-      getSelectedRepo(selected)
-        .then(data => setSideNavTitles(data))
+    if(dirUpdate){
+
+      getSelectedRepoOnDropDown(dirUpdate, userInformation.login)
+      .then(data => {
+        if (data.directories && data.directories.length > 0)
+        {
+          setDirectories(data.directories);
+        } else {
+          setDirectories(null);
+          setSelected(null)
+        }
+        if (data.files && data.files.length > 0){
+          setSideNavTitles(data.files);
+        }else {
+          setSideNavTitles(null);
+        }
+      })
+    }
+  }, [dirUpdate])
+
+  useEffect(() => {
+    if(selected || directories){
+      console.log("dirUpdate", dirUpdate)
+      getSelectedRepo(selected, dirUpdate)
+        .then(data => 
+          setSideNavTitles(data)
+        )
     }
   }, [selected])
   
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <TopBanner compare={compare} dummyCode={dummyCode} count={count}/>
-      <Nav userInfo={userInformation}/>
-    {!authorized? <GitHubOAuth setAuthorized={setAuthorized}/> :
+      <Nav 
+        userInfo={userInformation} 
+        setUserRepos={setUserRepos}
+        setDirectories={setDirectories}
+        dummyTopicTitles={dummyTopicTitles}
+      />
+    {!authorized? 
+      <GitHubOAuth 
+        setAuthorized={setAuthorized}
+        setUserInformation={setUserInformation}
+      /> :
       <>
       <Divider />
       <Topicbutton 
-        topicTitles={directories || dummyTopicTitles} 
+        dirUpdate={dirUpdate}
+        setDirUpdate={setDirUpdate}
+        topicTitles={directories} 
         selected={selected}
         setSelected={setSelected}
-      />
+        userRepos={userRepos}
+      /> 
       <div 
         className="card" 
         style={{
@@ -194,37 +271,45 @@ function App() {
           padding: '0px'
         }}
       >
-        <SidePanelComb 
-          sideNavTitles={sideNavTitles} 
-          loadSelectedChallenge={loadSelectedChallenge} 
-          selected={selected} 
-          directories={directories} 
-          currentChallengeTitle={currentChallengeTitle} 
-          setSelected={setSelected}
-        />
+        <SidePanelContainer className={'sideMenu'}>
+          <SidePanelComb 
+            sideNavTitles={sideNavTitles} 
+            loadSelectedChallenge={loadSelectedChallenge} 
+            selected={selected} 
+            directories={directories} 
+            currentChallengeTitle={currentChallengeTitle} 
+            setSelected={setSelected}
+            dirUpdate={dirUpdate}
+          />
+        </SidePanelContainer>
           <LanguageNav 
+            className={'langNav'}
             languageOptions={languageOptions} 
             setLanguage={setLanguage} 
             language={language}
+            showSelectedLangOnly={false}
           />
           <LeftPanel 
+            theme={theme}
             language={language}
             setTabsContainer={setTabsContainer}
             tabsContainer={tabsContainer}
             userInput={userInput}
             onChangeInput={onChangeInput}
-            processingChecker1={processingChecker2}
+            processingChecker1={processingChecker}
+            showSelectedLangOnly={true}
           />
         
-          <RightPanel 
+          <RightPanel
+            theme={theme} 
             language={language}
             setTabsContainer1={setTabsContainer1}
             tabsContainer1={tabsContainer1}
             count={count}
             onChangeSolution={onChangeSolution}
             processingChecker2={processingChecker2}
+            showSelectedLangOnly={false}
           />
-        {/* </div> */}
         <OutputWindows 
           handleCompile={handleCompile} 
           userInput={userInput} 

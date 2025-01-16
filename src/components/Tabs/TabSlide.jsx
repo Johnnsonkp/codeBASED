@@ -1,8 +1,11 @@
 import './tabs.css'
 
 import React, {useEffect, useState} from 'react'
+import { height, width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 
-function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer}) {
+import LanguageNav from '../Languages/LanguageNav';
+
+function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer, showSelectedLangOnly}) {
   const [activeTab, setActiveTab] = useState()
   let dateKey = Date.now();
   
@@ -26,7 +29,7 @@ function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer}) {
         width: '50%'
       }}
     >
-    <div style={{display: 'flex'}}>
+    <div style={{display: 'flex', justifyContent: 'space-between'}}>
       <div className="tab-container">
         {tabs && tabs.map((tab, index) => (
             <button
@@ -41,25 +44,11 @@ function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer}) {
         ))}
       </div>
       
-      {language && language[0].value?
-        <button style={{fontSize: '10px', padding: '0px 8px', minWidth: '50px', borderRadius: '14px', fontWeight: 'bold'}}>
-          {language && language[0].value}
-        </button> : ''
-      }
+        <LanguageNav 
+          language={language}
+          showSelectedLangOnly={showSelectedLangOnly} 
+        />
     </div>
-
-      {/* <div key={dateKey} className="tab-content" >
-        {contents && contents.map((content, index) => {
-        return <>
-          <div 
-            key={index} 
-            className={`tab-panel ${tabsContainer == tabs[index]? 'activePanel' : ''} `}
-          >
-            {content}
-          </div>
-        </>
-      })}
-      </div> */}
     </div>
   )
 }

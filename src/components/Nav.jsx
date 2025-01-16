@@ -1,23 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
 import SwitchBtn from './CustomButtons/SwitchBtn';
 import UnknownUser from './userData/UnknownUser';
 import UserBadge from './userData/userBadge';
 import { useTheme } from './theme-provider'
 
-function Nav({userInfo}) {
+function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles}) {
   const { theme, setTheme } = useTheme();
   const userPresence = userInfo && userInfo? true : false;
+  const [signOutInitiated, setSignOutInitiated] = useState(false)
 
-  const handleLogout = async (code) => {
-    const response = await fetch('http://localhost:3001/logout', {
-      method: 'GET',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-    })
-    const codeChallenge = await response;
-    console.log("logout", response)
-    return codeChallenge;    
+  const handleLogout = async (code) => { 
+    console.log("handleLogout")
+    setUserRepos(null);
+    setDirectories(dummyTopicTitles); 
+    setSignOutInitiated(false) 
+    window.location.href = '/'
   };
+
+  useEffect(() => {
+    if (signOutInitiated){
+      handleLogout()
+    }
+  }, [signOutInitiated])
   
   return (
     <div 
@@ -54,7 +59,11 @@ function Nav({userInfo}) {
             <hr></hr>
           </div>
           {userPresence?  
-            <UserBadge userInfo={userInfo}/> : <UnknownUser />
+            <UserBadge 
+              setSignOutInitiated={setSignOutInitiated}
+              theme={theme} 
+              userInfo={userInfo}
+            /> : <UnknownUser />
           }
         </div>
     </div>

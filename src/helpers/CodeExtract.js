@@ -5,5 +5,6 @@ export const extractCodeInstructions = (str) => {
     return extracted;
   } else {
     console.log("End marker `*/` not found.");
+    return ('/* test */');
   }
 }

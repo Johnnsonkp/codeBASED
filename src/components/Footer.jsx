@@ -22,17 +22,31 @@ function Footer({userInput, setCompare, AIChecker, compareOutputs, score, sideNa
             }}
           >
               <div style={{width: '40%', textAlign: 'left'}}>
-                <button onClick={() => setCompare(userInput)}>Score: {score}</button>
+                <button 
+                  style={{fontSize: '14px'}}
+                  onClick={() => setCompare(userInput)}
+                >Score: {score}
+                </button>
               </div>
               <div style={{textAlign: 'right', width: '', display: 'flex', justifyContent: 'space-evenly'}}>
-                <button style={{margin: '5px'}} onClick={() => setCompare(userInput)}>Strict Check</button>
                 <button 
-                  style={{margin: '5px'}} 
+                  style={{margin: '5px', fontSize: '14px'}} 
+                  onClick={() => setCompare(userInput)}
+                >
+                  Strict Check
+                </button>
+                <button 
+                  style={{margin: '5px', fontSize: '14px'}} 
                   onClick={compareOutputs}
                 >
                     Check Output
                 </button>
-                <button style={{margin: '5px'}} onClick={() => nextChallenge()}>Next </button>
+                <button 
+                  style={{margin: '5px', fontSize: '14px'}} 
+                  onClick={() => nextChallenge()}
+                >
+                  Next 
+                </button>
               </div>
           </div>
       </div>

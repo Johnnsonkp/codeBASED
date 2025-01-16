@@ -1,12 +1,15 @@
 import { LeftSlideButton, RightSlideButton } from './Buttons/SliderButtons'
 import React, {useEffect, useState} from 'react'
 
+import CustomDropDown from './DropdownMenu/CustomDropDown'
+import NumBubble from './Buttons/NumBubble'
 import { useTheme } from './theme-provider'
 
-const Topicbutton = ({topicTitles, onClick, selected, setSelected}) => {
+const Topicbutton = ({dirUpdate, setDirUpdate, topicTitles, onClick, selected, setSelected, userRepos}) => {
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(6)
   const {theme} = useTheme();
+  const defaultSelect = userRepos && userRepos[0].length || "holbertonschool-low_level_programming"
 
   const handleLeftClick = () => {
     if (startIndex > 0 && startIndex < topicTitles.length){
@@ -32,22 +35,41 @@ const Topicbutton = ({topicTitles, onClick, selected, setSelected}) => {
     setStartIndex(0);
     setEndIndex(6)
   }
+
+  const dropDownRepoSelect = (e) => {
+    setTimeout(() => {
+      var e = document.getElementById("repos");
+      var value = e.value;
+      var text = e.options[e.selectedIndex].text;
+
+      if (dirUpdate != text){
+        setDirUpdate(text)  
+      }
+    }, [200])
+  }
   
   return (
-    <div style={{ display: 'flex', alignItems: 'center', margin: '10px', marginBottom: '30px'}}>
+    <div 
+      style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        marginBottom: '30px', 
+        border: '1px solid red', 
+        border: `1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
+        padding: '5px',
+        overflow: 'hidden'
+      }}
+    >
+      <CustomDropDown 
+        items={userRepos}
+        defaultSelect={defaultSelect || ''}
+        func={dropDownRepoSelect}
+      />
       
-      <select 
-        id="cars" 
-        name="cars" 
-        style={{width: '140px', padding: '5px', marginRight: '5px', backgroundColor: '#CCCCCC', border: "1px solid #3C3C3C"}}
-      >
-        <option value="volvo">Repository <span>{topicTitles && topicTitles.length}</span></option>
-        <option value="saab">Saab</option>
-        <option value="fiat">Fiat</option>
-        <option value="audi">Audi</option>
-      </select>
+      <NumBubble 
+        num={userRepos && userRepos.length}
+      />
       
-
       <div style={{marginRight: '15px'}}>
         <LeftSlideButton 
           onClick={() => handleLeftClick()}
@@ -58,8 +80,8 @@ const Topicbutton = ({topicTitles, onClick, selected, setSelected}) => {
         />
       </div>
 
-      <div style={{display: 'inline-flex', alignItems: 'center'}}>
-        {topicTitles.map((title, index) => (
+      <div style={{display: 'inline-flex', alignItems: 'center', overflow: 'hidden', maxWidth: '1100px'}}>
+        {topicTitles && topicTitles.map((title, index) => (
           index >= startIndex && index <= endIndex &&
           
           <button 
@@ -68,25 +90,16 @@ const Topicbutton = ({topicTitles, onClick, selected, setSelected}) => {
               margin: '5px', 
               marginTop: '0px',
               marginBottom: '2px',
-              fontSize: '11px',
-              border: selected == title ? '1px solid rgb(80, 250, 123)' : `${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
+              fontSize: '12px',
+              border: selected == title ? '1px solid rgb(80, 250, 123)' : `${theme == 'light'? '1px solid #EBEBEB' : '1px solid #3C3C3C'}`,
               backgroundColor: selected == title && 'rgb(80, 250, 123)',
-              color: selected == title && '#333'
+              color: selected == title && '#333',
+              borderRadius: '5px',
+              padding: '6px'
             }}
             onClick={() => setSelected(title)}
           >
-            <span 
-              style={{
-                borderRadius: '14px', 
-                border: `1px solid ${theme == 'light'? '#333' : '#fff'}`, 
-                marginRight: '5px',
-                fontSize: '10px',
-                // background: 'black',
-                padding: '0px 3px',
-              }}
-            >
-              {index + 1}
-            </span> 
+            <NumBubble num={index + 1} />
             {title}
           </button>
         ))}
