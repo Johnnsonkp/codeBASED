@@ -7,7 +7,8 @@ import { fetchUserInfo } from '../api/userService';
 
 const GITHUB_CLIENT_ID = import.meta.env.VITE_APP_GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = import.meta.env.VITE_APP_GITHUB_SECRET_KEY;
-const GITHUB_CALLBACK_URL = import.meta.env.VITE_APP_CLIENT_CALLBACK_URL
+const GITHUB_CALLBACK_URL = import.meta.env.VITE_APP_CLIENT_CALLBACK_URL;
+const server_URL = import.meta.env.VITE_APP_PROD_SERVER_URL;
 const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
 
 const GitHubOAuth = ({setAuthorized, setUserInformation}) => {
@@ -16,9 +17,9 @@ const GitHubOAuth = ({setAuthorized, setUserInformation}) => {
     const redirectURI = GITHUB_CALLBACK_URL
     window.location.href = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&scope=user:email&client_id=${clientID}`
   };
-
+  VITE_APP_PROD_SERVER_URL
   const handleLogin = async (code) => {
-    fetch('http://localhost:3001/auth/github/callback', {
+    fetch(`${server_URL}/auth/github/callback`, {
       method: 'POST',
       mode: 'cors',
       headers: { 
