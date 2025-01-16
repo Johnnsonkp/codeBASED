@@ -8,10 +8,9 @@ function SidePanelContainer({children, className}) {
     <div 
       className={className}
       style={{
-        // border: "0.1px solid #606266",
         border: `0.1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
         width: '180px', 
-        overflow: 'scroll', 
+        overflow: 'auto', 
         padding: '5px', 
         paddingTop: '0px', 
         borderRadius: '5px', 
