@@ -17,6 +17,7 @@ const GitHubOAuth = ({setAuthorized, setUserInformation}) => {
     const redirectURI = GITHUB_CALLBACK_URL
     window.location.href = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&scope=user:email&client_id=${clientID}`
   };
+  
   const handleLogin = async (code) => {
     fetch(`${server_URL}/auth/github/callback`, {
       method: 'POST',
