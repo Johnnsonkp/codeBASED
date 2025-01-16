@@ -19,9 +19,9 @@ const GitHubOAuth = ({setAuthorized, setUserInformation}) => {
   const loginWithGitHub = () => {
     const clientID = GITHUB_CLIENT_ID;
     const redirectURI = GITHUB_CALLBACK_URL;
-    // window.location.href = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&scope=user:email&client_id=${clientID}`
+    window.location.href = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&scope=user:email&client_id=${clientID}`
 
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
+    // window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
   };
   
   const handleLogin = async (code) => {
@@ -43,15 +43,17 @@ const GitHubOAuth = ({setAuthorized, setUserInformation}) => {
     });
   };
 
-  const handleGitHubCallback = () => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const code = urlParams.get('code');
+  // const handleGitHubCallback = () => {
+  //   const queryString = window.location.search;
+  //   const urlParams = new URLSearchParams(queryString);
+  //   const code = urlParams.get('code');
     
-    if (code) {
-      handleLogin(code);    
-    }
-  };
+  //   if (code) {
+  //     handleLogin(code);    
+  //     alert("code:", code)
+  //     navigate("/")
+  //   }
+  // };
 
   const handleLoadDemoUserData = () => {
     fetchUserInfo()
@@ -67,9 +69,18 @@ const GitHubOAuth = ({setAuthorized, setUserInformation}) => {
       });
   }
 
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const code = urlParams.get('code');
+
   useEffect(() => {
-    handleGitHubCallback()
-  }, [])
+    // handleGitHubCallback()
+    if (code) {
+      handleLogin(code);    
+      alert("code:", code)
+      navigate("/")
+    }
+  }, [code])
 
   return (
     <AuthTemplatePage 
