@@ -22,8 +22,13 @@ const root = document.getElementById("root");
 ReactDOM.createRoot(root).render(
   <BrowserRouter>
     <Routes>
-      <Route path="/auth/github/callback" element={<GitHubOAuth />} />
-      <Route path="/" element={<App />} />
+      {/* <Route path="/" element={<App />} />
+      <Route path="/auth/github/callback" element={<GitHubOAuth />} /> */}
+
+
+      <Route path="/" element={<GitHubOAuth />} />
+      <Route path="/dashboard" element={<App />} />
+      <Route path="/auth/github/callback" element={<GitHubOAuth/>} /> 
     </Routes>
   </BrowserRouter>
 );

@@ -255,12 +255,12 @@ function App() {
         dummyCode={dummyCode} 
         count={count}
       />
-    {!authorized? 
+    {/* {!authorized? 
       <GitHubOAuth 
         setAuthorized={setAuthorized}
         setUserInformation={setUserInformation}
       /> :
-      <>
+      <> */}
       <Divider />
       <Topicbutton 
         dirUpdate={dirUpdate}
@@ -340,7 +340,7 @@ function App() {
           solutionOutputDetails={solutionOutputDetails}
           outputDetails={outputDetails} 
         /> 
-        </>}
+        {/* </>} */}
       </ThemeProvider>
   )
 }
