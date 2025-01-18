@@ -42,7 +42,6 @@ const GitHubOAuth = ({setAuthorized, setUserInformation}) => {
         console.log("data client", data)
         setUserInformation(data)
         setAuthorized(true)
-        navigate("/dashboard")
     });
   };
 
