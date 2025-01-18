@@ -1,6 +1,6 @@
 import './index.css'
 
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Route, Routes, useParams } from 'react-router';
 
 import App from './App.jsx';
 import GitHubOAuth from './components/auth/GitHuboAuth.jsx';
@@ -22,13 +22,10 @@ const root = document.getElementById("root");
 ReactDOM.createRoot(root).render(
   <BrowserRouter>
     <Routes>
-      {/* <Route path="/" element={<App />} />
-      <Route path="/auth/github/callback" element={<GitHubOAuth />} /> */}
-
-
-      <Route path="/" element={<GitHubOAuth />} />
-      <Route path="/dashboard" element={<App />} />
+      <Route path="/" element={<App />} />
       <Route path="/auth/github/callback" element={<GitHubOAuth/>} /> 
+      {/* <Route path="/" element={<GitHubOAuth />} /> */}
+      {/* <Route path="/dashboard" element={<App />} />  */}
     </Routes>
   </BrowserRouter>
 );

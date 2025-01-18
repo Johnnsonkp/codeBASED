@@ -21,11 +21,7 @@ const GitHubOAuth = ({setAuthorized, setUserInformation}) => {
     const redirectURI = GITHUB_CALLBACK_URL;
     // const url = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&scope=user:email&client_id=${clientID}`;
     const url = githubOAuthURL;
-    const encodedURL = encodeURI(url);
-    
-    // console.log("url", url);
-    // console.log("encodedURL", encodedURL);
-    
+    const encodedURL = encodeURI(url);    
     window.location.href = encodedURL;
 
     // window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
@@ -84,8 +80,6 @@ const GitHubOAuth = ({setAuthorized, setUserInformation}) => {
     // handleGitHubCallback()
     if (code) {
       handleLogin(code);    
-      alert("code:", code)
-      navigate("/dashboard")
     }
   }, [code])
 

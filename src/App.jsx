@@ -246,6 +246,7 @@ function App() {
   
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <TopBanner compare={compare} dummyCode={dummyCode} count={count}/> 
       <Nav 
         userInfo={userInformation} 
         setUserRepos={setUserRepos}
@@ -255,12 +256,12 @@ function App() {
         dummyCode={dummyCode} 
         count={count}
       />
-    {/* {!authorized? 
+    {!authorized? 
       <GitHubOAuth 
         setAuthorized={setAuthorized}
         setUserInformation={setUserInformation}
       /> :
-      <> */}
+      <>
       <Divider />
       <Topicbutton 
         dirUpdate={dirUpdate}
@@ -340,7 +341,7 @@ function App() {
           solutionOutputDetails={solutionOutputDetails}
           outputDetails={outputDetails} 
         /> 
-        {/* </>} */}
+        </>}
       </ThemeProvider>
   )
 }
