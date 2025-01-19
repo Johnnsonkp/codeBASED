@@ -48,6 +48,15 @@ const Topicbutton = ({dirUpdate, setDirUpdate, topicTitles, onClick, selected, s
       }
     }, [200])
   }
+
+  useEffect(() => {
+    if (!dirUpdate){
+      console.log("Topicbutton setDirUpdate", dirUpdate);
+      console.log("TdefaultSelect", repoOnDropDownSelect);
+      
+      setDirUpdate(repoOnDropDownSelect);
+    }
+  }, [repoOnDropDownSelect])
   
   return (
     <div 
