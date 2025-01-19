@@ -10,22 +10,15 @@ import { StrictMode } from 'react';
 import { ThemeProvider } from './components/theme-provider.tsx';
 import { createRoot } from 'react-dom/client';
 
-// createRoot(document.getElementById('root')).render(
-//   <StrictMode>
-//       <App />
-//   </StrictMode>,
-// )
-
-
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/auth/github/callback" element={<GitHubOAuth/>} /> 
-      {/* <Route path="/" element={<GitHubOAuth />} /> */}
-      {/* <Route path="/dashboard" element={<App />} />  */}
-    </Routes>
-  </BrowserRouter>
+  <StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/auth/github/callback" element={<GitHubOAuth/>} /> 
+      </Routes>
+    </BrowserRouter>
+   </StrictMode>
 );

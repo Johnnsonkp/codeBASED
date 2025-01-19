@@ -5,11 +5,12 @@ import CustomDropDown from './DropdownMenu/CustomDropDown'
 import NumBubble from './Buttons/NumBubble'
 import { useTheme } from './theme-provider'
 
-const Topicbutton = ({dirUpdate, setDirUpdate, topicTitles, onClick, selected, setSelected, userRepos}) => {
+const Topicbutton = ({dirUpdate, setDirUpdate, topicTitles, onClick, selected, setSelected, userRepos, repoOnDropDownSelect}) => {
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(6)
   const {theme} = useTheme();
-  const defaultSelect = userRepos && userRepos[0].length || "holbertonschool-low_level_programming"
+  // const defaultSelect = userRepos && userRepos[0].length || "holbertonschool-low_level_programming"
+  const defaultSelect = repoOnDropDownSelect || userRepos && userRepos[0].length; 
 
   const handleLeftClick = () => {
     if (startIndex > 0 && startIndex < topicTitles.length){
@@ -54,7 +55,6 @@ const Topicbutton = ({dirUpdate, setDirUpdate, topicTitles, onClick, selected, s
         display: 'flex', 
         alignItems: 'center', 
         marginBottom: '30px', 
-        border: '1px solid red', 
         border: `1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
         padding: '5px',
         overflow: 'hidden'

@@ -23,25 +23,12 @@ export async function getSelectedRepo(repo, dirUpdate) {
   return response.json();
 }
 
-// export async function fetchDefaultRepos(userRepos) {
-//   console.log("userRepos[0]", userRepos[0]);
-  
-//   const response = await fetch(`${serverURL}/api/repos/default`, {
-//     method: 'POST',
-//     mode: 'cors',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ 
-//       defaultRepo: userRepos[0]
-//     }),
-//   });
-//   return response.json();
-// }
+export async function fetchDefaultRepos(defaultRepo) {
+  console.log("defaultRepo", defaultRepo)
 
-export async function fetchDefaultRepos(userRepos) {
-  console.log("userepos", userRepos[0])
   const response = await fetch(
     `${serverURL}/api/repos/default?` +
-      new URLSearchParams({ default_repo: userRepos[0] })
+      new URLSearchParams({ default_repo: defaultRepo })
   );
   return response.json();
 }

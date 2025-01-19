@@ -51,6 +51,11 @@ function App() {
   const [directories, setDirectories] = useState()
   const [userRepos, setUserRepos] = useState()
   const [dirUpdate, setDirUpdate] = useState()
+  const [repoOnDropDownSelect, setRepoOnDropDownSelect] = useState()
+  const [status, setStatus] = useState({
+    status: '',
+    message: ''
+  })
   const theme = useTheme();
   const [returnData, setReturnData] = useState(
     {expected_output: null,
@@ -170,7 +175,13 @@ function App() {
   }
 
   const handleUserContents = (data) => {
-    fetchDefaultRepos(data)
+    let userRepos = data;
+    let repo = userRepos?.filter((repo) => repo === "holbertonschool-low_level_programming");
+    let defaultRepo = repo[0]? repo[0] : userRepos[0];
+
+    setRepoOnDropDownSelect(defaultRepo);
+
+    fetchDefaultRepos(defaultRepo)
     .then(response => {
       if (response?.status && response.status !== 200) {
         console.error("Data error:", response);
@@ -246,7 +257,7 @@ function App() {
   
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <TopBanner compare={compare} dummyCode={dummyCode} count={count}/> 
+      <TopBanner compare={compare} dummyCode={dummyCode} count={count} status={status}/> 
       <Nav 
         userInfo={userInformation} 
         setUserRepos={setUserRepos}
@@ -260,6 +271,7 @@ function App() {
       <GitHubOAuth 
         setAuthorized={setAuthorized}
         setUserInformation={setUserInformation}
+        setStatus={setStatus}
       /> :
       <>
       <Divider />
@@ -270,6 +282,7 @@ function App() {
         selected={selected}
         setSelected={setSelected}
         userRepos={userRepos}
+        repoOnDropDownSelect={repoOnDropDownSelect}
       /> 
       <div 
         className="card" 

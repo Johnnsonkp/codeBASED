@@ -27,7 +27,6 @@ function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles, compare,
   
   return (
     <>
-    {/* <TopBanner compare={compare} dummyCode={dummyCode} count={count}/> */}
     <div 
       style={{
         display: 'flex', 
