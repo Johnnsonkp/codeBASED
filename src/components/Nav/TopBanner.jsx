@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 
-function TopBanner({compare, dummyCode, count, status}) {
+function TopBanner({compare, count, status}) {
   let userCode = compare? compare.replace(/\s/g, "") : 'x';
   let challengeCode = count? count.replace(/\s/g, "") : 'y';
   const statusCheck = status.status;

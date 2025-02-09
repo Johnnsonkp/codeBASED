@@ -1,13 +1,11 @@
 import './tabs.css'
 
 import React, {useEffect, useState} from 'react'
-import { height, width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 
 import LanguageNav from '../Languages/LanguageNav';
 
 function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer, showSelectedLangOnly}) {
   const [activeTab, setActiveTab] = useState()
-  let dateKey = Date.now();
   
   if(activeTab == null){
     setTabsContainer(tabs[0]);
@@ -34,7 +32,6 @@ function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer, sh
         {tabs && tabs.map((tab, index) => (
             <button
               style={{fontSize: '11px'}} 
-              // onClick={() => setTabsContainer(tab)}
               onClick={() => handleActiveTabSelect(tab)}
               key={index} 
               className={`tab-button ${tabsContainer == tabs[index]? 'active' : ''}`} 

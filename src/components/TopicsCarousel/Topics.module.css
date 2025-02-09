@@ -1,0 +1,32 @@
+.topicsContainer{
+  display: inline-flex; 
+  align-items: center; 
+  overflow: hidden;
+  max-width: 68vw;
+  border-left: 5px solid rgba(255, 255, 255, 0); 
+  border-right: 20px solid rgba(255, 255, 255, 0);
+}
+.topicButton{
+  margin: 5px;
+  margin-top: 0px;
+  margin-bottom: 2px;
+  font-size: 12px;
+  border-radius: 5px;
+  padding: 6px;
+}
+.carouselContainer{
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 5px;
+  overflow: hidden;
+}
+.borderHighlight{
+  border: 1px solid rgb(80, 250, 123);
+}
+.borderLight{
+  border: 1px solid #EBEBEB;
+}
+.borderDark{
+  border: 1px solid #3C3C3C;
+}

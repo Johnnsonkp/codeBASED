@@ -33,8 +33,6 @@ export async function fetchDefaultRepos(defaultRepo) {
   return response.json();
 }
 
-
-
 export async function fetchAllRepos() {
   const response = await fetch(`${serverURL}/api/repos/all`, {
     method: 'GET',

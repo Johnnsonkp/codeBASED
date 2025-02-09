@@ -1,10 +1,10 @@
-import GitHubOAuth from './GitHuboAuth';
+import GithubOAuth from './GithuboAuth';
 import React from 'react'
 
 export default function Auth() {
   return (
     <div >
-      <GitHubOAuth />
+      <GithubOAuth />
     </div>
   )
 }

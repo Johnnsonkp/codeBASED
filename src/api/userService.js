@@ -12,7 +12,7 @@ export async function fetchUserInfo() {
   return response.json();
 }
 
-export const handleLogin = async (code) => {
+export const handleLogin = async () => {
   const response = await fetch(`${serverURL}/api/auth/github`, {
     method: 'GET',
     mode: 'cors',
@@ -38,3 +38,18 @@ export const userLogout = async () => {
   return response;
 }
 
+export const handleLoginWithCode = async (code) => {
+    fetch(`${serverURL}/auth/github/callback`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: { 
+      'Content-Type': 'application/json',
+      "Access-Control-Allow-Origin": "*", 
+    },
+    body: JSON.stringify({ code }),
+  })
+  .then(response => response.json())
+  .then(data => {
+      return data;
+  });
+};

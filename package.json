@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "eslint": "eslint src/**/*.{js,jsx}",
     "start": "npx http-server ./dist",
     "dev": "vite",
     "build": "vite build",

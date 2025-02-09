@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
 import UserBadgeDropDown from './UserBadgeDropDown';
-import { userLogout } from '../api/userService';
+import { userLogout } from '../../api/userService';
 
 function UserBadge({userInfo, theme, setSignOutInitiated}) {
   const [showDropDown, setShowDropDown] = useState(false);

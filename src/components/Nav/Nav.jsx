@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import SwitchBtn from './CustomButtons/SwitchBtn';
-import TopBanner from './TopBanner';
-import UnknownUser from './userData/UnknownUser';
-import UserBadge from './userData/userBadge';
-import { useTheme } from './theme-provider'
+import SwitchBtn from '../CustomButtons/SwitchBtn';
+import UnknownUser from '../userData/UnknownUser';
+import UserBadge from '../userData/userBadge';
+import { useTheme } from '../theme-provider'
 
-function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles, compare, dummyCode, count}) {
+function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles}) {
   const { theme, setTheme } = useTheme();
   const userPresence = userInfo && userInfo? true : false;
   const [signOutInitiated, setSignOutInitiated] = useState(false)
 
-  const handleLogout = async (code) => { 
+  const handleLogout = async () => { 
     console.log("handleLogout")
     setUserRepos(null);
     setDirectories(dummyTopicTitles); 
@@ -23,7 +22,7 @@ function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles, compare,
     if (signOutInitiated){
       handleLogout()
     }
-  }, [signOutInitiated])
+  }, [signOutInitiated, handleLogout])
   
   return (
     <>
@@ -35,7 +34,7 @@ function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles, compare,
       }}
     >
       <a href="/">
-        <h2>[-] CodeBASED</h2>
+        <h2 style={{marginBottom: '12px'}}>[-] CodeBASED</h2>
       </a>
         <div 
           style={{

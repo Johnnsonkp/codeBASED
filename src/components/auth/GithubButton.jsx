@@ -49,19 +49,6 @@ function GithubButton({onClick}) {
       <img src={githubIcon} style={{marginRight: '5px', color: '#fff'}}/>
       Sign in with GitHub
     </button>
-
-    // <a
-    //   type="button" 
-    //   style={buttonStyle}
-    //   onMouseOver={(e) => Object.assign(e.target.style, hoverStyle)}
-    //   onMouseOut={(e) => Object.assign(e.target.style, buttonStyle)}
-    //   onFocus={(e) => Object.assign(e.target.style, focusStyle)}
-    //   onBlur={(e) => Object.assign(e.target.style, buttonStyle)} 
-    //   href={`${onClick}`}
-    // >
-    //   <img src={githubIcon} style={{marginRight: '5px', color: '#fff'}}/>
-    //   Sign in with GitHub
-    // </a>
   )
 }
 

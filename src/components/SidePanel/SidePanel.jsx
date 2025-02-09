@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 
-import Divider from './Divider'
-import H5Title from './constants/H5Title';
-import SidePanelContainer from './SidePanelComp/SidePanelContainer';
-import SidePanelList from './SidePanelComp/SidePanelList';
+import Divider from '../Common/Divider'
+import H5Title from '../constants/H5Title';
+import SidePanelList from '../SidePanelComp/SidePanelList';
 
-export default function SidePanel({selected, sideNavTitles, onClick, topicTitles, currentChallengeTitle}) {
+export default function SidePanel({selected, sideNavTitles, onClick, currentChallengeTitle}) {
   const [btnSelected, setBtnSelected] = useState();
 
   useEffect(() => {

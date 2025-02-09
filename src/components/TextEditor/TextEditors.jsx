@@ -1,14 +1,12 @@
-import React from 'react';
-import ShowHideSolution from './CustomButtons/ShowHideSolution'
-import TabSlide from './Tabs/TabSlide';
+import ShowHideSolution from '../CustomButtons/ShowHideSolution'
+import TabSlide from '../Tabs/TabSlide';
 
-function TextEditors({processingChecker2, processingChecker, userInput, count, dummyCode, onChange, onChangeSolution, blur, setBlur, setToggleLargeEditor, toggleLargeEditor, language, setLanguage}) {
+function TextEditors({processingChecker2, processingChecker, blur, setBlur, setToggleLargeEditor, toggleLargeEditor, language}) {
   
   return (
     <div 
     style={{ 
       textAlign: 'left', 
-      // margin: '10px', 
       marginTop: '0px !important', 
       marginBottom: '100px',
       display: 'flex', 
@@ -31,18 +29,6 @@ function TextEditors({processingChecker2, processingChecker, userInput, count, d
               width: `${processingChecker2? "101%" : ""}`
             }}
           > 
-            {/* <CodeMirror 
-              value={userInput} 
-              extensions={[cppLanguage]} 
-              onChange={onChange} 
-              width={'100%'}
-              height={'80vh'}
-              minHeight={'725px'}
-              maxHeight="725px"
-              theme={'dark'}
-              style={{fontSize: '10px', flexWrap: 'wrap'}}
-            /> */}
-            {/* <ShowHideSolution blur={blur} setBlur={setBlur}/> */}
             <button 
               style={{position: 'absolute', top: '5px', left: '90%', fontSize: '12px', padding: "6px", borderRadius: '12px', 
                 backgroundColor: "rgba(255, 255, 255, 0.1)", color: '#f4f4f4'}}
@@ -73,17 +59,6 @@ function TextEditors({processingChecker2, processingChecker, userInput, count, d
           <div 
             key={3}
             style={{ position: 'relative', border: `${processingChecker? "2px solid red" : ""}`, width: `${processingChecker? "101%" : ""}` }}>
-            {/* <CodeMirror 
-              value={count || dummyCode} 
-              extensions={[cppLanguage]} 
-              onChange={onChangeSolution} 
-              width={'100%'}
-              height={'80vh'}
-              minHeight={'725px'}
-              maxHeight="725px"
-              theme={'dark'}
-              style={{fontSize: '10px', flexWrap: 'wrap', filter: `${blur? 'blur(2px)' : ''}`}}
-            /> */}
             <ShowHideSolution blur={blur} setBlur={setBlur}/>
           </div>,
           <div 

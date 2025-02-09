@@ -3,26 +3,23 @@ import './components/Tabs/tabs.css'
 
 import { LeftPanel, RightPanel } from './components/Panels/Panels.jsx';
 import {checkSolutionStatus, checkStatus} from './components/CodeCompiler/status.js'
-import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRepo, getSelectedRepoOnDropDown } from './components/api/challengeService';
+import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRepo, getSelectedRepoOnDropDown } from './api/challengeService.js';
 import { postDataToAPI, postSolutionDataToAPI } from './Service/CompileAPI.js';
 import { useCallback, useEffect, useState } from 'react'
 
-import Divider from './components/Divider';
-import Footer from './components/Footer';
-import GitHubOAuth from './components/auth/GitHuboAuth.jsx';
+import Divider from './components/Common/Divider.jsx';
+import Footer from './components/Common/Footer.jsx';
+import GithubOAuth from './components/auth/GithuboAuth.jsx';
 import LanguageNav from './components/Languages/LanguageNav.jsx';
-import Nav from './components/Nav';
+import Nav from './components/Nav/Nav.jsx';
 import OutputWindows from './components/CodeCompiler/OutputWindows.jsx';
-import SidePanelComb from './components/SidePanelComb.jsx';
+import SidePanelComb from './components/SidePanel/SidePanelComb.jsx';
 import SidePanelContainer from './components/SidePanelComp/SidePanelContainer.jsx';
-import { ThemeProvider } from './components/theme-provider';
-import TopBanner from './components/TopBanner';
-import Topicbutton from './components/Topics';
+import TopBanner from './components/Nav/TopBanner.jsx';
+import TopicsCarousel from './components/TopicsCarousel/TopicsCarousel.tsx';
 import axios from "axios";
-import { dummyCode } from './components/PlaceHolder';
 import { dummyTopicTitles } from './helpers/DummyData.js';
 import { extractCodeInstructions } from './helpers/CodeExtract.js';
-import { fetchUserInfo } from './components/api/userService';
 import { languageOptions } from './helpers/Language';
 import { useTheme } from './components/theme-provider';
 
@@ -33,7 +30,6 @@ function App() {
   const [compare, setCompare] = useState()
   const [userInformation, setUserInformation] = useState()
   const [sideNavTitles, setSideNavTitles] = useState()
-  const [loading, setLoading] = useState(false);
   const [language, setLanguage] = useState(languageOptions.filter((lang) => lang.value == 'c'))
   const [outputDetails, setOutputDetails] = useState(null);
   const [solutionOutputDetails, setSolutionOutputDetails] = useState(null);
@@ -45,7 +41,6 @@ function App() {
   const [processingChecker2, setProcessingChecker2] = useState(false);
   const [authorized, setAuthorized] = useState(false)
   const tabs = ["Code Challenge", "Code Explaination"]
-  const tabs1 = ["Solution", "Solution Explaination"]
   const [tabsContainer, setTabsContainer] = useState(tabs[0])
   const [tabsContainer1, setTabsContainer1] = useState(tabs[0])
   const [directories, setDirectories] = useState()
@@ -57,11 +52,11 @@ function App() {
     message: ''
   })
   const theme = useTheme();
-  const [returnData, setReturnData] = useState(
+  const [setReturnData] = useState(
     {expected_output: null,
       stdout: null}
   );
-  const [returnSolutionData, setReturnSolutionData] = useState(
+  const [ setReturnSolutionData] = useState(
     {expected_output: null,
       stdout: null}
   );
@@ -76,7 +71,7 @@ function App() {
       alert("Your solution is correct!");
     }
   }
-  
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
   const handleCompile = (userInput) => {
     setProcessing(true);
@@ -109,9 +104,10 @@ function App() {
       setProcessingChecker, 
       setProcessingChecker2
     })
+
   };
 
-  const handleSolutionCompile = (userInput) => {
+  const handleSolutionCompile = () => {
     setSolutionProcessing(true);
     setProcessingChecker2(true)
     const formData = {
@@ -137,7 +133,6 @@ function App() {
         options, 
         setSolutionOutputDetails,
         setReturnSolutionData,
-        setProcessing,
         setSolutionProcessing,
         setProcessingChecker, 
         setProcessingChecker2
@@ -146,11 +141,11 @@ function App() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const onChangeInput = useCallback((val, viewUpdate) => {
+  const onChangeInput = useCallback((val) => {
     setUserInput(val);
   }, []);
 
-  const onChangeSolution = useCallback((val, viewUpdate) => {
+  const onChangeSolution = useCallback((val) => {
     setCount(val);
   }, []);
 
@@ -256,26 +251,23 @@ function App() {
   }, [selected])
   
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <TopBanner compare={compare} dummyCode={dummyCode} count={count} status={status}/> 
+    <>
+      <TopBanner compare={compare} count={count} status={status}/> 
       <Nav 
         userInfo={userInformation} 
         setUserRepos={setUserRepos}
         setDirectories={setDirectories}
         dummyTopicTitles={dummyTopicTitles}
-        compare={compare} 
-        dummyCode={dummyCode} 
-        count={count}
       />
     {!authorized? 
-      <GitHubOAuth 
+      <GithubOAuth 
         setAuthorized={setAuthorized}
         setUserInformation={setUserInformation}
         setStatus={setStatus}
       /> :
       <>
       <Divider />
-      <Topicbutton 
+      <TopicsCarousel 
         dirUpdate={dirUpdate}
         setDirUpdate={setDirUpdate}
         topicTitles={directories} 
@@ -283,7 +275,7 @@ function App() {
         setSelected={setSelected}
         userRepos={userRepos}
         repoOnDropDownSelect={repoOnDropDownSelect}
-      /> 
+      />
       <div 
         className="card" 
         style={{
@@ -350,12 +342,9 @@ function App() {
           setCompare={setCompare} 
           compareOutputs={compareOutputs} 
           score={score} 
-          sideNavTitles={sideNavTitles}
-          solutionOutputDetails={solutionOutputDetails}
-          outputDetails={outputDetails} 
         /> 
         </>}
-      </ThemeProvider>
+        </>
   )
 }
 
