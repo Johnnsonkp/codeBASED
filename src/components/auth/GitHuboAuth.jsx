@@ -1,19 +1,18 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { fetchUserInfo, handleLoginWithCode } from '../../api/userService';
 
 import AuthTemplatePage from './AuthTemplatePage';
 import DemoButton from './DemoButton';
 import GithubButton from './GithubButton';
-import { useNavigate } from 'react-router';
 
 const GITHUB_CLIENT_ID = import.meta.env.VITE_APP_GITHUB_CLIENT_ID;
 const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
 
 const GithubOAuth = ({setAuthorized, setUserInformation, setStatus}) => {
+  
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const code = urlParams.get('code');
-  const navigate = useNavigate();
   
   const loginWithGitHub = () => {
     window.location.href = encodeURI(githubOAuthURL);
@@ -39,12 +38,13 @@ const GithubOAuth = ({setAuthorized, setUserInformation, setStatus}) => {
         status: "error",
         message: "An error occurred while loading demo user data"
       })
-      setUserInformation(null); // Optionally set to null in case of an error
+      setUserInformation(null);
     }
   };
 
   const handleLogin = async (code) => {
     const data = await handleLoginWithCode(code);
+    console.log("data", data)
     handleData(data);
   }
   

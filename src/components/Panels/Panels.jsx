@@ -19,7 +19,9 @@ export function LeftPanel({language, setTabsContainer, tabsContainer, userInput,
         tabsContainer={tabsContainer}
         showSelectedLangOnly={showSelectedLangOnly}
       />
-      <div className="tab-content" >
+      <div className="tab-content" 
+        style={{width: '30vw', maxWidth: '550px'}}
+      >
         {tabsContainer == "Code Challenge"?
           <div 
             style={{ 
@@ -65,7 +67,9 @@ export function RightPanel({ language, setTabsContainer1, tabsContainer1, count,
         setTabsContainer={setTabsContainer1}
         tabsContainer={tabsContainer1}
       />
-      <div className="tab-content" >
+      <div className="tab-content" 
+        style={{ width: '30vw', maxWidth: '550px'}}
+      >
         {tabsContainer1 == "Solution"?
           <div 
             style={{ 

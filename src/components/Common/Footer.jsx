@@ -22,11 +22,11 @@ function Footer({userInput, setCompare, compareOutputs, score, nextChallenge}) {
             }}
           >
               <div style={{width: '40%', textAlign: 'left'}}>
-                <DefaultButton title={`Score: ${score}`} onClick={setCompare(userInput)}/>
+                <DefaultButton title={`Score: ${score}`} onClick={() => setCompare(userInput)}/>
               </div>
               <div style={{textAlign: 'right', width: '', display: 'flex', justifyContent: 'space-evenly'}}>
-                <DefaultButton title={'Strict Check'} onClick={setCompare(userInput)}/>
-                <DefaultButton title={'Check Output'} onClick={compareOutputs}/>
+                {/* <DefaultButton title={'Strict Check'} onClick={setCompare(userInput)}/> */}
+                <DefaultButton title={'Check Output'} onClick={() => compareOutputs()}/>
                 <DefaultButton title={'Next'} onClick={() => nextChallenge()}/>
               </div>
           </div>

@@ -5,7 +5,7 @@ import { LeftPanel, RightPanel } from './components/Panels/Panels.jsx';
 import {checkSolutionStatus, checkStatus} from './components/CodeCompiler/status.js'
 import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRepo, getSelectedRepoOnDropDown } from './api/challengeService.js';
 import { postDataToAPI, postSolutionDataToAPI } from './Service/CompileAPI.js';
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 
 import Divider from './components/Common/Divider.jsx';
 import Footer from './components/Common/Footer.jsx';
@@ -16,7 +16,8 @@ import OutputWindows from './components/CodeCompiler/OutputWindows.jsx';
 import SidePanelComb from './components/SidePanel/SidePanelComb.jsx';
 import SidePanelContainer from './components/SidePanelComp/SidePanelContainer.jsx';
 import TopBanner from './components/Nav/TopBanner.jsx';
-import TopicsCarousel from './components/TopicsCarousel/TopicsCarousel.tsx';
+// import TopicsCarousel from './components/TopicsCarousel/TopicsCarousel.tsx';
+import TopicsCarousel from './components/TopicsCarousel/Topics.jsx'
 import axios from "axios";
 import { dummyTopicTitles } from './helpers/DummyData.js';
 import { extractCodeInstructions } from './helpers/CodeExtract.js';
@@ -47,28 +48,38 @@ function App() {
   const [userRepos, setUserRepos] = useState()
   const [dirUpdate, setDirUpdate] = useState()
   const [repoOnDropDownSelect, setRepoOnDropDownSelect] = useState()
+  const theme = useTheme();
   const [status, setStatus] = useState({
     status: '',
     message: ''
   })
-  const theme = useTheme();
-  const [setReturnData] = useState(
+  const [returnData, setReturnData] = useState(
     {expected_output: null,
       stdout: null}
   );
-  const [ setReturnSolutionData] = useState(
+  const [returnSolutionData, setReturnSolutionData] = useState(
     {expected_output: null,
       stdout: null}
   );
+  
 
-  const compareOutputs = ({outputDetails, solutionOutputDetails}) => {
-
+  // const compareOutputs = ({outputDetails, solutionOutputDetails, score, setScore}) => {
+    const compareOutputs = () => {
     const userOutput = btoa(outputDetails?.compile_output);
     const solutionOutput = btoa(solutionOutputDetails?.compile_output);
+
+    console.log("userOutput", userOutput)
+    console.log("solutionOutput", solutionOutput)
     
     if (atob(userOutput) == atob(solutionOutput)){
       setScore((score) => score + 1);
       alert("Your solution is correct!");
+    }
+    else{
+      setStatus({
+        status: 'error',
+        message: 'Your solution is incorrect'
+      })
     }
   }
 
@@ -107,7 +118,7 @@ function App() {
 
   };
 
-  const handleSolutionCompile = () => {
+  const handleSolutionCompile = (userInput) => {
     setSolutionProcessing(true);
     setProcessingChecker2(true)
     const formData = {
@@ -133,6 +144,7 @@ function App() {
         options, 
         setSolutionOutputDetails,
         setReturnSolutionData,
+        setProcessing,
         setSolutionProcessing,
         setProcessingChecker, 
         setProcessingChecker2
@@ -141,11 +153,11 @@ function App() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const onChangeInput = useCallback((val) => {
+  const onChangeInput = useCallback((val, viewUpdate) => {
     setUserInput(val);
   }, []);
 
-  const onChangeSolution = useCallback((val) => {
+  const onChangeSolution = useCallback((val, viewUpdate) => {
     setCount(val);
   }, []);
 
@@ -183,10 +195,8 @@ function App() {
         setDirectories(dummyTopicTitles);
         return;
       }
-
       const directories = response?.directories?.length > 0 ? response.directories : null;
       const files = response?.files?.length > 0 ? response.files : null;
-      
       setDirectories(directories);
       setSideNavTitles(files);
     })
@@ -195,22 +205,19 @@ function App() {
     });
   }
 
-  const loadUserContents = () => {
+  const loadUserContents = useCallback(() => {
     getAllRepos(userInformation)
     .then((data) => {
       if (data && data.status && data.status != 200){
-        console.log("data err", data);
-        setUserRepos(null);
-        return;
+        setUserRepos(data?.status === 200 ? data : null);
       } 
       setUserRepos(data);
       handleUserContents(data);
     })
-  }
+  }, [userInformation]);
 
   useEffect(() => {
     if (userInformation && userInformation.id && authorized && !userRepos){
-      console.log("userInformation:", userInformation)
       loadUserContents()
     } 
     else{
@@ -218,6 +225,7 @@ function App() {
       setDirectories(dummyTopicTitles);
     }
   }, [userInformation, authorized]);
+
 
   useEffect(() => {
     if(dirUpdate){
@@ -334,14 +342,13 @@ function App() {
           count={count} 
           solutionProcessing={solutionProcessing}
         />
-
       </div>
         <Footer 
-          nextChallenge={nextChallenge}
-          userInput={userInput} 
-          setCompare={setCompare} 
-          compareOutputs={compareOutputs} 
+          userInput={userInput}
+          setCompare={setCompare}
+          compareOutputs={compareOutputs}
           score={score} 
+          nextChallenge={nextChallenge}   
         /> 
         </>}
         </>
@@ -349,3 +356,4 @@ function App() {
 }
 
 export default App
+

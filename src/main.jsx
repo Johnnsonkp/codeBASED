@@ -12,13 +12,13 @@ const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
   <StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/auth/github/callback" element={<GithubOAuth/>} /> 
-      </Routes>
-    </BrowserRouter>
-    </ThemeProvider>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/auth/github/callback" element={<GithubOAuth/>} /> 
+            </Routes>
+          </BrowserRouter>
+        </ThemeProvider>
    </StrictMode>
 );

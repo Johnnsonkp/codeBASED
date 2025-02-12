@@ -24,7 +24,6 @@ export async function getSelectedRepo(repo, dirUpdate) {
 }
 
 export async function fetchDefaultRepos(defaultRepo) {
-  console.log("defaultRepo", defaultRepo)
 
   const response = await fetch(
     `${serverURL}/api/repos/default?` +
@@ -44,7 +43,6 @@ export async function fetchAllRepos() {
 }
 
 export const getAllRepos = async (userInformation) => {
-  console.log("userInformation", userInformation);
   
   const response = await fetch(`${serverURL}/api/repos/all`, {
     method: 'POST',

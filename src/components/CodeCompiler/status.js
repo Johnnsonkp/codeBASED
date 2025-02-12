@@ -64,11 +64,21 @@ export const checkSolutionStatus = async (token, axios) => {
   }
 };
 
-export const compareOutputs = ({outputDetails, solutionOutputDetails, setScore}) => {
-  atob(outputDetails?.compile_output) == atob(solutionOutputDetails?.compile_output)? true : false
+// export const compareOutputs = ({outputDetails, solutionOutputDetails, setScore}) => {
+//   atob(outputDetails?.compile_output) == atob(solutionOutputDetails?.compile_output)? true : false
   
-  if (atob(outputDetails?.compile_output) == atob(solutionOutputDetails?.compile_output)){
+//   if (atob(outputDetails?.compile_output) == atob(solutionOutputDetails?.compile_output)){
+//     setScore((score) => score + 1);
+//     alert("Yayy!");
+//   }
+// }
+
+export const compareOutputs = ({outputDetails, solutionOutputDetails, setScore}) => {
+  const userOutput = btoa(outputDetails?.compile_output);
+  const solutionOutput = btoa(solutionOutputDetails?.compile_output);
+  
+  if (atob(userOutput) == atob(solutionOutput)){
     setScore((score) => score + 1);
-    alert("Yayy!");
+    alert("Your solution is correct!");
   }
 }

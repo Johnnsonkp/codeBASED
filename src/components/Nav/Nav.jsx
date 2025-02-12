@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import Logo from './Logo';
 import SwitchBtn from '../CustomButtons/SwitchBtn';
 import UnknownUser from '../userData/UnknownUser';
 import UserBadge from '../userData/userBadge';
@@ -11,7 +12,6 @@ function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles}) {
   const [signOutInitiated, setSignOutInitiated] = useState(false)
 
   const handleLogout = async () => { 
-    console.log("handleLogout")
     setUserRepos(null);
     setDirectories(dummyTopicTitles); 
     setSignOutInitiated(false) 
@@ -33,9 +33,7 @@ function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles}) {
         alignItems: 'center'
       }}
     >
-      <a href="/">
-        <h2 style={{marginBottom: '12px'}}>[-] CodeBASED</h2>
-      </a>
+      <Logo title={'CodeBASED'} url={'/'}/>
         <div 
           style={{
             display: 'flex', 
