@@ -1,24 +1,25 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 
 import UserBadgeDropDown from './UserBadgeDropDown';
+import { UserContext } from '../../store/userStore';
 import { userLogout } from '../../api/userService';
 
-function UserBadge({userInfo, theme, setSignOutInitiated}) {
+function UserBadge({userInfo, theme}) {
   const [showDropDown, setShowDropDown] = useState(false);
+  const {state, dispatch} = useContext(UserContext)
   
-  const initiatUserSignOut = async () => {
-      console.log("handle logout")
-      userLogout()
-        .then((data) => {
-          if (data && data.status && data.status != 200){
-            console.log("data err", data);
-          } 
-          else{
-            setSignOutInitiated(true)
-          }
-        })
+  const userSignout = async () => {
+    userLogout()
+      .then((data) => {
+        if (data && data.status && data.status != 200){
+          dispatch({type: "UNKNOWN_ERROR", payload: data})
+        }
+        else{
+          dispatch({type: "SIGN_OUT"})
+          window.location.href = '/'
+        }
+      })
   };
-
 
   return (
     <>
@@ -58,7 +59,7 @@ function UserBadge({userInfo, theme, setSignOutInitiated}) {
     <UserBadgeDropDown 
       toggle={showDropDown}
       theme={theme}
-      initiatUserSignOut={initiatUserSignOut}
+      initiatUserSignOut={userSignout}
     />
     </>
   )

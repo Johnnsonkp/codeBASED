@@ -7,13 +7,13 @@ export function postDataToAPI({axios, checkStatus, options, setOutputDetails, se
       checkStatus(token, axios)
       .then(data => {
         setOutputDetails(data)
+        setProcessing(false)
+        setProcessingChecker(false);
+        setProcessingChecker2(false);
         setReturnData({
           expected_output: data.expected_output,
           stdout: data.stdout,
         });
-        setProcessing(false)
-        setProcessingChecker(false);
-        setProcessingChecker2(false);
       })
     })
     .catch((err) => {
@@ -42,18 +42,18 @@ export function postSolutionDataToAPI({
       checkSolutionStatus(token, axios)
       .then(data => {
         setSolutionOutputDetails(data)
+        setSolutionProcessing(false);
+        setProcessingChecker(false);
+        setProcessingChecker2(false);
         setReturnSolutionData({
           expected_output: data.expected_output,
           stdout: data.stdout,
         });
-        setSolutionProcessing(false);
-        setProcessingChecker(false);
-        setProcessingChecker2(false);
       })
     })
     .catch((err) => {
       let error = err.response ? err.response.data : err;
       setProcessing(false);
       console.log(error);
-      });
+    });
 }

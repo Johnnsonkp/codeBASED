@@ -1,31 +1,18 @@
-import { useEffect, useState } from 'react'
-
 import Logo from './Logo';
 import SwitchBtn from '../CustomButtons/SwitchBtn';
 import UnknownUser from '../userData/UnknownUser';
 import UserBadge from '../userData/userBadge';
+import { UserContext } from '../../store/userStore';
+import { useContext } from 'react'
 import { useTheme } from '../theme-provider'
 
-function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles}) {
+function Nav() {
   const { theme, setTheme } = useTheme();
-  const userPresence = userInfo && userInfo? true : false;
-  const [signOutInitiated, setSignOutInitiated] = useState(false)
-
-  const handleLogout = async () => { 
-    setUserRepos(null);
-    setDirectories(dummyTopicTitles); 
-    setSignOutInitiated(false) 
-    window.location.href = '/'
-  };
-
-  useEffect(() => {
-    if (signOutInitiated){
-      handleLogout()
-    }
-  }, [signOutInitiated, handleLogout])
+  const {state, dispatch} = useContext(UserContext)
+  const isUserAuth = state.authorised
+  const userInfo = state.user
   
   return (
-    <>
     <div 
       style={{
         display: 'flex', 
@@ -57,16 +44,14 @@ function Nav({userInfo, setUserRepos, setDirectories, dummyTopicTitles}) {
           >
             <hr></hr>
           </div>
-          {userPresence?  
+          {isUserAuth?  
             <UserBadge 
-              setSignOutInitiated={setSignOutInitiated}
               theme={theme} 
               userInfo={userInfo}
             /> : <UnknownUser />
           }
         </div>
     </div>
-    </>
   )
 }
 

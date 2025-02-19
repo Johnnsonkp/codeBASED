@@ -1,6 +1,8 @@
+import DemoButton from './DemoButton';
+import GithubButton from './GithubButton';
 import React from 'react';
 
-function AuthTemplatePage({GithubButton, DemoButton}) {
+function AuthTemplatePage({ loadDemoUser, githubAuth}) {
   const bgStyle = {
     backgroundColor: "#111827",
     height: "85vh",
@@ -19,21 +21,6 @@ function AuthTemplatePage({GithubButton, DemoButton}) {
     height: "13rem",
     top: "3rem",
     inset: 0,
-  };
-
-  const aTag = {
-    textAlign: "center",
-    borderRadius: "9999px",
-    transitionDuration: "150ms",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "0.25rem",
-    height: "3rem",
-    color: "white",
-    backgroundColor: "#333",
-    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-    outlineOffset: "2px",
   };
 
   const textCenter = {
@@ -63,11 +50,6 @@ function AuthTemplatePage({GithubButton, DemoButton}) {
     flexDirection: "row",
     alignItems: "center",
     gap: "0.75rem",
-  };
-
-  const buttonContainer = {
-    paddingTop: "0.75rem",
-    display: 'flex'
   };
 
   const imageStyle = {
@@ -101,9 +83,50 @@ function AuthTemplatePage({GithubButton, DemoButton}) {
     objectFit: "cover"
   };
 
+  const InnerForm = () => {
+    return (
+      <div style={{ position: "relative" }}>
+        <div style={{ position: "relative", paddingTop: "60px", padding: '10px', width: "100%" }}>
+          <div style={{ position: "relative", zIndex: 10, transition: "opacity 1s ease-in-out", padding: '30px' }}>
+            <div style={textCenter}>
+              <h2 style={titleStyle}>Your Personal Coding Arena</h2>
+              <p style={paragraphStyle}>
+                Welcome to codeBASED, the ultimate coding sandbox for developers! Take on unlimited coding challenges directly from your GitHub repositories, refine your skills, and master your craft—all in one place.
+              </p>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 500, fontSize: "1rem" }}>
+              <form style={formContainer}>
+                <GithubButton onClick={githubAuth}/>
+                <div className="sm:pt-0 pt-3" style={{width: '150px', padding: '0px'}}>
+                  <DemoButton onClick={loadDemoUser}/>
+                </div>
+              </form>
+            </div>
+          </div>
+          <img
+            src="https://i.ibb.co/8D7rcYv/download.webp"
+            alt="Background"
+            loading="lazy"
+            style={imageStyle}
+          />
+        </div>
+      </div>
+    )
+  }
+
+  const AppImage = () => {
+    return (
+      <div className="md:w-1/2 lg:w-2/3 mt-8 md:mt-0" style={imgBlock}>
+        <img 
+          style={imgBlockInner} 
+          src="TextEditors.png" alt="Responsive Design"
+        />
+      </div>
+    )
+  }
+
   return (
     <div style={bgStyle}>
-      <section>
         <div style={{ position: "relative", display: 'flex' }}>
           <div
             style={{
@@ -112,43 +135,9 @@ function AuthTemplatePage({GithubButton, DemoButton}) {
               ...gradient,
             }}
           ></div>
-          <div style={{ position: "relative" }}>
-            <div style={{ position: "relative", paddingTop: "60px", padding: '10px', width: "100%" }}>
-              <div style={{ position: "relative", zIndex: 10, transition: "opacity 1s ease-in-out", padding: '30px' }}>
-                <div style={textCenter}>
-                  <h2 style={titleStyle}>Your Personal Coding Arena</h2>
-                  <p style={paragraphStyle}>
-                    Welcome to codeBASED, the ultimate coding sandbox for developers! Take on unlimited coding challenges directly from your GitHub repositories, refine your skills, and master your craft—all in one place.
-                  </p>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 500, fontSize: "1rem" }}>
-                  <form style={formContainer}>
-                    {GithubButton}
-                    <div className="sm:pt-0 pt-3" style={{width: '150px', padding: '0px'}}>
-                      {/* <a style={aTag} href="">
-                        Demo
-                      </a> */}
-                      {DemoButton}
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <img
-                src="https://i.ibb.co/8D7rcYv/download.webp"
-                alt="Background"
-                loading="lazy"
-                style={imageStyle}
-              />
-            </div>
-          </div>
-          <div className="md:w-1/2 lg:w-2/3 mt-8 md:mt-0" style={imgBlock}>
-            <img 
-              style={imgBlockInner} 
-              src="TextEditors.png" alt="Responsive Design"
-            />
-          </div>
+          <InnerForm />
+          <AppImage />
         </div>
-      </section>
     </div>
   );
 }

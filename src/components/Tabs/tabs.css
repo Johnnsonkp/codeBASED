@@ -1,16 +1,12 @@
 .tab-container {
   display: inline-flex;
-  /* width: 300px; */
   width: 80%;
   margin: auto;
   margin-bottom: 0px;
-  /* border: 1px solid red; */
   margin-left: 10px;
-  /* border: 2px solid #EBEBEB; */
   border: 1px solid #A9A9A9;
   border-radius: 5px;
   overflow: hidden;
-  /* background-color: #CCCCCC; */
 }
 
 .tab-button {
@@ -26,7 +22,6 @@
   transition: 0.3s;
   transform: translateX(15px);
   border: none;
-  /* color: #111 !important; */
 }
 
 
@@ -115,8 +110,6 @@
 /* Laptops and Small Desktops (1024px to 1280px) */
 @media (max-width: 1440px) {
   .tab-content{
-    /* border: 1px solid red; */
-    /* max-width: 440px; */
     max-width: 450px;
     width: 435px;
     min-height: 750px;
@@ -138,7 +131,6 @@
     margin-right: 10px;
   }
   .tab-panel.activePanel{
-    /* max-width: 500px; */
     width: 100%;
   }
 }
@@ -147,75 +139,3 @@
 @media (min-width: 1920px) {
  
 }
-
-
-/* #include <unistd.h>
-#include <stdio.h> */
-/**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
- */
-
-//** putchar function **/ 
-/* int _putchar(char c)
-{
-	return (write(1, &c, 1));
-} */
-
-//** count the number of digits **/
-/* int digit_count(int n)
-{
-  int count_digit = 0;
-
-  if (n == 0){ return (1);}
-  if (n < 0){ n = -n;}
-  
-  while (n != 0)
-  {
-    n = n / 10;
-    count_digit++;
-  }
-  _putchar(count_digit + '0');
-  
-  return (count_digit);
-} */
-
-//** Print number function **/
-/* int print_number(int n)
-{
-  char num_to_str;
-  bool negative_num = false;
-  
-  // number of digits 
-  num_of_digits = digit_count(n);
-  if (num_of_digits == NULL)
-  {
-    return (1);
-  }
-  
-  // convert negative num
-  if (n < 0){
-    n = -n;
-    negative_num = true;
-  };
-
-  while (num_of_digits != 0)
-  {
-      n[]
-  }
-  
-} */
-
-/* int main(void)
-{
-  int negative_num = -20;
-  int positive_num = 20;
-  
-  printf("negative number %d\n", negative_num);
-  printf("positive number %d\n", positive_num);
-  
-  return (0);
-} */

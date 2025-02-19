@@ -1,54 +1,47 @@
-import {useEffect, useState} from 'react'
+import {useContext, useState} from 'react'
 
-function TopBanner({compare, count, status}) {
-  let userCode = compare? compare.replace(/\s/g, "") : 'x';
-  let challengeCode = count? count.replace(/\s/g, "") : 'y';
-  const statusCheck = status.status;
+import { ChallengeContext } from '../../store/challengeStore.jsx';
+import { UserContext } from '../../store/userStore.jsx';
 
-  const [bannerContents, setBannerContents] = useState({
-    color: "",
-    message: "",
-
-  });
-
-  const handleStatus = () => {
-    switch (statusCheck) {
-      case "error":
-        setBannerContents({
-          color: "#FCEBEB",
-          message: status.message
-        })
-        break;
+function TopBanner() {
+  const {state} = useContext(UserContext);
+  const {challengeState, challengeDispatch} = useContext(ChallengeContext);
+  const appStatus = state.app_status;
+  const [toggle, setToggle] = useState(false);
+  const statusColor = appStatus.status || challengeState.solutionStatus.status
   
-      case "":
-        setBannerContents({
-          color: '#51FA7B', 
-          message: userCode == challengeCode && "Exact match!"
-        })
-        break;
-      
-      default:
-        setBannerContents({
-          color: "",
-          message: ""
-        })
-        break;
-    };
-  }
-
-  useEffect(() => {
-    handleStatus();
-  }, [status])
-
+  const bannerAlert = ({
+    "error": "#FCEBEB",
+    "correct": '#51FA7B'
+  })
+  
   return (
-    <div 
+    <div
       style={{
-        backgroundColor: bannerContents?.color || "", 
+        backgroundColor: bannerAlert[statusColor] || "", 
         color: '#333', 
-        fontWeight: 'semibold'
+        fontWeight: 'bold',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: toggle? "none" : "block"
       }}
     >
-      {bannerContents?.message || ""}
+      {appStatus.message}
+      {challengeState.solutionStatus.message}
+
+      <button 
+        style={{
+          position: 'relative', 
+          left: '38vw', 
+          padding: '3px 10px', 
+          margin: '5px', 
+          display: statusColor? "inline-block" : "none"
+        }}
+        onClick={() => challengeDispatch({type: "RESET"})}
+      >
+        X
+      </button>
     </div>
   )
 }

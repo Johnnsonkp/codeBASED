@@ -1,30 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { fetchUserInfo, handleLoginWithCode } from '../../api/userService';
 
 import AuthTemplatePage from './AuthTemplatePage';
-import DemoButton from './DemoButton';
-import GithubButton from './GithubButton';
+import { UserContext } from '../../store/userStore.jsx';
+import { getCodeFromURL } from '../../helpers/auth/GithubAuth.js';
+import { useNavigate } from 'react-router';
 
 const GITHUB_CLIENT_ID = import.meta.env.VITE_APP_GITHUB_CLIENT_ID;
 const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
 
-const GithubOAuth = ({setAuthorized, setUserInformation, setStatus}) => {
+const GithubOAuth = () => {
   
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const code = urlParams.get('code');
+  const {state, dispatch} = useContext(UserContext)
+  const isUserAuth = state.authorised
+  const code = getCodeFromURL();
+  const navigate = useNavigate()
   
   const loginWithGitHub = () => {
     window.location.href = encodeURI(githubOAuthURL);
   };
 
+  const storeUserData = (data) => {
+    dispatch({type: "ADD_USER_DETAILS", payload: data})
+    dispatch({type: "AUTH_USER", payload: true})
+  }
+
   const handleData = (data) => {
     if (data && data?.status && data.status !== 200) {
-      console.log("Data error:", data);
-      setUserInformation(null);
-    } else {
-      setUserInformation(data);
-      setAuthorized(true);
+      dispatch({type: "USER_LOGIN_ERROR", payload: {status:'error', message: data.status}})
+    } else if (data && isUserAuth == false){
+      storeUserData(data)
     }
   }
   
@@ -34,31 +39,32 @@ const GithubOAuth = ({setAuthorized, setUserInformation, setStatus}) => {
       handleData(data);
     } catch (error) {
       console.error("An error occurred while loading demo user data:", error);
-      setStatus({
-        status: "error",
-        message: "An error occurred while loading demo user data"
-      })
-      setUserInformation(null);
+      dispatch({
+        type: "USER_LOGIN_ERROR", 
+        payload: {
+          status:'error', 
+          message: "An error occurred while loading user data"
+      }})
+      navigate('/');
     }
   };
 
   const handleLogin = async (code) => {
     const data = await handleLoginWithCode(code);
-    console.log("data", data)
     handleData(data);
   }
   
   useEffect(() => {
-    if (code) {
+    if (code && isUserAuth == false) {
       handleLogin(code);
     }
   }, [code])
 
   return (
-    <AuthTemplatePage 
-      GithubButton={<GithubButton onClick={() => loginWithGitHub()}/>}
-      DemoButton={<DemoButton onClick={() => handleLoadDemoUserData()}/>}
-    />
+      <AuthTemplatePage 
+        githubAuth={loginWithGitHub}
+        loadDemoUser={handleLoadDemoUserData}
+      />
   );
 };
 
