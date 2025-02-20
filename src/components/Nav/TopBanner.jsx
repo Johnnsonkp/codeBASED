@@ -1,12 +1,14 @@
 import {useContext, useState} from 'react'
 
-import { ChallengeContext } from '../../store/challengeStore.jsx';
-import { UserContext } from '../../store/userStore.jsx';
+// import { ChallengeContext } from '../../store/challengeProvider.jsx';
+import { ChallengeContext } from '../../store/context/ChallengeContext.jsx';
+import { UserContext } from '../../store/context/UserContext.jsx';
+import styles from './Nav.module.css'
 
 function TopBanner() {
-  const {state} = useContext(UserContext);
+  const {userState} = useContext(UserContext);
   const {challengeState, challengeDispatch} = useContext(ChallengeContext);
-  const appStatus = state.app_status;
+  const appStatus = userState.app_status;
   const [toggle, setToggle] = useState(false);
   const statusColor = appStatus.status || challengeState.solutionStatus.status
   
@@ -17,27 +19,18 @@ function TopBanner() {
   
   return (
     <div
+      className={styles.banner}
       style={{
         backgroundColor: bannerAlert[statusColor] || "", 
-        color: '#333', 
-        fontWeight: 'bold',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        display: toggle? "none" : "block"
+        display: toggle? "none" : "flex"
       }}
     >
       {appStatus.message}
       {challengeState.solutionStatus.message}
 
-      <button 
-        style={{
-          position: 'relative', 
-          left: '38vw', 
-          padding: '3px 10px', 
-          margin: '5px', 
-          display: statusColor? "inline-block" : "none"
-        }}
+      <button
+        className={styles.cancelbtn} 
+        style={{display: statusColor? "inline-block" : "none"}}
         onClick={() => challengeDispatch({type: "RESET"})}
       >
         X

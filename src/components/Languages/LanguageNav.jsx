@@ -6,25 +6,6 @@ function LanguageNav({languageOptions, style, setLanguage, language, showSelecte
 
   const SelectedLang = () => {
     return (
-      // <button
-      //   style={{
-      //     // marginTop: '7px', 
-      //     margin: '0px',
-      //     boxSizing: 'border-box', 
-      //     width: '25px', 
-      //     marginRight: 'auto',
-      //     marginLeft: 'auto',
-      //     display: 'flex', 
-      //     justifyContent: 'center',
-      //     background: "transparent",
-      //   }}
-      // >
-      //     <img 
-      //       style={{width: '20px', padding: '0px'}} 
-      //       src={language[0].image} 
-      //     /> 
-      // </button>
-
     <img 
       style={{width: '20px', padding: '0px'}} 
       src={language[0].image} 
@@ -63,14 +44,8 @@ function LanguageNav({languageOptions, style, setLanguage, language, showSelecte
     <div 
       className={className}
       style={{
-        // width: '25px',
         borderRadius: '5px',
-        // height: '100%',
         maxHeight: `${showSelectedLangOnly? '' : '785px'}`,
-        // minHeight: `${showSelectedLangOnly? '' : '785px'}`,
-        marginRight: 'auto',
-        marginLeft: 'auto',
-        // border: '1px solid red',
         style
       }}
     >

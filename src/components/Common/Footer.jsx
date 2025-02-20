@@ -1,6 +1,6 @@
 import '../../App.css'
 
-import { ChallengeContext } from '../../store/challengeStore'
+import { ChallengeContext } from '../../store/context/ChallengeContext'
 import DefaultButton from '../Buttons/DefaultButton'
 import { useContext } from 'react'
 

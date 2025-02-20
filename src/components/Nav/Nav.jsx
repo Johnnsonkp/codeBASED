@@ -2,15 +2,15 @@ import Logo from './Logo';
 import SwitchBtn from '../CustomButtons/SwitchBtn';
 import UnknownUser from '../userData/UnknownUser';
 import UserBadge from '../userData/userBadge';
-import { UserContext } from '../../store/userStore';
+import { UserContext } from '../../store/context/UserContext';
 import { useContext } from 'react'
 import { useTheme } from '../theme-provider'
 
 function Nav() {
   const { theme, setTheme } = useTheme();
-  const {state, dispatch} = useContext(UserContext)
-  const isUserAuth = state.authorised
-  const userInfo = state.user
+  const {userState, dispatch} = useContext(UserContext)
+  const isUserAuth = userState.authorised
+  const userInfo = userState.user
   
   return (
     <div 

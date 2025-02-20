@@ -1,21 +1,22 @@
 import React, {useContext, useState} from 'react'
 
 import UserBadgeDropDown from './UserBadgeDropDown';
-import { UserContext } from '../../store/userStore';
+import { UserContext } from '../../store/context/UserContext';
 import { userLogout } from '../../api/userService';
 
 function UserBadge({userInfo, theme}) {
   const [showDropDown, setShowDropDown] = useState(false);
-  const {state, dispatch} = useContext(UserContext)
+  const {userState, userDispatch} = useContext(UserContext)
   
   const userSignout = async () => {
+    let type = ''
     userLogout()
       .then((data) => {
         if (data && data.status && data.status != 200){
-          dispatch({type: "UNKNOWN_ERROR", payload: data})
+          userDispatch({type: "UNKNOWN_ERROR", payload: data})
         }
         else{
-          dispatch({type: "SIGN_OUT"})
+          userDispatch({type: "SIGN_OUT"})
           window.location.href = '/'
         }
       })

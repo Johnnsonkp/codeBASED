@@ -6,7 +6,7 @@ import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRe
 import { postDataToAPI, postSolutionDataToAPI } from './Service/CompileAPI.js';
 import { useCallback, useEffect, useState } from 'react'
 
-import { ChallengeContext } from './store/challengeStore.jsx';
+import { ChallengeContext } from './store/context/ChallengeContext.jsx';
 import Divider from './components/Common/Divider.jsx';
 import Footer from './components/Common/Footer.jsx';
 import GithubOAuth from './components/auth/GithuboAuth.jsx';
@@ -16,7 +16,7 @@ import { PanelsCombined } from './components/Panels/PanelsCombined.jsx';
 import SidePanelComb from './components/SidePanel/SidePanelComb.jsx';
 import SidePanelContainer from './components/SidePanelComp/SidePanelContainer.jsx';
 import TopicsCarousel from './components/TopicsCarousel/Topics.jsx'
-import { UserContext } from './store/userStore.jsx';
+import { UserContext } from './store/context/UserContext.jsx';
 import axios from "axios";
 import { dummyTopicTitles } from './helpers/DummyData.js';
 import { extractCodeInstructions } from './helpers/CodeExtract.js';
@@ -26,10 +26,10 @@ import { useContext } from 'react';
 import { useTheme } from './components/theme-provider';
 
 function App() {
-  const {state, dispatch} = useContext(UserContext)
+  const {userState, userDispatch} = useContext(UserContext)
   const {challengeState, challengeDispatch} = useContext(ChallengeContext)
-  const isUserAuth = state.authorised
-  const userInfo = state.user
+  const isUserAuth = userState.authorised
+  const userInfo = userState.user
   const [userInformation, setUserInformation] = useState(userInfo)
   
   const [count, setCount] = useState('')
@@ -162,7 +162,6 @@ function App() {
   const nextChallenge = () => {
     sideNavTitles && sideNavTitles.map((title, index) => {
       if (title == currentChallengeTitle){
-        
         let nextChallenge = sideNavTitles[index + 1] || sideNavTitles[0]
         return loadSelectedChallenge(nextChallenge, selected)
       }
@@ -183,9 +182,8 @@ function App() {
     let userRepos = data;
     let repo = userRepos?.filter((repo) => repo === "holbertonschool-low_level_programming");
     let defaultRepo = repo[0]? repo[0] : userRepos[0];
-
+    
     setRepoOnDropDownSelect(defaultRepo);
-
     fetchDefaultRepos(defaultRepo)
     .then(response => {
       if (response?.status && response.status !== 200) {
@@ -205,9 +203,6 @@ function App() {
   const loadUserContents = useCallback(() => {
     getAllRepos(userInformation)
     .then((data) => {
-      if (data && data.status && data.status != 200){
-        setUserRepos(data?.status === 200 ? data : null);
-      } 
       setUserRepos(data);
       handleUserContents(data);
     })
@@ -235,11 +230,7 @@ function App() {
           setDirectories(null);
           setSelected(null)
         }
-        if (data.files && data.files.length > 0){
-          setSideNavTitles(data.files);
-        }else {
-          setSideNavTitles(null);
-        }
+        setSideNavTitles(data && data.files && data.files.length > 0? data.files : null);
       })
     }
   }, [dirUpdate])

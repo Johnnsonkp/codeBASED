@@ -1,0 +1,22 @@
+/* TOP BANNER */
+.banner{
+  color: #333; 
+  font-Weight: bold;
+  justify-content: center;
+  align-items: center;
+}
+.cancelbtn{
+  position: relative; 
+  left: 30%; 
+  padding: 3px 10px;
+  margin: 5px;
+  color: #fff !important;
+  background-color: red !important;
+  border: 1px solid red;
+  font-weight: bold;
+}
+.cancelbtn:hover{
+  color: red !important;
+  background-color: #fff !important;
+  border: 1px solid #fff;
+}
