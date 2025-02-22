@@ -54,10 +54,10 @@ const GithubOAuth = () => {
   }, [code])
 
   return (
-      <AuthTemplatePage 
-        githubAuth={loginWithGitHub}
-        loadDemoUser={handleLoadDemoUserData}
-      />
+    <AuthTemplatePage 
+      githubAuth={loginWithGitHub}
+      loadDemoUser={handleLoadDemoUserData}
+    />
   );
 };
 
