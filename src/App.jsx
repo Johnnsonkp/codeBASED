@@ -9,7 +9,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { ChallengeContext } from './store/context/ChallengeContext.jsx';
 import Divider from './components/Common/Divider.jsx';
 import Footer from './components/Common/Footer.jsx';
-import GithubOAuth from './components/auth/GithuboAuth.jsx';
 import LanguageNav from './components/Languages/LanguageNav.jsx';
 import OutputWindows from './components/CodeCompiler/OutputWindows.jsx';
 import { PanelsCombined } from './components/Panels/PanelsCombined.jsx';
@@ -23,14 +22,16 @@ import { extractCodeInstructions } from './helpers/CodeExtract.js';
 import { isEmptyObj } from './helpers/utils.js';
 import { languageOptions } from './helpers/Language';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router';
 import { useTheme } from './components/theme-provider';
 
 function App() {
-  const {userState, userDispatch} = useContext(UserContext)
+  const {userState} = useContext(UserContext)
   const {challengeState, challengeDispatch} = useContext(ChallengeContext)
   const isUserAuth = userState.authorised
   const userInfo = userState.user
   const [userInformation, setUserInformation] = useState(userInfo)
+  const navigate = useNavigate()
   
   const [count, setCount] = useState('')
   const [userInput, setUserInput] = useState()
@@ -195,9 +196,6 @@ function App() {
         setDirectories(directories);
         setSideNavTitles(files);
       })
-      .catch(error => {
-        console.error("Fetch error:", error);
-      });
   }
 
   const loadUserContents = useCallback(() => {
@@ -218,22 +216,14 @@ function App() {
     }
   }, [userInformation, isUserAuth]);
 
-
   useEffect(() => {
-    if(dirUpdate){
-      getSelectedRepoOnDropDown(dirUpdate, userInformation.login)
-      .then(data => {
-        if (data.directories && data.directories.length > 0)
-        {
-          setDirectories(data.directories);
-        } else {
-          setDirectories(null);
-          setSelected(null)
-        }
-        setSideNavTitles(data && data.files && data.files.length > 0? data.files : null);
-      })
+    if (dirUpdate) {
+      getSelectedRepoOnDropDown(dirUpdate, userInformation.login).then(data => {
+        setDirectories(data.directories?.length ? data.directories : null);
+        setSideNavTitles(data.files?.length ? data.files : null);
+      });
     }
-  }, [dirUpdate])
+  }, [dirUpdate]);
 
   useEffect(() => {
     if(selected || directories){
@@ -248,12 +238,12 @@ function App() {
     if (isEmptyObj(userInformation) && isUserAuth == true){
       setUserInformation(userInfo)
     }
+    if (!isUserAuth){
+      navigate("/");
+    }
   }, [isUserAuth])
   
   return (
-    <>
-    {!isUserAuth? 
-      <GithubOAuth /> :
       <>
         <Divider />
         <TopicsCarousel 
@@ -265,15 +255,7 @@ function App() {
           userRepos={userRepos}
           repoOnDropDownSelect={repoOnDropDownSelect}
         />
-        <div 
-          className="card" 
-          style={{
-            display: 'flex', 
-            justifyContent: 'space-around', 
-            marginBottom: '120px', 
-            padding: '0px'
-          }}
-        >
+        <div className="card">
           <SidePanelContainer className={'sideMenu'}>
             <SidePanelComb 
               sideNavTitles={sideNavTitles} 
@@ -286,11 +268,9 @@ function App() {
             />
           </SidePanelContainer>
             <LanguageNav 
-              className={'langNav'}
               languageOptions={languageOptions} 
               setLanguage={setLanguage} 
               language={language}
-              showSelectedLangOnly={false}
             />
             <PanelsCombined 
               theme={theme} 
@@ -322,8 +302,7 @@ function App() {
           compareOutputs={compareOutputs}
           nextChallenge={nextChallenge}   
         /> 
-        </>}
-    </>
+      </>
   )
 }
 

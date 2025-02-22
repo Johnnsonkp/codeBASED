@@ -1,18 +1,8 @@
 import React from 'react'
 import { useTheme } from '../theme-provider'
 
-function LanguageNav({languageOptions, style, setLanguage, language, showSelectedLangOnly, className }) {
+function LanguageNav({languageOptions, setLanguage, language }) {
   const {theme} = useTheme();
-
-  const SelectedLang = () => {
-    return (
-    <img 
-      style={{width: '20px', padding: '0px'}} 
-      src={language[0].image} 
-    /> 
-    )
-  }
-
   const AllLanguage = () => (
     languageOptions && languageOptions? languageOptions.map((lang, index) => (
       <button 
@@ -36,22 +26,17 @@ function LanguageNav({languageOptions, style, setLanguage, language, showSelecte
         } 
       </button>
       ))
-
       : ''
   )
   
   return (
     <div 
-      className={className}
       style={{
         borderRadius: '5px',
-        maxHeight: `${showSelectedLangOnly? '' : '785px'}`,
-        style
+        maxHeight: '785px',
       }}
     >
-      {showSelectedLangOnly? 
-        <SelectedLang /> : <AllLanguage />
-      }
+      <AllLanguage />
     </div>
   )
 }

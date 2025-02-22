@@ -1,10 +1,10 @@
 import './tabs.css'
 
-import React, {useEffect, useState} from 'react'
+import React, { useState } from 'react'
 
 import LanguageNav from '../Languages/LanguageNav';
 
-function TabSlide({tabs, contents, language, setTabsContainer, tabsContainer, showSelectedLangOnly}) {
+function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelectedLangOnly}) {
   const [activeTab, setActiveTab] = useState()
   
   if(activeTab == null){

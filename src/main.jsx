@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import App from './App.jsx';
 // import ChallengeProvider from './store/challengeProvider.jsx';
 import ChallengeProvider from './store/challengeProvider.jsx';
-import GithubOAuth from './components/auth/GithuboAuth.jsx';
+import GithubOAuth from './components/auth/GithubOAuth.jsx';
 import Nav from './components/Nav/Nav.jsx';
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
@@ -24,7 +24,8 @@ ReactDOM.createRoot(root).render(
           <Nav />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<App />} />
+            <Route path="/" element={<GithubOAuth/>} /> 
+              <Route path="/dashboard" element={<App />} />
               <Route path="/auth/github/callback" element={<GithubOAuth/>} /> 
             </Routes>
           </BrowserRouter>
