@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 
 import App from './App.jsx';
 import ChallengeProvider from './store/challengeProvider.jsx';
-import GithubOAuth from './components/auth/GithubOAuth.jsx';
+import GithubOAuth from './components/auth/GithubOAuth';
 import Nav from './components/Nav/Nav.jsx';
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
