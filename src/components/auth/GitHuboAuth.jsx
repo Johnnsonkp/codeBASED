@@ -7,11 +7,9 @@ import { UserContext } from '../../store/context/UserContext.jsx';
 import { getCodeFromURL } from '../../helpers/auth/GithubAuth.js';
 import { useNavigate } from 'react-router';
 
-const GITHUB_CLIENT_ID = import.meta.env.VITE_APP_GITHUB_CLIENT_ID;
-const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
-
-
 const GithubOAuth = () => {
+  const GITHUB_CLIENT_ID = import.meta.env.VITE_APP_GITHUB_CLIENT_ID;
+  const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
   
   const {userState, userDispatch} = useContext(UserContext)
   const isUserAuth = userState.authorised
