@@ -3,7 +3,6 @@ import './index.css'
 import { BrowserRouter, Route, Routes } from 'react-router';
 
 import App from './App.jsx';
-// import ChallengeProvider from './store/challengeProvider.jsx';
 import ChallengeProvider from './store/challengeProvider.jsx';
 import GithubOAuth from './components/auth/GithubOAuth.jsx';
 import Nav from './components/Nav/Nav.jsx';
