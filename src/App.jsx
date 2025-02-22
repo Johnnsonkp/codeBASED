@@ -116,7 +116,7 @@ function App() {
     })
   };
 
-  const handleSolutionCompile = (userInput) => {
+  const handleSolutionCompile = (count) => {
     setSolutionProcessing(true);
     setProcessingChecker2(true)
     const formData = {
@@ -185,19 +185,19 @@ function App() {
     
     setRepoOnDropDownSelect(defaultRepo);
     fetchDefaultRepos(defaultRepo)
-    .then(response => {
-      if (response?.status && response.status !== 200) {
-        setDirectories(dummyTopicTitles);
-        return;
-      }
-      const directories = response?.directories?.length > 0 ? response.directories : null;
-      const files = response?.files?.length > 0 ? response.files : null;
-      setDirectories(directories);
-      setSideNavTitles(files);
-    })
-    .catch(error => {
-      console.error("Fetch error:", error);
-    });
+      .then(response => {
+        if (response?.status && response.status !== 200) {
+          setDirectories(dummyTopicTitles);
+          return;
+        }
+        const directories = response?.directories?.length > 0 ? response.directories : null;
+        const files = response?.files?.length > 0 ? response.files : null;
+        setDirectories(directories);
+        setSideNavTitles(files);
+      })
+      .catch(error => {
+        console.error("Fetch error:", error);
+      });
   }
 
   const loadUserContents = useCallback(() => {
@@ -274,50 +274,50 @@ function App() {
             padding: '0px'
           }}
         >
-        <SidePanelContainer className={'sideMenu'}>
-          <SidePanelComb 
-            sideNavTitles={sideNavTitles} 
-            loadSelectedChallenge={loadSelectedChallenge} 
-            selected={selected} 
-            directories={directories} 
-            currentChallengeTitle={currentChallengeTitle} 
-            setSelected={setSelected}
-            dirUpdate={dirUpdate}
+          <SidePanelContainer className={'sideMenu'}>
+            <SidePanelComb 
+              sideNavTitles={sideNavTitles} 
+              loadSelectedChallenge={loadSelectedChallenge} 
+              selected={selected} 
+              directories={directories} 
+              currentChallengeTitle={currentChallengeTitle} 
+              setSelected={setSelected}
+              dirUpdate={dirUpdate}
+            />
+          </SidePanelContainer>
+            <LanguageNav 
+              className={'langNav'}
+              languageOptions={languageOptions} 
+              setLanguage={setLanguage} 
+              language={language}
+              showSelectedLangOnly={false}
+            />
+            <PanelsCombined 
+              theme={theme} 
+              language={language}
+              setTabsContainer={setTabsContainer}
+              tabsContainer={tabsContainer}
+              userInput={userInput}
+              onChangeInput={onChangeInput}
+              processingChecker1={processingChecker}
+              showSelectedLangOnly={true}
+              setTabsContainer1={setTabsContainer1}
+              tabsContainer1={tabsContainer1}
+              count={count}
+              onChangeSolution={onChangeSolution}
+              processingChecker2={processingChecker2}
+            />
+          <OutputWindows 
+            handleCompile={handleCompile} 
+            userInput={userInput} 
+            outputDetails={outputDetails} 
+            processing={processing} 
+            solutionOutputDetails={solutionOutputDetails} 
+            handleSolutionCompile={handleSolutionCompile} 
+            count={count} 
+            solutionProcessing={solutionProcessing}
           />
-        </SidePanelContainer>
-          <LanguageNav 
-            className={'langNav'}
-            languageOptions={languageOptions} 
-            setLanguage={setLanguage} 
-            language={language}
-            showSelectedLangOnly={false}
-          />
-          <PanelsCombined 
-            theme={theme} 
-            language={language}
-            setTabsContainer={setTabsContainer}
-            tabsContainer={tabsContainer}
-            userInput={userInput}
-            onChangeInput={onChangeInput}
-            processingChecker1={processingChecker}
-            showSelectedLangOnly={true}
-            setTabsContainer1={setTabsContainer1}
-            tabsContainer1={tabsContainer1}
-            count={count}
-            onChangeSolution={onChangeSolution}
-            processingChecker2={processingChecker2}
-          />
-        <OutputWindows 
-          handleCompile={handleCompile} 
-          userInput={userInput} 
-          outputDetails={outputDetails} 
-          processing={processing} 
-          solutionOutputDetails={solutionOutputDetails} 
-          handleSolutionCompile={handleSolutionCompile} 
-          count={count} 
-          solutionProcessing={solutionProcessing}
-        />
-      </div>
+        </div>
         <Footer 
           compareOutputs={compareOutputs}
           nextChallenge={nextChallenge}   

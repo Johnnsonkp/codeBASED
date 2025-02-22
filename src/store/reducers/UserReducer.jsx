@@ -1,7 +1,7 @@
 export const userInitialState = {
   user: {},
   app_status: {status: "", message: ""},
-  authorised: false
+  authorised: false,
 }
 
 export const userReducer = (state, action) => {
@@ -9,7 +9,7 @@ export const userReducer = (state, action) => {
     case "ADD_USER_DETAILS": {
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
       }
     }
     case "AUTH_USER": {

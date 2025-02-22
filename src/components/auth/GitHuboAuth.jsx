@@ -17,7 +17,7 @@ const GithubOAuth = () => {
   const isUserAuth = userState.authorised
   const code = getCodeFromURL();
   const navigate = useNavigate()
-  
+
   const loginWithGitHub = () => {
     window.location.href = encodeURI(githubOAuthURL);
   };
