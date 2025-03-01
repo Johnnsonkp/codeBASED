@@ -3,9 +3,11 @@ import './tabs.css'
 import React, { useState } from 'react'
 
 import LanguageNav from '../Languages/LanguageNav';
+import { useTheme } from '../theme-provider';
 
 function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelectedLangOnly}) {
   const [activeTab, setActiveTab] = useState()
+  const theme = useTheme();
   
   if(activeTab == null){
     setTabsContainer(tabs[0]);
@@ -24,11 +26,13 @@ function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelected
         display: 'flex !important', 
         maxHeight: '700px', 
         minWidth: '440px', 
-        width: '50%'
+        width: '100%'
       }}
     >
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-      <div className="tab-container">
+      <div 
+        style={{border: `2px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`}}
+        className="tab-container">
         {tabs && tabs.map((tab, index) => (
             <button
               style={{fontSize: '11px'}} 

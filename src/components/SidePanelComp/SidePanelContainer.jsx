@@ -9,7 +9,7 @@ function SidePanelContainer({children, className}) {
       className={className}
       style={{
         border: `0.1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
-        width: '180px', 
+        // width: '180px', 
         overflow: 'auto', 
         padding: '5px', 
         paddingTop: '0px', 

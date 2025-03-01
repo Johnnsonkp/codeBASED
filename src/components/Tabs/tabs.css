@@ -1,10 +1,11 @@
 .tab-container {
   display: inline-flex;
   width: 80%;
+  width: 100%;
   margin: auto;
   margin-bottom: 0px;
   margin-left: 10px;
-  border: 1px solid #A9A9A9;
+  /* border: 1px solid #A9A9A9; */
   border-radius: 5px;
   overflow: hidden;
 }
@@ -83,8 +84,8 @@
 .tab-panel.activePanel {
   display: block;
   font-size: 16px;
-  padding: 10px;
-  border: 0.1px solid darkgray;
+  padding: 5px;
+  /* border: 0.1px solid darkgray; */
   min-height: 725px;
   border-radius: 5px;
 }

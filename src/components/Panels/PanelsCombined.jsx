@@ -24,7 +24,7 @@ export function LeftPanel({language, setTabsContainer, tabsContainer, userInput,
         showSelectedLangOnly={showSelectedLangOnly}
       />
       <div className="tab-content" 
-        style={{width: '30vw', maxWidth: '550px'}}
+        style={{width: '31.5vw', maxWidth: '550px'}}
       >
         {tabsContainer == "Code Challenge"?
           <Suspense
@@ -34,20 +34,22 @@ export function LeftPanel({language, setTabsContainer, tabsContainer, userInput,
               width: `${processing? "102%" : ""}`,
               overflow: `${processing? "hidden" : ""}`,
             }}
-            fallback={<div>Test...</div>}
+            fallback={<div>loading...</div>}
           >
-              <CodeMirror 
-                value={userInput} 
-                extensions={[cppLanguage]} 
-                onChange={onChangeInput} 
-                width={'100%'}
-                height={'80vh'}
-                minHeight={'725px'}
-                maxHeight="725px"
-                theme={`${theme == 'light'? 'light' : 'dark'}`}
-                style={{fontSize: '10px', flexWrap: 'wrap', textAlign: 'left'}}
-                className={`tab-panel ${tabsContainer == "Code Challenge"? 'activePanel' : ''} `}
-              /> 
+            <CodeMirror 
+              value={userInput} 
+              extensions={[cppLanguage]} 
+              onChange={onChangeInput} 
+              width={'100%'}
+              height={'80vh'}
+              minHeight={'725px'}
+              maxHeight="725px"
+              theme={`${theme == 'light'? 'light' : 'dark'}`}
+              style={{
+                border: `${processing? "1px solid blue" : `0.1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`}`,
+                fontSize: '10px', flexWrap: 'wrap', textAlign: 'left'}}
+              className={`tab-panel ${tabsContainer == "Code Challenge"? 'activePanel' : ''} `}
+            /> 
             </Suspense>
             :
           <TextAreaComp 
@@ -75,13 +77,13 @@ export function RightPanel({ language, setTabsContainer1, tabsContainer1, count,
         tabsContainer={tabsContainer1}
       />
       <div className="tab-content" 
-        style={{ width: '30vw', maxWidth: '550px'}}
+        style={{ width: '31.5vw', maxWidth: '550px'}}
       >
         {tabsContainer1 == "Solution"?
           <div 
             style={{ 
               position: 'relative', 
-              border: `${processing? "1px solid red" : ""}`, 
+              border: `${processing? "1px solid blue" : ""}`, 
               width: `${processing? "102%" : ""}`,
               overflow: `${processing? "hidden" : ""}`,
             }}
@@ -96,7 +98,9 @@ export function RightPanel({ language, setTabsContainer1, tabsContainer1, count,
               minHeight={'725px'}
               maxHeight="725px"
               theme={`${theme == 'light'? 'light' : 'dark'}`}
-              style={{fontSize: '10px', flexWrap: 'wrap', textAlign: 'left', position: 'relative', filter: `${blur? 'blur(2px)' : ''}`}}
+              style={{
+                border: `0.1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
+                fontSize: '10px', flexWrap: 'wrap', textAlign: 'left', position: 'relative', filter: `${blur? 'blur(2px)' : ''}`}}
               className={`tab-panel ${tabsContainer1 == "Solution"? 'activePanel' : ''} `}
             />
             <ShowHideSolution blur={blur} setBlur={setBlur}/>
@@ -144,3 +148,5 @@ const PanelsCombined = (
 }
 
 export default PanelsCombined
+
+

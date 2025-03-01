@@ -34,7 +34,7 @@ export const compileOptions = (formData, compileHeaders) => ({
 export async function postDataToAPIv2(identifyer, axios, checkStatus, options, challengeDispatch) {
   try {
     const response = await axios.request(options);
-    const token = response.data.token;
+    const token = await response.data.token;
     const data = await checkStatus(token, axios);
 
     challengeDispatch({type: identifyer, payload: data})

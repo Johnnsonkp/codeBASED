@@ -1,6 +1,12 @@
-// export const handleCompareOutput = (dispatch, status) => {
-//   dispatch({
-//     type: "USER_LOGIN_ERROR", 
-//     payload: {status:'error', message: status
-//   }})
-// }
+
+export const handleCompareOutput = (userOutput, solutionOutput, challengeDispatch) => {
+  atob(userOutput) == atob(solutionOutput) ? 
+  challengeDispatch({type: "CORRECT_SOLUTION"}) : 
+  challengeDispatch({type: "INCORRECT_SOLUTION"})
+  
+  resetChallenge("RESET_OUTPUTS")
+}
+
+export const resetChallenge = (dispatch, type) => {
+  dispatch({type: type})
+}

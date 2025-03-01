@@ -4,8 +4,8 @@ const OutputDetails = ({ outputDetails, title }) => {
   return (
     <div 
       style={{
-        border: `2px solid ${outputDetails?.status?.description == 'Accepted'? "lightgreen" : "red"}`, 
-        marginTop: '15px', borderRadius: '5px', padding: '3px'}}
+        border: `1px solid ${outputDetails?.status?.description == 'Accepted'? "lightgreen" : "red"}`, 
+        marginTop: '5px', borderRadius: '5px', padding: '2px'}}
       className="metrics-container mt-4 flex flex-col space-y-3">
       <h5 style={{marginBottom: '0px', marginTop: '0px'}}>{title}:</h5>
       <p

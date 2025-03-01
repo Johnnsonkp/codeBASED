@@ -7,10 +7,12 @@ import { compileHeaders, compileOptions } from './Service/CompileAPI.js';
 import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRepo, getSelectedRepoOnDropDown } from './api/challengeService.js';
 
 import { ChallengeContext } from './store/context/ChallengeContext.jsx';
+import LanguageDropDown from './components/Languages/languageDropDownMenu/LanguageDropDown.jsx';
 import { UserContext } from './store/context/UserContext.jsx';
 import axios from "axios";
 import { dummyTopicTitles } from './helpers/DummyData.js';
 import { extractCodeInstructions } from './helpers/CodeExtract.js';
+import { handleCompareOutput } from './store/actions/challengeActions.jsx';
 import { isEmptyObj } from './helpers/utils.js';
 import { languageOptions } from './helpers/Language';
 import { postDataToAPIv2 } from './Service/CompileAPI.js';
@@ -40,7 +42,6 @@ function App() {
   const [selected, setSelected] = useState()
   const [sideNavTitles, setSideNavTitles] = useState()
   const [language, setLanguage] = useState(languageOptions.filter((lang) => lang.value == 'c'))
-  const [score, setScore] = useState(0);
   const [currentChallengeTitle, setCurrentChallengeTitle] = useState(null);
   const tabs = ["Code Challenge", "Code Explaination"]
   const [tabsContainer, setTabsContainer] = useState(tabs[0])
@@ -53,23 +54,13 @@ function App() {
   const user_stdout = challengeState.userSolutionExecutionState.userOutputDetails
   const solution_stdout = challengeState.solutionExecutionState.solutionOutputDetails
 
-  
   const compareOutputs = () => {
     const userOutput = btoa(user_stdout?.stdout);
     const solutionOutput = btoa(solution_stdout?.stdout);
-    
-    if (atob(userOutput) == atob(solutionOutput)){
-      setScore(challengeState.score);
-      challengeDispatch({type: "CORRECT_SOLUTION"})
-    }
-    else{
-      challengeDispatch({type: "INCORRECT_SOLUTION"})
-    }
-    challengeDispatch({type: "RESET_OUTPUTS" })
+    handleCompareOutput(userOutput, solutionOutput, challengeDispatch)
   }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
   const handleCompile = (userInput) => {
     challengeDispatch({type: "SET_USER_PROCESSING"})
     const formData = {
@@ -103,7 +94,6 @@ function App() {
       challengeDispatch
     )
   };
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
   const onChangeInput = useCallback((val, viewUpdate) => {
@@ -205,23 +195,25 @@ function App() {
         userRepos={userRepos}
         repoOnDropDownSelect={repoOnDropDownSelect}
       />
-      <div className="card">
-        <SidePanelContainer className={'sideMenu'}>
-          <SidePanelComb 
-            sideNavTitles={sideNavTitles} 
-            loadSelectedChallenge={loadSelectedChallenge} 
-            selected={selected} 
-            directories={directories} 
-            currentChallengeTitle={currentChallengeTitle} 
-            setSelected={setSelected}
-            dirUpdate={dirUpdate}
-          />
-        </SidePanelContainer>
-          <LanguageNav 
+      <div style={{marginTop: '20px'}} className="card">
+        <div>
+          <LanguageDropDown 
             languageOptions={languageOptions} 
             setLanguage={setLanguage} 
             language={language}
           />
+          <SidePanelContainer className={'sideMenu'}>
+            <SidePanelComb 
+              sideNavTitles={sideNavTitles} 
+              loadSelectedChallenge={loadSelectedChallenge} 
+              selected={selected} 
+              directories={directories} 
+              currentChallengeTitle={currentChallengeTitle} 
+              setSelected={setSelected}
+              dirUpdate={dirUpdate}
+            />
+          </SidePanelContainer>
+        </div>
           <PanelsCombined 
             theme={theme} 
             language={language}
