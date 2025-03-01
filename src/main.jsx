@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import React, {Suspense, lazy} from 'react';
 
 import ChallengeProvider from './store/challengeProvider.jsx';
-import GithubOAuth from './components/auth/GithubOAuth';
+// import GithubOAuth from './components/auth/GithubOAuth';
 import LoadingOverlay from './components/Common/Loading/Loading.jsx';
 import Nav from './components/Nav/Nav.jsx';
 import ReactDOM from 'react-dom/client';
@@ -27,9 +27,10 @@ ReactDOM.createRoot(root).render(
           <BrowserRouter>
           <Suspense fallback={<LoadingOverlay />}>
             <Routes>
-              <Route path="/" element={<GithubOAuth/>} /> 
+              {/* <Route path="/" element={<GithubOAuth/>} />  */}
+              <Route path="/" element={<App/>} /> 
                 <Route path="/dashboard" element={<App />} />
-                <Route path="/auth/github/callback" element={<GithubOAuth/>} /> 
+                {/* <Route path="/auth/github/callback" element={<GithubOAuth/>} />  */}
               </Routes>
             </Suspense>
           </BrowserRouter>
