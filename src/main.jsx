@@ -14,7 +14,7 @@ import TopBanner from './components/Nav/TopBanner.jsx';
 import UserProvider from './store/userProvider.jsx';
 
 const root = document.getElementById("root");
-// const GithubOAuth = lazy(() => import('./components/auth/GithubOAuth'))
+const GithubOAuth = lazy(() => import('./components/auth/GithubOAuth'))
 const App = lazy(() => import('./App.jsx'))
 
 ReactDOM.createRoot(root).render(
@@ -27,8 +27,7 @@ ReactDOM.createRoot(root).render(
           <BrowserRouter>
           <Suspense fallback={<LoadingOverlay />}>
             <Routes>
-              {/* <Route path="/" element={<GithubOAuth/>} />  */}
-              <Route path="/" element={<App/>} /> 
+              <Route path="/" element={<GithubOAuth/>} /> 
                 <Route path="/dashboard" element={<App />} />
                 {/* <Route path="/auth/github/callback" element={<GithubOAuth/>} />  */}
               </Routes>
