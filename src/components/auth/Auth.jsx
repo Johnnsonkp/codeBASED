@@ -4,7 +4,6 @@ import { storeUserData, userLoginError } from '../../store/actions/userActions';
 
 import AuthTemplatePage from './AuthTemplatePage.jsx';
 import { UserContext } from '../../store/context/UserContext';
-import { getCodeFromURL } from '../../helpers/auth/GithubAuth.js';
 import { useNavigate } from 'react-router';
 
 export default function Auth() {
@@ -13,7 +12,12 @@ export default function Auth() {
   
   const {userState, userDispatch} = useContext(UserContext)
   const isUserAuth = userState.authorised
-  const code = getCodeFromURL();
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const code = urlParams.get('code');
+  
+  // const code = getCodeFromURL();
   const navigate = useNavigate()
 
   const loginWithGitHub = () => {
