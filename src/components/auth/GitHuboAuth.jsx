@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import { fetchUserInfo, handleLoginWithCode } from '../../api/userService.js';
-import { storeUserData, userLoginError } from '../../store/actions/userActions.jsx';
+import { storeUserData, userLoginError } from '../../store/actions/userActions';
 
 import AuthTemplatePage from './AuthTemplatePage.jsx';
-import { UserContext } from '../../store/context/UserContext.jsx';
+import { UserContext } from '../../store/context/UserContext';
 import { getCodeFromURL } from '../../helpers/auth/GithubAuth.js';
 import { useNavigate } from 'react-router';
 
@@ -21,7 +21,7 @@ const GithubOAuth = () => {
   };
 
   const handleData = (data) => {
-    if (data && data?.status && data.status !== 200) {
+    if (data?.status !== 200) {
       userLoginError(userDispatch, data.status)
     } else if (data && isUserAuth == false){
       storeUserData(data, userDispatch)
@@ -49,7 +49,7 @@ const GithubOAuth = () => {
     if (code && isUserAuth == false) {
       handleLogin(code);
     }
-  }, [code])
+  }, [code, isUserAuth])
 
   return (
     <AuthTemplatePage 
