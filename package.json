@@ -7,7 +7,7 @@
     "eslint": "eslint src/**/*.{js,jsx}",
     "start": "npx http-server ./dist",
     "dev": "vite",
-    "build": "vite build",
+    "build": "rm -rf node_modules/.cache && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
