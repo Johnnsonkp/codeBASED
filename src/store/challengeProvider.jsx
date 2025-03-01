@@ -1,6 +1,6 @@
-import { challengeInitialState, challengeReducer } from "./reducers/ChallengeReducer";
-
 import { ChallengeContext } from "./context/ChallengeContext";
+import { challengeInitialState } from "./initialState/challengeInitialState";
+import { challengeReducer } from "./reducers/ChallengeReducer";
 import { useReducer } from "react";
 
 const ChallengeProvider = ({children}) => {

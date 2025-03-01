@@ -1,6 +1,7 @@
 import React from "react";
 
 const OutputWindow = ({ outputDetails, title }) => {
+  
   const getOutput = () => {
     let statusId = outputDetails?.status?.id;
 
@@ -15,7 +16,7 @@ const OutputWindow = ({ outputDetails, title }) => {
       return (
         <pre className="px-2 py-1 font-normal text-xs text-green-500" style={{fontSize: '11px'}}>
           {atob(outputDetails.stdout) !== null
-            ? `${atob(outputDetails.stdout)}`
+            ? `${atob(outputDetails?.stdout)}`
             : null}
         </pre>
       );
@@ -28,7 +29,7 @@ const OutputWindow = ({ outputDetails, title }) => {
     } else {
       return (
         <pre className="px-2 py-1 font-normal text-xs text-red-500">
-          {atob(outputDetails?.stderr)}
+          {atob(outputDetails?.stdout)}
         </pre>
       );
     }

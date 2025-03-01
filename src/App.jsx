@@ -1,29 +1,31 @@
 import './App.css'
 import './components/Tabs/tabs.css'
 
+import { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import {checkSolutionStatus, checkStatus} from './components/CodeCompiler/status.js'
+import { compileHeaders, compileOptions } from './Service/CompileAPI.js';
 import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRepo, getSelectedRepoOnDropDown } from './api/challengeService.js';
-import { postDataToAPI, postSolutionDataToAPI } from './Service/CompileAPI.js';
-import { useCallback, useEffect, useState } from 'react'
 
 import { ChallengeContext } from './store/context/ChallengeContext.jsx';
-import Divider from './components/Common/Divider.jsx';
-import Footer from './components/Common/Footer.jsx';
-import LanguageNav from './components/Languages/LanguageNav.jsx';
-import OutputWindows from './components/CodeCompiler/OutputWindows.jsx';
-import { PanelsCombined } from './components/Panels/PanelsCombined.jsx';
-import SidePanelComb from './components/SidePanel/SidePanelComb.jsx';
-import SidePanelContainer from './components/SidePanelComp/SidePanelContainer.jsx';
-import TopicsCarousel from './components/TopicsCarousel/Topics.jsx'
 import { UserContext } from './store/context/UserContext.jsx';
 import axios from "axios";
 import { dummyTopicTitles } from './helpers/DummyData.js';
 import { extractCodeInstructions } from './helpers/CodeExtract.js';
 import { isEmptyObj } from './helpers/utils.js';
 import { languageOptions } from './helpers/Language';
+import { postDataToAPIv2 } from './Service/CompileAPI.js';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { useTheme } from './components/theme-provider';
+
+const Footer = lazy( ()=> import('./components/Common/Footer.jsx'))
+const Divider = lazy(() => import('./components/Common/Divider.jsx'));
+const LanguageNav = lazy(() => import('./components/Languages/LanguageNav.jsx'));
+const OutputWindows = lazy(() => import('./components/CodeCompiler/OutputWindows.jsx'));
+const PanelsCombined = lazy(() => import('./components/Panels/PanelsCombined.jsx')) 
+const SidePanelComb = lazy(() => import('./components/SidePanel/SidePanelComb.jsx'));
+const SidePanelContainer = lazy(() => import('./components/SidePanelComp/SidePanelContainer.jsx'));
+const TopicsCarousel = lazy(() => import('./components/TopicsCarousel/Topics.jsx'));
 
 function App() {
   const {userState} = useContext(UserContext)
@@ -38,14 +40,8 @@ function App() {
   const [selected, setSelected] = useState()
   const [sideNavTitles, setSideNavTitles] = useState()
   const [language, setLanguage] = useState(languageOptions.filter((lang) => lang.value == 'c'))
-  const [outputDetails, setOutputDetails] = useState(null);
-  const [solutionOutputDetails, setSolutionOutputDetails] = useState(null);
-  const [processing, setProcessing] = useState(null);
-  const [solutionProcessing, setSolutionProcessing] = useState(null);
   const [score, setScore] = useState(0);
   const [currentChallengeTitle, setCurrentChallengeTitle] = useState(null);
-  const [processingChecker, setProcessingChecker] = useState(false);
-  const [processingChecker2, setProcessingChecker2] = useState(false);
   const tabs = ["Code Challenge", "Code Explaination"]
   const [tabsContainer, setTabsContainer] = useState(tabs[0])
   const [tabsContainer1, setTabsContainer1] = useState(tabs[0])
@@ -54,25 +50,13 @@ function App() {
   const [dirUpdate, setDirUpdate] = useState()
   const [repoOnDropDownSelect, setRepoOnDropDownSelect] = useState()
   const theme = useTheme();
-  const [ setReturnData] = useState(
-    {expected_output: null,
-      stdout: null}
-  );
-  const [ setReturnSolutionData] = useState(
-    {expected_output: null,
-      stdout: null}
-  );
+  const user_stdout = challengeState.userSolutionExecutionState.userOutputDetails
+  const solution_stdout = challengeState.solutionExecutionState.solutionOutputDetails
 
-  const resetOutputs = () => {
-    setSolutionOutputDetails(null)
-    setOutputDetails(null)
-    setProcessing(false)
-    setSolutionProcessing(false)
-  }
   
   const compareOutputs = () => {
-    const userOutput = btoa(outputDetails?.compile_output);
-    const solutionOutput = btoa(solutionOutputDetails?.compile_output);
+    const userOutput = btoa(user_stdout?.stdout);
+    const solutionOutput = btoa(solution_stdout?.stdout);
     
     if (atob(userOutput) == atob(solutionOutput)){
       setScore(challengeState.score);
@@ -81,73 +65,43 @@ function App() {
     else{
       challengeDispatch({type: "INCORRECT_SOLUTION"})
     }
-    resetOutputs()
+    challengeDispatch({type: "RESET_OUTPUTS" })
   }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
+
   const handleCompile = (userInput) => {
-    setProcessing(true);
-    setProcessingChecker(true);
+    challengeDispatch({type: "SET_USER_PROCESSING"})
     const formData = {
       language_id: language[0].id,
       source_code: btoa(userInput),
       stdin: btoa(''),
     };
-    const options = {
-      method: "POST",
-      url: import.meta.env.VITE_APP_RAPID_API_URL,
-      params: { base64_encoded: "true", fields: "*" },
-      headers: {
-        "content-type": "application/json",
-        "Content-Type": "application/json",
-        "X-RapidAPI-Host": import.meta.env.VITE_APP_RAPID_API_HOST,
-        "X-RapidAPI-Key": import.meta.env.VITE_APP_RAPID_API_KEY,
-      },
-      data: formData,
-    };
-    postDataToAPI({
+    const options = compileOptions(formData, compileHeaders)
+    postDataToAPIv2(
+      "SET_USER_OUTPUT",
       axios,
       checkStatus,
-      options, 
-      setOutputDetails, 
-      setReturnData, 
-      setProcessing, 
-      setProcessingChecker, 
-      setProcessingChecker2
-    })
+      options,
+      challengeDispatch
+    )
   };
 
   const handleSolutionCompile = (count) => {
-    setSolutionProcessing(true);
-    setProcessingChecker2(true)
+    challengeDispatch({type: "SET_SOLUTION_PROCESSING"})
     const formData = {
       language_id: language[0].id,
       source_code: btoa(count),
       stdin: btoa(''),
     };
-    const options = {
-      method: "POST",
-      url: import.meta.env.VITE_APP_RAPID_API_URL,
-      params: { base64_encoded: "true", fields: "*" },
-      headers: {
-        "content-type": "application/json",
-        "Content-Type": "application/json",
-        "X-RapidAPI-Host": import.meta.env.VITE_APP_RAPID_API_HOST,
-        "X-RapidAPI-Key": import.meta.env.VITE_APP_RAPID_API_KEY,
-      },
-      data: formData,
-    };
-    postSolutionDataToAPI({
-        axios,
-        checkSolutionStatus,
-        options, 
-        setSolutionOutputDetails,
-        setReturnSolutionData,
-        setProcessing,
-        setSolutionProcessing,
-        setProcessingChecker, 
-        setProcessingChecker2
-    });
+    const options = compileOptions(formData, compileHeaders)
+    postDataToAPIv2(
+      "SET_SOLUTION_OUTPUT",
+      axios,
+      checkStatus,
+      options, 
+      challengeDispatch
+    )
   };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,13 +141,9 @@ function App() {
     setRepoOnDropDownSelect(defaultRepo);
     fetchDefaultRepos(defaultRepo)
       .then(response => {
-        if (response?.status && response.status !== 200) {
-          setDirectories(dummyTopicTitles);
-          return;
-        }
         const directories = response?.directories?.length > 0 ? response.directories : null;
         const files = response?.files?.length > 0 ? response.files : null;
-        setDirectories(directories);
+        setDirectories(directories || dummyTopicTitles);
         setSideNavTitles(files);
       })
   }
@@ -244,65 +194,59 @@ function App() {
   }, [isUserAuth])
   
   return (
-      <>
-        <Divider />
-        <TopicsCarousel 
-          dirUpdate={dirUpdate}
-          setDirUpdate={setDirUpdate}
-          topicTitles={directories} 
-          selected={selected}
-          setSelected={setSelected}
-          userRepos={userRepos}
-          repoOnDropDownSelect={repoOnDropDownSelect}
-        />
-        <div className="card">
-          <SidePanelContainer className={'sideMenu'}>
-            <SidePanelComb 
-              sideNavTitles={sideNavTitles} 
-              loadSelectedChallenge={loadSelectedChallenge} 
-              selected={selected} 
-              directories={directories} 
-              currentChallengeTitle={currentChallengeTitle} 
-              setSelected={setSelected}
-              dirUpdate={dirUpdate}
-            />
-          </SidePanelContainer>
-            <LanguageNav 
-              languageOptions={languageOptions} 
-              setLanguage={setLanguage} 
-              language={language}
-            />
-            <PanelsCombined 
-              theme={theme} 
-              language={language}
-              setTabsContainer={setTabsContainer}
-              tabsContainer={tabsContainer}
-              userInput={userInput}
-              onChangeInput={onChangeInput}
-              processingChecker1={processingChecker}
-              showSelectedLangOnly={true}
-              setTabsContainer1={setTabsContainer1}
-              tabsContainer1={tabsContainer1}
-              count={count}
-              onChangeSolution={onChangeSolution}
-              processingChecker2={processingChecker2}
-            />
-          <OutputWindows 
-            handleCompile={handleCompile} 
-            userInput={userInput} 
-            outputDetails={outputDetails} 
-            processing={processing} 
-            solutionOutputDetails={solutionOutputDetails} 
-            handleSolutionCompile={handleSolutionCompile} 
-            count={count} 
-            solutionProcessing={solutionProcessing}
+    <Suspense fallback={<div>Loading...</div>}>
+      <Divider />
+      <TopicsCarousel 
+        dirUpdate={dirUpdate}
+        setDirUpdate={setDirUpdate}
+        topicTitles={directories} 
+        selected={selected}
+        setSelected={setSelected}
+        userRepos={userRepos}
+        repoOnDropDownSelect={repoOnDropDownSelect}
+      />
+      <div className="card">
+        <SidePanelContainer className={'sideMenu'}>
+          <SidePanelComb 
+            sideNavTitles={sideNavTitles} 
+            loadSelectedChallenge={loadSelectedChallenge} 
+            selected={selected} 
+            directories={directories} 
+            currentChallengeTitle={currentChallengeTitle} 
+            setSelected={setSelected}
+            dirUpdate={dirUpdate}
           />
-        </div>
-        <Footer 
-          compareOutputs={compareOutputs}
-          nextChallenge={nextChallenge}   
-        /> 
-      </>
+        </SidePanelContainer>
+          <LanguageNav 
+            languageOptions={languageOptions} 
+            setLanguage={setLanguage} 
+            language={language}
+          />
+          <PanelsCombined 
+            theme={theme} 
+            language={language}
+            setTabsContainer={setTabsContainer}
+            tabsContainer={tabsContainer}
+            userInput={userInput}
+            onChangeInput={onChangeInput}
+            showSelectedLangOnly={true}
+            setTabsContainer1={setTabsContainer1}
+            tabsContainer1={tabsContainer1}
+            count={count}
+            onChangeSolution={onChangeSolution}
+          />
+        <OutputWindows 
+          handleCompile={handleCompile} 
+          userInput={userInput} 
+          handleSolutionCompile={handleSolutionCompile} 
+          count={count} 
+        />
+      </div>
+      <Footer 
+        compareOutputs={compareOutputs}
+        nextChallenge={nextChallenge}   
+      /> 
+  </Suspense>
   )
 }
 

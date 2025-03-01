@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, {Suspense, lazy, useContext, useState} from 'react'
 
-import CodeMirror from '@uiw/react-codemirror';
+import { ChallengeContext } from '../../store/context/ChallengeContext';
 import ShowHideSolution from '../CustomButtons/ShowHideSolution';
 import TabSlide from '../Tabs/TabSlide'
 import TextAreaComp from '../TextInputs/TextAreaComp';
 import { cppLanguage } from '@codemirror/lang-cpp';
 import { useTheme } from '../theme-provider';
 
-export function LeftPanel({language, setTabsContainer, tabsContainer, userInput, onChangeInput, processingChecker2, showSelectedLangOnly, processingChecker1}) {
+const CodeMirror = lazy(() => import("@uiw/react-codemirror"))
+
+export function LeftPanel({language, setTabsContainer, tabsContainer, userInput, onChangeInput, showSelectedLangOnly}) {
   const { theme } = useTheme();
+  const {challengeState} = useContext(ChallengeContext)
+  const processing = challengeState.userSolutionExecutionState.userProcessing
   
   return (
     <div>
@@ -23,30 +27,31 @@ export function LeftPanel({language, setTabsContainer, tabsContainer, userInput,
         style={{width: '30vw', maxWidth: '550px'}}
       >
         {tabsContainer == "Code Challenge"?
-          <div 
+          <Suspense
             style={{ 
               position: 'relative', 
-              border: `${processingChecker1? "1px solid red" : ""}`, 
-              width: `${processingChecker1? "102%" : ""}`,
-              overflow: `${processingChecker1? "hidden" : ""}`,
+              border: `${processing? "1px solid red" : ""}`, 
+              width: `${processing? "102%" : ""}`,
+              overflow: `${processing? "hidden" : ""}`,
             }}
+            fallback={<div>Test...</div>}
           >
-            <CodeMirror 
-              value={userInput} 
-              extensions={[cppLanguage]} 
-              onChange={onChangeInput} 
-              width={'100%'}
-              height={'80vh'}
-              minHeight={'725px'}
-              maxHeight="725px"
-              theme={`${theme == 'light'? 'light' : 'dark'}`}
-              style={{fontSize: '10px', flexWrap: 'wrap', textAlign: 'left'}}
-              className={`tab-panel ${tabsContainer == "Code Challenge"? 'activePanel' : ''} `}
-            /> 
-            </div>
+              <CodeMirror 
+                value={userInput} 
+                extensions={[cppLanguage]} 
+                onChange={onChangeInput} 
+                width={'100%'}
+                height={'80vh'}
+                minHeight={'725px'}
+                maxHeight="725px"
+                theme={`${theme == 'light'? 'light' : 'dark'}`}
+                style={{fontSize: '10px', flexWrap: 'wrap', textAlign: 'left'}}
+                className={`tab-panel ${tabsContainer == "Code Challenge"? 'activePanel' : ''} `}
+              /> 
+            </Suspense>
             :
           <TextAreaComp 
-            processingChecker1={processingChecker2}
+            processingChecker1={processing}
             className={`tab-panel ${tabsContainer == "Code Explaination"? 'activePanel' : ''} `}
           />
         }
@@ -55,9 +60,11 @@ export function LeftPanel({language, setTabsContainer, tabsContainer, userInput,
   )
 }
 
-export function RightPanel({ language, setTabsContainer1, tabsContainer1, count, onChangeSolution, processingChecker2}) {
+export function RightPanel({ language, setTabsContainer1, tabsContainer1, count, onChangeSolution}) {
   const [blur, setBlur] = useState(true);
   const { theme } = useTheme();
+  const {challengeState} = useContext(ChallengeContext)
+  const processing = challengeState.solutionExecutionState.solutionProcessing
 
   return (
     <div>
@@ -74,11 +81,12 @@ export function RightPanel({ language, setTabsContainer1, tabsContainer1, count,
           <div 
             style={{ 
               position: 'relative', 
-              border: `${processingChecker2? "1px solid red" : ""}`, 
-              width: `${processingChecker2? "102%" : ""}`,
-              overflow: `${processingChecker2? "hidden" : ""}`,
+              border: `${processing? "1px solid red" : ""}`, 
+              width: `${processing? "102%" : ""}`,
+              overflow: `${processing? "hidden" : ""}`,
             }}
           >
+          <Suspense fallback={<div>Test...</div>}>
             <CodeMirror 
               value={count} 
               extensions={[cppLanguage]} 
@@ -92,10 +100,11 @@ export function RightPanel({ language, setTabsContainer1, tabsContainer1, count,
               className={`tab-panel ${tabsContainer1 == "Solution"? 'activePanel' : ''} `}
             />
             <ShowHideSolution blur={blur} setBlur={setBlur}/>
+          </Suspense>
           </div>
           :
           <TextAreaComp 
-            processingChecker2={processingChecker2}
+            processingChecker2={processing}
             className={`tab-panel `}
           />
         }
@@ -104,7 +113,10 @@ export function RightPanel({ language, setTabsContainer1, tabsContainer1, count,
   )
 }
 
-export const PanelsCombined = ({theme, language, setTabsContainer, tabsContainer, userInput, onChangeInput, processingChecker1, showSelectedLangOnly, setTabsContainer1, tabsContainer1, count, onChangeSolution, processingChecker2, processingChecker}) => {
+const PanelsCombined = (
+  {theme, language, setTabsContainer, tabsContainer, userInput, onChangeInput, setTabsContainer1, tabsContainer1, count, onChangeSolution
+    
+  }) => {
 
   return (
     <>
@@ -115,7 +127,6 @@ export const PanelsCombined = ({theme, language, setTabsContainer, tabsContainer
         tabsContainer={tabsContainer}
         userInput={userInput}
         onChangeInput={onChangeInput}
-        processingChecker1={processingChecker1}
         showSelectedLangOnly={true}
       />
 
@@ -126,9 +137,10 @@ export const PanelsCombined = ({theme, language, setTabsContainer, tabsContainer
         tabsContainer1={tabsContainer1}
         count={count}
         onChangeSolution={onChangeSolution}
-        processingChecker2={processingChecker2}
         showSelectedLangOnly={false}
       />
     </>
   )
 }
+
+export default PanelsCombined

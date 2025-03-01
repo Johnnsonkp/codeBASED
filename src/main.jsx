@@ -1,10 +1,9 @@
 import './index.css'
 
 import { BrowserRouter, Route, Routes } from 'react-router';
+import React, {Suspense, lazy} from 'react';
 
-import App from './App.jsx';
 import ChallengeProvider from './store/challengeProvider.jsx';
-import GithubOAuth from './components/auth/GithubOAuth.jsx';
 import Nav from './components/Nav/Nav.jsx';
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
@@ -13,6 +12,8 @@ import TopBanner from './components/Nav/TopBanner.jsx';
 import UserProvider from './store/userProvider.jsx';
 
 const root = document.getElementById("root");
+const GithubOAuth = lazy(() => import('./components/auth/GithubOAuth.jsx'))
+const App = lazy(() => import('./App.jsx'))
 
 ReactDOM.createRoot(root).render(
   <StrictMode>
@@ -22,11 +23,13 @@ ReactDOM.createRoot(root).render(
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <Nav />
           <BrowserRouter>
+          <Suspense fallback={<div>Loading...</div>}>
             <Routes>
-            <Route path="/" element={<GithubOAuth/>} /> 
-              <Route path="/dashboard" element={<App />} />
-              <Route path="/auth/github/callback" element={<GithubOAuth/>} /> 
-            </Routes>
+              <Route path="/" element={<GithubOAuth/>} /> 
+                <Route path="/dashboard" element={<App />} />
+                <Route path="/auth/github/callback" element={<GithubOAuth/>} /> 
+              </Routes>
+            </Suspense>
           </BrowserRouter>
         </ThemeProvider>
       </ChallengeProvider>

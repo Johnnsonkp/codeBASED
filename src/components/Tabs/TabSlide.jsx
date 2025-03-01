@@ -12,7 +12,7 @@ function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelected
   }
 
   function handleActiveTabSelect(tab){
-    if(tab == tabs[0] || tabs[1]){
+    if(tab == tabs[0] || tab == tabs[1]){
       setActiveTab(tab)
       setTabsContainer(tab);
     }

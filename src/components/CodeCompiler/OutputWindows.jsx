@@ -1,11 +1,18 @@
+import React, {useContext} from 'react'
+
+import { ChallengeContext } from '../../store/context/ChallengeContext'
 import CompileBtn from '../CustomButtons/CompileBtn'
 import OutputDetails from '../outputWindow/OutputDetails'
 import OutputWindow from '../outputWindow/OutputWindow'
-import React from 'react'
 import { useTheme } from '../theme-provider'
 
-function OutputWindows({handleCompile, userInput, outputDetails, processing, solutionOutputDetails, handleSolutionCompile, count, solutionProcessing}) {
+function OutputWindows({handleCompile, userInput, handleSolutionCompile, count}) {
   const { theme } = useTheme();
+  const {challengeState} = useContext(ChallengeContext)
+  const user_stdout = challengeState.userSolutionExecutionState.userOutputDetails
+  const user_processing = challengeState.userSolutionExecutionState.userProcessing 
+  const solution_stdout = challengeState.solutionExecutionState.solutionOutputDetails
+  const solution_processing = challengeState.solutionExecutionState.solutionProcessing
 
   return (
     <div 
@@ -20,7 +27,6 @@ function OutputWindows({handleCompile, userInput, outputDetails, processing, sol
         marginLeft: '15px', 
         minHeight: '520px', 
         padding: '10px', 
-        // marginTop: '13px'
       }}
     >
         <div 
@@ -30,12 +36,11 @@ function OutputWindows({handleCompile, userInput, outputDetails, processing, sol
             flexDirection: 'column'
           }}
         >
-          <OutputWindow outputDetails={outputDetails} title={"User Output"}/>
+          <OutputWindow outputDetails={user_stdout} title={"User Output"}/>
           <CompileBtn 
             onClick={() => handleCompile(userInput)} 
-            handleCompile={handleCompile} 
             userInput={userInput} 
-            processing={processing}
+            processing={user_processing}
           />
         </div>
         <div 
@@ -43,18 +48,17 @@ function OutputWindows({handleCompile, userInput, outputDetails, processing, sol
         >
         </div>
         <div style={{display: "flex", flexShrink: 0, flexDirection: 'column'}}>
-          <OutputWindow outputDetails={solutionOutputDetails} title={"Solution Output"}/>
+          <OutputWindow outputDetails={solution_stdout} title={"Solution Output"}/>
           <CompileBtn 
             onClick={() => handleSolutionCompile(count)} 
-            handleCompile={handleCompile} 
             userInput={count} 
-            processing={solutionProcessing}
+            processing={solution_processing}
           />
         </div>
         
         <div style={{marginTop: '20px'}}>
-          {outputDetails && <OutputDetails outputDetails={outputDetails} title={"User output"} />}
-          {solutionOutputDetails && <OutputDetails outputDetails={solutionOutputDetails} title={"Solution output"}/>}
+          {user_stdout && <OutputDetails outputDetails={user_stdout} title={"User output"} />}
+          {solution_stdout && <OutputDetails outputDetails={solution_stdout} title={"Solution output"}/>}
         </div>
     </div>
   )
