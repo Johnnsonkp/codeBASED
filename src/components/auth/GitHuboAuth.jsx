@@ -21,7 +21,7 @@ const GithubOAuth = () => {
   };
 
   const handleData = (data) => {
-    if (data?.status !== 200) {
+    if (data && data?.status && data?.status !== 200) {
       userLoginError(userDispatch, data.status)
     } else if (data && isUserAuth == false){
       storeUserData(data, userDispatch)
@@ -49,7 +49,7 @@ const GithubOAuth = () => {
     if (code && isUserAuth == false) {
       handleLogin(code);
     }
-  }, [code, isUserAuth])
+  }, [code])
 
   return (
     <AuthTemplatePage 
