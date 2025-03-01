@@ -35,7 +35,7 @@ const GithubOAuth = () => {
       handleData(data);
     } catch (error) {
       console.error("An error occurred while loading demo user data:", error);
-      userLoginError(userDispatch, "An error occurred while loading user data")
+      userLoginError(userDispatch, "An error occurred while loading user data ")
       navigate('/');
     }
   };
