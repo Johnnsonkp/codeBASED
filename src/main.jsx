@@ -14,8 +14,8 @@ import { ThemeProvider } from './components/theme-provider.tsx';
 import TopBanner from './components/Nav/TopBanner.jsx';
 import UserProvider from './store/userProvider.jsx';
 
-const App = lazy(() => import('./App.jsx'))
 const root = document.getElementById("root");
+const App = lazy(() => import('./App.jsx'))
 
 ReactDOM.createRoot(root).render(
   <StrictMode>

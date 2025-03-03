@@ -17,7 +17,6 @@ function ModeSwitch() {
     transition: 'display 3s',
     marginTop: '22px',
     justifyContent: 'space-around',
-    // border: '1px solid red',
     border: `2px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
     fontSize: '12px',
     fontWeight: 'bold',
