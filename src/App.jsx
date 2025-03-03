@@ -8,6 +8,7 @@ import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRe
 
 import { ChallengeContext } from './store/context/ChallengeContext.jsx';
 import LanguageDropDown from './components/Languages/languageDropDownMenu/LanguageDropDown.jsx';
+import LoadingOverlay from './components/Common/Loading/Loading.jsx';
 import { UserContext } from './store/context/UserContext.jsx';
 import axios from "axios";
 import { dummyTopicTitles } from './helpers/DummyData.js';
@@ -184,7 +185,7 @@ function App() {
   }, [isUserAuth])
   
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingOverlay />}>
       <Divider />
       <TopicsCarousel 
         dirUpdate={dirUpdate}

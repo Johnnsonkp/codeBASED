@@ -1,4 +1,9 @@
 export const userInitialState = {
+  mode_categories: [
+    {"name": "Code Mode", "route": "/dashboard"},
+    {"name": "Quiz Mode", "route": "/quiz"}
+  ],
+  mode: 'Code Mode',
   user: {},
   app_status: {status: "", message: ""},
   authorised: false,
@@ -36,6 +41,18 @@ export const userReducer = (state, action) => {
       return {
         ...state,
         app_status: action.payload
+      }
+    }
+    case "QUIZ_MODE": {
+      return {
+        ...state,
+        mode: state.mode_categories[1].name,
+      }
+    }
+    case "CODE_MODE": {
+      return {
+        ...state,
+        mode: state.mode_categories[0].name,
       }
     }
     default:

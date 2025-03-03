@@ -9,7 +9,6 @@ export async function getSelectedCodeChallenge(codingChallengeName, selected, di
         directory: dirUpdate
       })
   );
-  console.log("serverURL", serverURL);
   const codeChallenge = await response.text();
   return codeChallenge; 
 }
@@ -19,7 +18,6 @@ export async function getSelectedRepo(repo, dirUpdate) {
     `${serverURL}/api/repos?` +
       new URLSearchParams({ selectedRepo: repo, directory: dirUpdate })
   );
-  console.log("serverURL", serverURL);
   return response.json();
 }
 

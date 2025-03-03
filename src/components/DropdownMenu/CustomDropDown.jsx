@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTheme } from '../theme-provider';
 
-function CustomDropDown({items, defaultSelect, func}) {
+function CustomDropDown({items, defaultselect, func}) {
   const {theme} = useTheme();
 
   return (
@@ -24,7 +24,7 @@ function CustomDropDown({items, defaultSelect, func}) {
       {items && items.map((repo, index) => (
         <option 
           key={index}
-          selected={repo == defaultSelect? true : false}
+          selected={repo == defaultselect? true : false}
           value={repo}
         >
           {repo} 

@@ -1,11 +1,12 @@
 import React from 'react'
 
-export default function TextAreaComp({processingChecker2}) {
+export default function TextAreaComp({processingChecker2, tabsContainer1}) {
   return (
     <div 
       style={{
+        display: `${tabsContainer1 == "Solution Explained" || "Code Explaination" ? 'block' : 'none'}`,
         border: `${processingChecker2? "2px solid orange" : ""}`, 
-        width: `${processingChecker2? "101%" : ""}`
+        width: `${processingChecker2? "101%" : ""}`,
       }}
     >
       <textarea 

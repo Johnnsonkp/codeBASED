@@ -1,7 +1,6 @@
 const serverURL = import.meta.env.VITE_APP_PROD_SERVER_URL 
 
 export async function fetchUserInfo() {
-  console.log("url", serverURL)
   const response = await fetch(`${serverURL}/api/user_info`, {
     method: 'GET',
     mode: 'cors',

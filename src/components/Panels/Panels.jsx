@@ -1,105 +1,80 @@
-import React, { useState } from 'react'
+import React, {Suspense, lazy} from 'react'
 
-import CodeMirror from '@uiw/react-codemirror';
 import ShowHideSolution from '../CustomButtons/ShowHideSolution';
 import TabSlide from '../Tabs/TabSlide'
 import TextAreaComp from '../TextInputs/TextAreaComp';
 import { cppLanguage } from '@codemirror/lang-cpp';
-import { useTheme } from '../theme-provider';
 
-export function LeftPanel({language, setTabsContainer, tabsContainer, userInput, onChangeInput, processingChecker2, showSelectedLangOnly, processingChecker1}) {
-  const { theme } = useTheme();
-  
+const CodeMirror = lazy(() => import("@uiw/react-codemirror"))
+
+const Panel = ({
+  mode, 
+  language, 
+  setTabsContainer, 
+  tabsContainer, 
+  userInput, 
+  onChangeInput, 
+  showSelectedLangOnly, 
+  processing, 
+  blur, 
+  setBlur, 
+  theme
+}) => {
+  const tabContent = {
+    width: '31.5vw', 
+    maxWidth: '550px'
+  }
+  const CodeBlockOuter = {
+    position: 'relative', 
+    border: `${processing? "1px solid red" : ""}`, 
+    width: `${processing? "102%" : ""}`,
+    overflow: `${processing? "hidden" : ""}`,
+  }
+  const codeBlock = {
+    border: `${processing? "1px solid blue" : `0.1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`}`,
+    fontSize: '10px', 
+    flexWrap: 'wrap', 
+    textAlign: 'left',
+    display: `${tabsContainer == "Code Challenge"? 'block' : 'none'}`,
+    filter: `${mode == "solution" && blur? 'blur(2px)' : ''}`
+  }
+  const tabs = ["Code Challenge", "Code Explaination"]
+
   return (
     <div>
       <TabSlide
         language={language} 
-        tabs={["Code Challenge", "Code Explaination"]}
+        tabs={tabs}
         setTabsContainer={setTabsContainer}
         tabsContainer={tabsContainer}
         showSelectedLangOnly={showSelectedLangOnly}
       />
-      <div className="tab-content" 
-        style={{width: '30vw', maxWidth: '550px'}}
-      >
+      <div className="tab-content" style={tabContent}>
         {tabsContainer == "Code Challenge"?
-          <div 
-            style={{ 
-              position: 'relative', 
-              border: `${processingChecker1? "1px solid red" : ""}`, 
-              width: `${processingChecker1? "102%" : ""}`,
-              overflow: `${processingChecker1? "hidden" : ""}`,
-            }}
-          >
-            <CodeMirror 
-              value={userInput} 
-              extensions={[cppLanguage]} 
-              onChange={onChangeInput} 
-              width={'100%'}
-              height={'80vh'}
-              minHeight={'725px'}
-              maxHeight="725px"
-              theme={`${theme == 'light'? 'light' : 'dark'}`}
-              style={{fontSize: '10px', flexWrap: 'wrap', textAlign: 'left'}}
-              className={`tab-panel ${tabsContainer == "Code Challenge"? 'activePanel' : ''} `}
-            /> 
-            </div>
-            :
-          <TextAreaComp 
-            processingChecker1={processingChecker2}
-            className={`tab-panel ${tabsContainer == "Code Explaination"? 'activePanel' : ''} `}
-          />
-        }
-      </div>
-    </div>
-  )
-}
-
-export function RightPanel({ language, setTabsContainer1, tabsContainer1, count, onChangeSolution, processingChecker2}) {
-  const [blur, setBlur] = useState(true);
-  const { theme } = useTheme();
-
-  return (
-    <div>
-      <TabSlide
-        language={language} 
-        tabs={["Solution", "Solution Explained"]}
-        setTabsContainer={setTabsContainer1}
-        tabsContainer={tabsContainer1}
-      />
-      <div className="tab-content" 
-        style={{ width: '30vw', maxWidth: '550px'}}
-      >
-        {tabsContainer1 == "Solution"?
-          <div 
-            style={{ 
-              position: 'relative', 
-              border: `${processingChecker2? "1px solid red" : ""}`, 
-              width: `${processingChecker2? "102%" : ""}`,
-              overflow: `${processingChecker2? "hidden" : ""}`,
-            }}
-          >
-            <CodeMirror 
-              value={count} 
-              extensions={[cppLanguage]} 
-              onChange={onChangeSolution} 
-              width={'100%'}
-              height={'80vh'}
-              minHeight={'725px'}
-              maxHeight="725px"
-              theme={`${theme == 'light'? 'light' : 'dark'}`}
-              style={{fontSize: '10px', flexWrap: 'wrap', textAlign: 'left', position: 'relative', filter: `${blur? 'blur(2px)' : ''}`}}
-              className={`tab-panel ${tabsContainer1 == "Solution"? 'activePanel' : ''} `}
-            />
-            <ShowHideSolution blur={blur} setBlur={setBlur}/>
+          <div style={CodeBlockOuter}>
+            <Suspense fallback={<div>loading...</div>}>
+                <CodeMirror 
+                  value={userInput} 
+                  extensions={[cppLanguage]} 
+                  onChange={onChangeInput} 
+                  width={'100%'}
+                  height={'80vh'}
+                  minHeight={'725px'}
+                  maxHeight="725px"
+                  theme={`${theme == 'light'? 'light' : 'dark'}`}
+                  style={codeBlock}
+                  className={`tab-panel ${tabsContainer == "Code Challenge"? 'activePanel' : ''} `}
+                /> 
+                {mode == "solution" ? <ShowHideSolution blur={blur} setBlur={setBlur}/> : ""}
+              </Suspense> 
           </div>
           :
-          <TextAreaComp 
-            processingChecker2={processingChecker2}
-            className={`tab-panel `}
-          />
-        }
+          <TextAreaComp tabsContainer1={tabsContainer} processingChecker1={processing}
+            className={`tab-panel ${tabsContainer == "Code Explaination"? 'activePanel' : ''} `}
+          />}
       </div>
     </div>
   )
 }
+
+export default Panel

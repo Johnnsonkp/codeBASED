@@ -1,5 +1,4 @@
 import './loading.css'
-// import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css';
 
 const LoadingOverlay = () => {
   return (

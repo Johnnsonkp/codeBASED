@@ -1,12 +1,10 @@
-import { challengeInitialState } from "../initialState/challengeInitialState"
-
 export const challengeReducer = (state, action) => {
   switch (action.type){
     case "CORRECT_SOLUTION":{
       return {
         ...state,
         isSolutionCorrect: true,
-        score: state.score += 1,
+        score: state.score + 1,
         solutionStatus: {status: "correct", message: "Correct solution, well done!!"},
       }
     }

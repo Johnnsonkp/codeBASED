@@ -20,7 +20,6 @@ export const checkStatus = async (token, axios) => {
       }, 2000)
       return
     } else {
-      console.log('response.data', response.data)
       return response.data
     }
   } catch (err) {
@@ -54,7 +53,6 @@ export const checkSolutionStatus = async (token, axios) => {
       return
     } else {
       
-      console.log('response.data', response.data)
       return response.data
     }
   } catch (err) {

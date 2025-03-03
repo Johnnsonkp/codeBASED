@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "topic": "Python",
+    "subcategory": "Arithmetic",
+    "type": "multiple-choice",
+    "question": "What is 2 + 2?",
+    "correct_answer": "4",
+    "incorrect_answers": ["3", "5", "6"]
+  },
+  {
+    "id": 2,
+    "topic": "Python",
+    "subcategory": "Astronomy",
+    "type": "true-false",
+    "question": "The Earth is flat.",
+    "correct_answer": "False",
+    "incorrect_answers": ["True"]
+  },
+  {
+    "id": 3,
+    "topic": "Python",
+    "subcategory": "Capitals",
+    "type": "written-response",
+    "question": "What is the capital of France?",
+    "correct_answer": "Paris",
+    "incorrect_answers": ["Spain", "Lille", "Marselle"]
+  },
+  {
+    "id": 4,
+    "topic": "Python",
+    "subcategory": "World War II",
+    "type": "multiple-choice",
+    "question": "Who was the leader of Nazi Germany?",
+    "correct_answer": "Adolf Hitler",
+    "incorrect_answers": ["Joseph Stalin", "Winston Churchill", "Franklin D. Roosevelt"]
+  }
+]

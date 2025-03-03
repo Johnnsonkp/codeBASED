@@ -9,13 +9,17 @@ function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelected
   const [activeTab, setActiveTab] = useState()
   const theme = useTheme();
   
-  if(activeTab == null){
-    setTabsContainer(tabs[0]);
-  }
+  // if(activeTab == null){
+  //   setTabsContainer(tabs[0]);
+  // }
 
   function handleActiveTabSelect(tab){
-    if(tab == tabs[0] || tab == tabs[1]){
-      setActiveTab(tab)
+    if(tab == tabs[0]){
+      setActiveTab(tab[1])
+      setTabsContainer(tab);
+    }
+    if(tab == tabs[1]){
+      setActiveTab(tab[0])
       setTabsContainer(tab);
     }
   }

@@ -14,6 +14,7 @@ export const compilerExecution = {
 }
 
 export const challengeInitialState = {
+  mode: "Code",
   score: 0,
   isSolutionCorrect: false,
   solutionStatus: {status: "", message: ""},

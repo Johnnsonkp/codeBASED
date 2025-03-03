@@ -19,14 +19,10 @@ const Topicbutton = ({dirUpdate, setDirUpdate, topicTitles, selected, setSelecte
       setStartIndex((prev) => prev + 1);
       setEndIndex((prev) => prev + 1);
     } else {
-      reset();
+      setStartIndex(0);
+      setEndIndex(6)
     }
   };
-
-  const reset = () => {
-    setStartIndex(0);
-    setEndIndex(6)
-  }
 
   const dropDownRepoSelect = (e) => {
     setTimeout(() => {
@@ -40,76 +36,69 @@ const Topicbutton = ({dirUpdate, setDirUpdate, topicTitles, selected, setSelecte
   }
 
   const TopicsCarousel = () => {
+    
+    const topicBtnContainer = {
+      display: 'inline-flex', 
+      alignItems: 'center', 
+      overflow: 'hidden', 
+      maxWidth: '68vw',
+      borderLeft: '5px solid rgba(255, 255, 255, 0)', 
+      borderRight: '20px solid rgba(255, 255, 255, 0)'
+    }
+
+    const CarouselItems = () => (
+      topicTitles && topicTitles.map((title, index) => (
+        index >= startIndex && index <= endIndex &&
+        
+        <button key={index} onClick={() => setSelected(title)}
+          style={{
+            margin: '5px', 
+            fontSize: '12px',
+            border: selected == title ? '1px solid rgb(80, 250, 123)' : 
+              `${theme == 'light'? '1px solid #EBEBEB' : '1px solid #3C3C3C'}`,
+            backgroundColor: selected == title && 'rgb(80, 250, 123)',
+            color: selected == title && '#333',
+            borderRadius: '5px',
+            padding: '6px'
+          }}
+        >
+          <NumBubble num={index + 1} /> {title}
+        </button>
+      ))
+    )
+    
     return (
       <>
-      <LeftSlideButton 
-        onClick={() => handleNavigationClick("left")}
-      />
-      <div 
-        style={{
-          display: 'inline-flex', 
-          alignItems: 'center', 
-          overflow: 'hidden', 
-          maxWidth: '68vw',
-          borderLeft: '5px solid rgba(255, 255, 255, 0)', 
-          borderRight: '20px solid rgba(255, 255, 255, 0)'
-          }}
-      >
-        {topicTitles && topicTitles.map((title, index) => (
-          index >= startIndex && index <= endIndex &&
-          <button 
-            key={index}
-            style={{
-              margin: '5px', 
-              marginTop: '0px',
-              marginBottom: '2px',
-              fontSize: '12px',
-              border: selected == title ? '1px solid rgb(80, 250, 123)' : `${theme == 'light'? '1px solid #EBEBEB' : '1px solid #3C3C3C'}`,
-              backgroundColor: selected == title && 'rgb(80, 250, 123)',
-              color: selected == title && '#333',
-              borderRadius: '5px',
-              padding: '6px'
-            }}
-            onClick={() => setSelected(title)}
-          >
-            <NumBubble num={index + 1} />
-            {title}
-          </button>
-        ))}
-      </div>
-      <RightSlideButton 
-        onClick={() => handleNavigationClick("right")}
-      />
+        <LeftSlideButton onClick={() => handleNavigationClick("left")}/>
+          <div style={topicBtnContainer}>
+            <CarouselItems />
+          </div>
+        <RightSlideButton onClick={() => handleNavigationClick("right")}/>
       </>
     );
   }
 
   useEffect(() => {
-    if (!dirUpdate){
-      setDirUpdate(repoOnDropDownSelect);
-    }
+    if (!dirUpdate){ setDirUpdate(repoOnDropDownSelect)}
   }, [repoOnDropDownSelect])
+
+  const carouselContainer = {
+    display: 'flex', 
+    alignItems: 'center', 
+    marginBottom: '15px', 
+    border: `1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
+    padding: '5px',
+    overflow: 'hidden'
+  }
   
   return (
-    <div 
-      style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        marginBottom: '15px', 
-        border: `1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
-        padding: '5px',
-        overflow: 'hidden'
-      }}
-    >
+    <div style={carouselContainer}>
       <CustomDropDown 
         items={userRepos}
-        defaultSelect={defaultSelect || ''}
+        defaultselect={defaultSelect || ''}
         func={dropDownRepoSelect}
       />
-      
-      <NumBubble
-        num={userRepos && userRepos.length}
-      />
+      <NumBubble num={userRepos && userRepos.length}/>
       <TopicsCarousel />
     </div>
   )
