@@ -29,7 +29,7 @@ export default function Auth() {
       userLoginError(userDispatch, data.status)
     } 
     // else if (data && isUserAuth == false){
-    else if (data && isUserAuth == false){
+    else if (data){
       storeUserData(data, userDispatch)
       navigate('/dashboard');
     }
