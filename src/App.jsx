@@ -23,7 +23,6 @@ import { useTheme } from './components/theme-provider';
 
 const Footer = lazy( ()=> import('./components/Common/Footer.jsx'))
 const Divider = lazy(() => import('./components/Common/Divider.jsx'));
-const LanguageNav = lazy(() => import('./components/Languages/LanguageNav.jsx'));
 const OutputWindows = lazy(() => import('./components/CodeCompiler/OutputWindows.jsx'));
 const PanelsCombined = lazy(() => import('./components/Panels/PanelsCombined.jsx')) 
 const SidePanelComb = lazy(() => import('./components/SidePanel/SidePanelComb.jsx'));
@@ -40,7 +39,7 @@ function App() {
   
   const [count, setCount] = useState('')
   const [userInput, setUserInput] = useState()
-  const [selected, setSelected] = useState()
+  const [selected, setSelected] = useState(false)
   const [sideNavTitles, setSideNavTitles] = useState()
   const [language, setLanguage] = useState(languageOptions.filter((lang) => lang.value == 'c'))
   const [currentChallengeTitle, setCurrentChallengeTitle] = useState(null);
@@ -78,7 +77,6 @@ function App() {
       challengeDispatch
     )
   };
-
   const handleSolutionCompile = (count) => {
     challengeDispatch({type: "SET_SOLUTION_PROCESSING"})
     const formData = {
@@ -215,19 +213,19 @@ function App() {
             />
           </SidePanelContainer>
         </div>
-          <PanelsCombined 
-            theme={theme} 
-            language={language}
-            setTabsContainer={setTabsContainer}
-            tabsContainer={tabsContainer}
-            userInput={userInput}
-            onChangeInput={onChangeInput}
-            showSelectedLangOnly={true}
-            setTabsContainer1={setTabsContainer1}
-            tabsContainer1={tabsContainer1}
-            count={count}
-            onChangeSolution={onChangeSolution}
-          />
+        <PanelsCombined 
+          theme={theme} 
+          language={language}
+          setTabsContainer={setTabsContainer}
+          tabsContainer={tabsContainer}
+          userInput={userInput}
+          onChangeInput={onChangeInput}
+          showSelectedLangOnly={true}
+          setTabsContainer1={setTabsContainer1}
+          tabsContainer1={tabsContainer1}
+          count={count}
+          onChangeSolution={onChangeSolution}
+        />
         <OutputWindows 
           handleCompile={handleCompile} 
           userInput={userInput} 

@@ -3,9 +3,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin: 15px;
   /* width: 100%; */
   min-width: 300px;
+  max-width: 300px;
 }
 
 .form-box {
@@ -25,8 +26,8 @@
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   margin: 0px;
-  font-size: 13px;
-  max-width: 450px;
+  font-size: 12px;
+  /* max-width: 450px; */
 }
 
 .options {
@@ -34,7 +35,7 @@
   flex-direction: column;
   width: 95%;
   margin: auto;
-  gap: 12px;
+  gap: 6px;
   padding: 10px 6px;
   position: relative;
   font-size: 12px;
@@ -73,6 +74,7 @@
   top: 50%;
   left: 12px;
   color: #9ca3af;
+  color: #48484895;
   transform: translateY(-50%);
   transition: all 0.2s ease-in-out;
   user-select: none;
@@ -101,6 +103,7 @@
   border: none;
   cursor: pointer;
   margin-top: 10px;
+  font-size: 12px;
 }
 
 .submit-button:hover {

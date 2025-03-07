@@ -9,6 +9,7 @@ function QuizPage() {
   const [quizData, setQuizData] = useState()
   const [cLangData, setClangData] = useState()
   const [topics, setTopics] = useState()
+  const [subTopics, setSubtopics] = useState()
 
   const getData = async () => {
     try {
@@ -51,10 +52,16 @@ function QuizPage() {
 
     if (quizData && cLangData && topics === undefined && isMounted){
       const topics = []
+      const subTopics = []
+
       topics.push(quizData[0].topic)
       topics.push(cLangData[0].topic)
 
+      quizData.map((quiz) => subTopics.push(quiz.subcategory))
+      cLangData.map((quiz) => subTopics.push(quiz.subcategory))
+
       setTopics(topics)
+      setSubtopics(subTopics)
     }
 
     return () => {
@@ -65,7 +72,13 @@ function QuizPage() {
   return (
     <div style={{}}>
       <Divider />
-      {topics && topics.map((title, index) => (<button style={{margin: '5px', padding: '5px'}} key={index}>{title}</button>))}
+      {/* {topics && topics.map((title, index) => (<button style={{margin: '5px', padding: '5px'}} key={index}>{title}</button>))} */}
+
+      <select>
+        {topics && topics.map((title, index) => (<option style={{margin: '5px', padding: '5px'}} key={index}>{title}</option>))}
+      </select>
+
+      {subTopics && subTopics.map((title, index) => (<button style={{margin: '5px', padding: '5px'}} key={index}>{title}</button>))}
       
         <div style={{display: 'flex', flexWrap: 'wrap', minHeight: '90vh', marginBottom: '80px'}}>
           {quizData && quizData.map((item, index) => (

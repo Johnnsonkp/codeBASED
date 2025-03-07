@@ -1,92 +1,246 @@
 [
   {
+      "id": 1,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which of the following is a valid way to print 'Hello, World!' in Python?",
+      "correct_answer": "print('Hello, World!')",
+      "incorrect_answers": [
+          "echo 'Hello, World!'",
+          "printf('Hello, World!')",
+          "console.log('Hello, World!'"
+      ]
+  },
+  {
+      "id": 2,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "true-false",
+      "question": "Python is a statically typed language.",
+      "correct_answer": "False",
+      "incorrect_answers": [
+          "True"
+      ]
+  },
+  {
+      "id": 3,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which data type is used to store a sequence of characters in Python?",
+      "correct_answer": "String",
+      "incorrect_answers": [
+          "Integer",
+          "Boolean",
+          "Float"
+      ]
+  },
+  {
+      "id": 4,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "What will `type(10.5)` return?",
+      "correct_answer": "<class 'float'>",
+      "incorrect_answers": [
+          "<class 'int'>",
+          "<class 'double'>",
+          "<class 'decimal'>"
+      ]
+  },
+  {
+      "id": 5,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "true-false",
+      "question": "Python uses indentation to define code blocks.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+          "False"
+      ]
+  },
+  {
+      "id": 6,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which of the following is NOT a valid variable name in Python?",
+      "correct_answer": "2_variable",
+      "incorrect_answers": [
+          "_variable",
+          "variable_name",
+          "Variable2"
+      ]
+  },
+  {
+      "id": 7,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which function is used to take user input in Python?",
+      "correct_answer": "input()",
+      "incorrect_answers": [
+          "scanf()",
+          "get_input()",
+          "read()"
+      ]
+  },
+  {
+      "id": 8,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "true-false",
+      "question": "Python is an interpreted language.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+          "False"
+      ]
+  },
+  {
+      "id": 9,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which keyword is used to define a function in Python?",
+      "correct_answer": "def",
+      "incorrect_answers": [
+          "function",
+          "define",
+          "fn"
+      ]
+  },
+  {
+      "id": 10,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which of the following is the correct way to declare a comment in Python?",
+      "correct_answer": "# This is a comment",
+      "incorrect_answers": [
+          "// This is a comment",
+          "/* This is a comment */",
+          "-- This is a comment"
+      ]
+  }, 
+  {
+    "id": 1,
+    "topic": "Python",
+    "subcategory": "Control Flow & Loops",
+    "type": "multiple-choice",
+    "question": "Which keyword is used for conditional branching in Python?",
+    "correct_answer": "if",
+    "incorrect_answers": [
+        "switch",
+        "case",
+        "choose"
+    ]
+},
+{
+    "id": 2,
+    "topic": "Python",
+    "subcategory": "Control Flow & Loops",
+    "type": "true-false",
+    "question": "The 'break' statement is used to exit a loop early.",
+    "correct_answer": "True",
+    "incorrect_answers": [
+        "False"
+    ]
+},
+{
+    "id": 3,
+    "topic": "Python",
+    "subcategory": "Functions & Error Handling",
+    "type": "multiple-choice",
+    "question": "What is the correct syntax for defining a function in Python?",
+    "correct_answer": "def function_name():",
+    "incorrect_answers": [
+        "function function_name():",
+        "define function_name():",
+        "func function_name():"
+    ]
+},
+{
+    "id": 4,
+    "topic": "Python",
+    "subcategory": "Functions & Error Handling",
+    "type": "true-false",
+    "question": "The 'finally' block in exception handling is always executed, even if an error occurs.",
+    "correct_answer": "True",
+    "incorrect_answers": [
+        "False"
+    ]
+},
+{
     "id": 5,
     "topic": "Python",
-    "subcategory": "RESTful API Basics",
+    "subcategory": "Data Structures & Collections",
     "type": "multiple-choice",
-    "question": "What does REST stand for?",
-    "correct_answer": "Representational State Transfer",
-    "incorrect_answers": ["Remote Execution Standard Transmission", "Resource Execution State Transfer", "Representational Service Transfer"]
-  },
-  {
+    "question": "Which of these data structures is immutable?",
+    "correct_answer": "Tuple",
+    "incorrect_answers": [
+        "List",
+        "Dictionary",
+        "Set"
+    ]
+},
+{
     "id": 6,
     "topic": "Python",
-    "subcategory": "HTTP Methods",
-    "type": "multiple-choice",
-    "question": "Which HTTP method is used to retrieve data from a RESTful API?",
-    "correct_answer": "GET",
-    "incorrect_answers": ["POST", "DELETE", "PUT"]
-  },
-  {
+    "subcategory": "Data Structures & Collections",
+    "type": "true-false",
+    "question": "Dictionaries in Python maintain order starting from Python 3.7.",
+    "correct_answer": "True",
+    "incorrect_answers": [
+        "False"
+    ]
+},
+{
     "id": 7,
     "topic": "Python",
-    "subcategory": "Frameworks",
+    "subcategory": "Object-Oriented Programming",
     "type": "multiple-choice",
-    "question": "Which Python framework is commonly used to build RESTful APIs?",
-    "correct_answer": "Flask",
-    "incorrect_answers": ["Django", "Pandas", "Matplotlib"]
-  },
-  {
+    "question": "Which method is called when an object is instantiated in Python?",
+    "correct_answer": "__init__",
+    "incorrect_answers": [
+        "__str__",
+        "__new__",
+        "__del__"
+    ]
+},
+{
     "id": 8,
     "topic": "Python",
-    "subcategory": "API Authentication",
-    "type": "multiple-choice",
-    "question": "Which authentication method is commonly used for securing RESTful APIs?",
-    "correct_answer": "JWT (JSON Web Token)",
-    "incorrect_answers": ["OAuth 1.0", "HTTP Basic Authentication", "SSL Certificate"]
-  },
-  {
+    "subcategory": "Object-Oriented Programming",
+    "type": "true-false",
+    "question": "Inheritance allows a class to inherit methods and properties from another class.",
+    "correct_answer": "True",
+    "incorrect_answers": [
+        "False"
+    ]
+},
+{
     "id": 9,
     "topic": "Python",
-    "subcategory": "Status Codes",
+    "subcategory": "File Handling & Serialization",
     "type": "multiple-choice",
-    "question": "What does the HTTP status code 201 indicate?",
-    "correct_answer": "Resource Created",
-    "incorrect_answers": ["OK", "Unauthorized", "Internal Server Error"]
-  },
-  {
+    "question": "Which function is used to open a file in Python?",
+    "correct_answer": "open()",
+    "incorrect_answers": [
+        "read()",
+        "write()",
+        "file()"
+    ]
+},
+{
     "id": 10,
     "topic": "Python",
-    "subcategory": "API Endpoints",
-    "type": "multiple-choice",
-    "question": "Which of the following is a properly formatted RESTful API endpoint?",
-    "correct_answer": "/api/users/123",
-    "incorrect_answers": ["/getUsers?id=123", "/api?users=123", "/users?id=123"]
-  },
-  {
-    "id": 11,
-    "topic": "Python",
-    "subcategory": "Serialization",
-    "type": "multiple-choice",
-    "question": "Which Python library is commonly used to serialize and deserialize JSON data in a RESTful API?",
-    "correct_answer": "json",
-    "incorrect_answers": ["pickle", "csv", "xml"]
-  },
-  {
-    "id": 12,
-    "topic": "Python",
-    "subcategory": "Flask API",
-    "type": "multiple-choice",
-    "question": "Which decorator is used in Flask to define an API route?",
-    "correct_answer": "@app.route",
-    "incorrect_answers": ["@flask.api", "@route", "@app.get"]
-  },
-  {
-    "id": 13,
-    "topic": "Python",
-    "subcategory": "HTTP Methods",
-    "type": "multiple-choice",
-    "question": "Which HTTP method is used to update a resource in a RESTful API?",
-    "correct_answer": "PUT",
-    "incorrect_answers": ["PATCH", "GET", "DELETE"]
-  },
-  {
-    "id": 14,
-    "topic": "Python",
-    "subcategory": "REST vs SOAP",
+    "subcategory": "File Handling & Serialization",
     "type": "true-false",
-    "question": "REST APIs are generally considered more lightweight and scalable than SOAP APIs.",
+    "question": "The 'with' statement ensures that a file is closed properly after operations.",
     "correct_answer": "True",
-    "incorrect_answers": ["False"]
-  }
+    "incorrect_answers": [
+        "False"
+    ]
+}
 ]

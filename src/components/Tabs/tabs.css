@@ -4,7 +4,7 @@
   width: 100%;
   margin: auto;
   margin-bottom: 0px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   /* border: 1px solid #A9A9A9; */
   border-radius: 5px;
   overflow: hidden;
@@ -115,7 +115,7 @@
     width: 435px;
     min-height: 750px;
     box-sizing: border-box;
-    margin: 10px;
+    /* margin: 10px; */
   }
   .tab-panel.activePanel{
     width: 100%;

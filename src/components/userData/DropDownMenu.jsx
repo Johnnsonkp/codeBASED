@@ -61,10 +61,10 @@ function DropDownMenu({toggle, theme, initiatUserSignOut, challengeState}) {
         <a href="#" style={styles.menuItem}>
             <UserIcon style={styles.menuItemIcon}/> User Details
         </a>
-        <a href="#" class="menu-item" style={styles.menuItem}>
+        <a href="#" className="menu-item" style={styles.menuItem}>
             <IntergrationIcon style={styles.menuItemIcon}/> Integrations
         </a>
-        <a href="#" class="menu-item" style={styles.menuItem}>
+        <a href="#" className="menu-item" style={styles.menuItem}>
             <SettingsIcon style={styles.menuItemIcon}/> Settings
         </a>
 
@@ -73,7 +73,8 @@ function DropDownMenu({toggle, theme, initiatUserSignOut, challengeState}) {
         </div>
         <button 
           onClick={() => initiatUserSignOut()}
-          style={{marginTop: "0px", fontSize: '13px', width: '100%', color: 'red', background: '#fff'}}>Logout</button>
+          style={{marginTop: "0px", fontSize: '13px', width: '100%', color: 'red', background: '#fff'}}>Logout
+        </button>
       </nav>
     </div>
   )

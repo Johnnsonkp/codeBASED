@@ -17,7 +17,6 @@ function Nav() {
     display: 'flex', 
     justifyContent: 'space-between', 
     alignItems: 'center',
-    width: '98vw',
     margin: 'auto'
   }
   const InnerNav = {
@@ -46,10 +45,11 @@ function Nav() {
   return (
     <div style={NavContainer}>
       <Logo title={'CodeBASED'} url={'/'}/>
-      <ModeSwitch />
+      <ModeSwitch theme={theme}/>
       
       <div style={InnerNav}>
-        <SwitchBtn theme={theme} 
+        <SwitchBtn 
+          theme={theme} 
           onClick={() => theme == "dark"? setTheme("light") : setTheme("dark")}
         />
         <NavDivider />

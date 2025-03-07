@@ -22,7 +22,8 @@ const Panel = ({
 }) => {
   const tabContent = {
     width: '31.5vw', 
-    maxWidth: '550px'
+    maxWidth: '550px',
+    minWidth: '430px'
   }
   const CodeBlockOuter = {
     position: 'relative', 
