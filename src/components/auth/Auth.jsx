@@ -30,6 +30,7 @@ export default function Auth() {
     } 
     // else if (data && isUserAuth == false){
     else if (data){
+      console.log("handle Data", data)
       storeUserData(data, userDispatch)
       navigate('/dashboard');
     }
