@@ -50,11 +50,17 @@ export default function Auth() {
 
   const handleLogin = async (code) => {
     const data = await handleLoginWithCode(code);
-    console.log("handleLogin", data)
+    // console.log("handleLogin", data)
     // handleData(data);
 
-    storeUserData(data, userDispatch)
-    navigate('/dashboard');
+    if (data){
+      console.log("else handle Data", data)
+      storeUserData(data, userDispatch)
+      navigate('/dashboard');
+    }
+
+    // storeUserData(data, userDispatch)
+    // navigate('/dashboard');
   }
   
   useEffect(() => {
