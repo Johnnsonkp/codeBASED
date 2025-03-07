@@ -47,11 +47,13 @@ export default function Auth() {
   const handleLogin = async (code) => {
     const data = await handleLoginWithCode(code);
     handleData(data);
+    navigate('/dashboard');
   }
   
   useEffect(() => {
     // if (code && isUserAuth == false) {
     if (code) {
+      console.log(code)
       handleLogin(code);
     }
   }, [code])
