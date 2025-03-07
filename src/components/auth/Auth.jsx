@@ -27,7 +27,9 @@ export default function Auth() {
   const handleData = (data) => {
     if (data && data?.status && data?.status !== 200) {
       userLoginError(userDispatch, data.status)
-    } else if (data && isUserAuth == false){
+    } 
+    // else if (data && isUserAuth == false){
+    else if (data && isUserAuth == false){
       storeUserData(data, userDispatch)
       navigate('/dashboard');
     }
@@ -47,7 +49,6 @@ export default function Auth() {
   const handleLogin = async (code) => {
     const data = await handleLoginWithCode(code);
     handleData(data);
-    navigate('/dashboard');
   }
   
   useEffect(() => {
