@@ -48,8 +48,11 @@ export const handleLoginWithCode = async (code) => {
     },
     body: JSON.stringify({ code }),
   })
-  .then(response => response.json())
-  .then(data => {
-      return data;
-  });
+  .then(response => {return response})
+  // .then(data => {
+  //   return data;
+  // });
+  // .then(data => {
+  //     return data;
+  // });
 };
