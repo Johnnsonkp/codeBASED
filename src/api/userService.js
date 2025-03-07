@@ -60,7 +60,7 @@ export const handleLoginWithCode = async (code) => {
   // });
 
 
-  const response = await fetch(`${serverURL}auth/github/callback`, {
+  const response = await fetch(`${serverURL}/auth/github/callback`, {
     method: 'POST',
     mode: 'cors',
     headers: { 
