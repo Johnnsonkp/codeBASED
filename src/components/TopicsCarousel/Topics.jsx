@@ -1,4 +1,5 @@
 import CustomDropDown from '../DropdownMenu/CustomDropDown'
+import DropDownSelect from '../Quiz/DropDownSelect'
 import Label from '../Buttons/Label'
 import NumBubble from '../Buttons/NumBubble'
 import TopicsCarousel from './Carousel'
@@ -12,21 +13,13 @@ const Topicbutton = ({dirUpdate, setDirUpdate, topicTitles, selected, setSelecte
 
   const carouselContainer = {
     display: 'flex', 
-    alignItems: 'center', 
-    marginBottom: '15px', 
+    alignItems: 'center',
+    marginTop: '0px', 
+    marginBottom: '0px', 
     border: `1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
-    padding: '5px',
+    paddingTop: '4px',
     overflow: 'hidden',
     width: '100%'
-  }
-
-  const labelBubble = {
-    border: "1px solid red", 
-    fontSize: '11px',
-    padding: '3px',
-    borderRadius: '10px',
-    position: 'relative',
-    top: '-8px'
   }
 
   const dropDownRepoSelect = (e) => {
@@ -50,29 +43,24 @@ const Topicbutton = ({dirUpdate, setDirUpdate, topicTitles, selected, setSelecte
   }
   
   return (
-    // <CarouselWrapper>
     <div style={carouselContainer}>
-      {/* <div style={labelBubble}>Repositories</div> */}
-      {/* <NumBubble num={"Repositories"}/> */}
-      <Label string={"Repositories"}/>
       <CustomDropDown 
         items={userRepos}
         defaultselect={defaultSelect || ''}
         func={dropDownRepoSelect}
       />
-      {/* <NumBubble 
-        num={userRepos && userRepos.length}
-        num={"Directories"}
-      /> */}
-      <Label string={"Directories"} />
-      <TopicsCarousel 
-        topicTitles={topicTitles} 
-        selected={selected} 
-        setSelected={setSelected} 
-        theme={theme}
-      />
+      <div style={{display: 'flex', flexDirection: 'column'}}>
+        <Label string={"Directories"} />
+        <div style={{display: 'flex', height: '30px'}}>
+          <TopicsCarousel 
+            topicTitles={topicTitles} 
+            selected={selected} 
+            setSelected={setSelected} 
+            theme={theme}
+          />
+        </div>
       </div>
-    // </CarouselWrapper>
+      </div>
   )
 }
 

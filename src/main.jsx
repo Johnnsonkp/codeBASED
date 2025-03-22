@@ -1,21 +1,23 @@
 import './index.css'
 
 import { BrowserRouter, Route, Routes } from 'react-router';
-import React, {Suspense, lazy, useEffect} from 'react';
+import React, {Suspense, lazy} from 'react';
 
-import Auth from './components/auth/Auth.jsx';
 import ChallengeProvider from './store/challengeProvider.jsx';
 import LoadingOverlay from './components/Common/Loading/Loading.jsx';
-import Nav from './components/Nav/Nav.jsx';
-import QuizPage from './components/Quiz/QuizPage.jsx';
+// import Nav from './components/Nav/Nav.jsx';
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
 import { ThemeProvider } from './components/theme-provider.tsx';
 import TopBanner from './components/Nav/TopBanner.jsx';
+import UserAccount from './components/userData/UserAccount.jsx';
 import UserProvider from './store/userProvider.jsx';
 
 const root = document.getElementById("root");
 const App = lazy(() => import('./App.jsx'))
+const Nav = lazy(() => import('./components/Nav/Nav.jsx'))
+const QuizPage = lazy(() => import('./components/Quiz/QuizPage.jsx'))
+const Auth = lazy(() => import('./components/auth/Auth.jsx'))
 
 ReactDOM.createRoot(root).render(
   <StrictMode>
@@ -30,6 +32,7 @@ ReactDOM.createRoot(root).render(
               <Route path="/" element={<Auth/>} /> 
               <Route path="/dashboard" element={<App />} />
               <Route path="/quiz" element={<QuizPage />} />
+              <Route path="/user-account" element={<UserAccount />} />
               <Route path="/auth/github/callback" element={<Auth/>} /> 
             </Routes>
           </Suspense>

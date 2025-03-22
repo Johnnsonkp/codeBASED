@@ -1,0 +1,125 @@
+/* Main Container */
+.account-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.account-wrapper {
+  width: 80%;
+  max-width: 800px;
+  margin-top: 20px;
+}
+
+/* Card */
+.card {
+  background-color: #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px;
+  border-radius: 8px 8px 0 0;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #374151;
+}
+
+.settings-button {
+  background-color: #ec4899;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.settings-button:hover {
+  background-color: #db2777;
+}
+
+/* Form */
+.form-container {
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #64748b;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+/* Input Groups */
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #475569;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.input-field {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 14px;
+  transition: 0.2s ease-in-out;
+}
+
+.input-field:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+/* Divider */
+.divider {
+  border: none;
+  height: 1px;
+  background: #cbd5e1;
+  margin: 20px 0;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.footer a {
+  color: #64748b;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #1e293b;
+}

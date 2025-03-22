@@ -1,24 +1,25 @@
 import './singleQuizCard.css';
 
-import React from 'react';
+import React, {useState} from 'react';
+
+import { shuffleArray } from '../../helpers/utils';
 
 const SingleQuizCard = ({ id, topic, subcategory, type, question, correct_answer, incorrect_answers}) => {
+  const [solved, setSolved] = useState(false)
 
-  const DisplayOptions = () => {
+  const optionSelected = (option, correct_answer) => {
+    option == correct_answer? setSolved(true) : setSolved(false)
+  }
+
+  const DisplayOptions = ({optionSelected}) => {
     let options = []
 
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i >= 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-      }
-    }
     options.push(correct_answer)
     incorrect_answers.map((option) => options.push(option))
     shuffleArray(options)
     
     return options.map((option, index) => (
-      <div key={index} className="option" onClick={() => option == correct_answer? alert("yes") : ''}>
+      <div key={index} className="option" onClick={() => optionSelected(option, correct_answer)}>
         <input type="checkbox"  className="checkbox" />
         <label className="label" value={option}>{option}</label>
       </div>
@@ -30,17 +31,16 @@ const SingleQuizCard = ({ id, topic, subcategory, type, question, correct_answer
   }
 
   return (
-    <div className="container" key={id}>
-      <div className="form-box">
+      <div 
+        key={id}
+        className="form-box"
+        style={{backgroundColor: `${solved? "#40C86A" : "rgba(217, 83, 79, 0.3)"}`}}
+      >
         <p className="header">{question || ""}</p>
         <div className="options">
-          <DisplayOptions />
-        </div>
-        <div className="submit-container">
-          <button className="submit-button" onClick={(e) => handleSubmit(e)}>Submit</button>
+          <DisplayOptions optionSelected={optionSelected}/>
         </div>
       </div>
-    </div>
   );
 };
 

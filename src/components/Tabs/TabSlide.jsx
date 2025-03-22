@@ -9,10 +9,6 @@ function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelected
   const [activeTab, setActiveTab] = useState()
   const theme = useTheme();
   
-  // if(activeTab == null){
-  //   setTabsContainer(tabs[0]);
-  // }
-
   function handleActiveTabSelect(tab){
     if(tab == tabs[0]){
       setActiveTab(tab[1])
@@ -24,19 +20,29 @@ function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelected
     }
   }
 
+  const tabStyle = {
+    borderLeft: `1px solid ${theme.theme == 'light'? '#D3D3D3' : '#3C3C3C'}`,
+    borderRight: `1px solid ${theme.theme == 'light'? '#D3D3D3' : '#3C3C3C'}`,
+    fontSize: '11px'
+  }
+
   return (
     <div 
       style={{
         display: 'flex !important', 
         maxHeight: '700px', 
-        minWidth: '440px', 
-        width: '100%'
+        width: '100%',
+        borderRadius: '5px',
+        overflow: 'hidden'
       }}
     >
-    <div style={{display: 'flex', justifyContent: 'space-between'}}>
       <div 
-        style={{border: `2px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`}}
-        className="tab-container">
+        style={{
+          borderLeft: `2px solid ${theme.theme == 'light'? '#D3D3D3' : '#3C3C3C'}`,
+          borderRight: `2px solid ${theme.theme == 'light'? '#D3D3D3' : '#3C3C3C'}`,
+        }}
+        className="tab-container"
+      >
         {tabs && tabs.map((tab, index) => (
             <button
               style={{fontSize: '11px'}} 
@@ -48,12 +54,6 @@ function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelected
             </button>
         ))}
       </div>
-      
-        <LanguageNav 
-          language={language}
-          showSelectedLangOnly={showSelectedLangOnly} 
-        />
-    </div>
     </div>
   )
 }

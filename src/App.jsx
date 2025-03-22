@@ -7,7 +7,6 @@ import { compileHeaders, compileOptions } from './Service/CompileAPI.js';
 import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRepo, getSelectedRepoOnDropDown } from './api/challengeService.js';
 
 import { ChallengeContext } from './store/context/ChallengeContext.jsx';
-import LanguageDropDown from './components/Languages/languageDropDownMenu/LanguageDropDown.jsx';
 import LoadingOverlay from './components/Common/Loading/Loading.jsx';
 import { UserContext } from './store/context/UserContext.jsx';
 import axios from "axios";
@@ -177,10 +176,21 @@ function App() {
     if (isEmptyObj(userInformation) && isUserAuth == true){
       setUserInformation(userInfo)
     }
+  }, [isUserAuth])
+
+  useEffect(() => {
     if (!isUserAuth){
+      alert("user not authorised")
       navigate("/");
     }
-  }, [isUserAuth])
+  }, [])
+
+  const container = {
+    display: 'flex',
+    flexDirection: 'row',
+    position: 'absolute'
+  }
+
   
   return (
     <Suspense fallback={<LoadingOverlay />}>
@@ -194,14 +204,9 @@ function App() {
         userRepos={userRepos}
         repoOnDropDownSelect={repoOnDropDownSelect}
       />
-      <div style={{marginTop: '20px'}} className="card">
-        <div>
-          <LanguageDropDown 
-            languageOptions={languageOptions} 
-            setLanguage={setLanguage} 
-            language={language}
-          />
-          <SidePanelContainer className={'sideMenu'}>
+      <div style={container}>
+        <div >
+          <SidePanelContainer>
             <SidePanelComb 
               sideNavTitles={sideNavTitles} 
               loadSelectedChallenge={loadSelectedChallenge} 
@@ -213,25 +218,28 @@ function App() {
             />
           </SidePanelContainer>
         </div>
-        <PanelsCombined 
-          theme={theme} 
-          language={language}
-          setTabsContainer={setTabsContainer}
-          tabsContainer={tabsContainer}
-          userInput={userInput}
-          onChangeInput={onChangeInput}
-          showSelectedLangOnly={true}
-          setTabsContainer1={setTabsContainer1}
-          tabsContainer1={tabsContainer1}
-          count={count}
-          onChangeSolution={onChangeSolution}
-        />
-        <OutputWindows 
-          handleCompile={handleCompile} 
-          userInput={userInput} 
-          handleSolutionCompile={handleSolutionCompile} 
-          count={count} 
-        />
+          <PanelsCombined 
+            theme={theme} 
+            language={language}
+            setTabsContainer={setTabsContainer}
+            tabsContainer={tabsContainer}
+            userInput={userInput}
+            onChangeInput={onChangeInput}
+            showSelectedLangOnly={true}
+            setTabsContainer1={setTabsContainer1}
+            tabsContainer1={tabsContainer1}
+            count={count}
+            onChangeSolution={onChangeSolution}
+          />
+          <OutputWindows
+            language={language}
+            languageOptions={languageOptions}
+            setLanguage={setLanguage}
+            handleCompile={handleCompile} 
+            userInput={userInput} 
+            handleSolutionCompile={handleSolutionCompile} 
+            count={count} 
+          />
       </div>
       <Footer 
         compareOutputs={compareOutputs}

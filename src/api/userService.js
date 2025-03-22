@@ -39,27 +39,6 @@ export const userLogout = async () => {
 }
 
 export const handleLoginWithCode = async (code) => {
-  //   fetch(`${serverURL}/auth/github/callback`, {
-  //   method: 'POST',
-  //   mode: 'cors',
-  //   headers: { 
-  //     'Content-Type': 'application/json',
-  //     "Access-Control-Allow-Origin": "*", 
-  //   },
-  //   body: JSON.stringify({ code }),
-  // })
-  // .then(response => {
-  //   console.log("response", response)
-  //   return response
-  // })
-  // .then(data => {
-  //   return data;
-  // });
-  // .then(data => {
-  //     return data;
-  // });
-
-
   const response = await fetch(`${serverURL}/auth/github/callback`, {
     method: 'POST',
     mode: 'cors',
@@ -69,10 +48,5 @@ export const handleLoginWithCode = async (code) => {
     },
     body: JSON.stringify({ code }),
   })
-  // .then(response => {
-  //   console.log("response", response.json())
-  //   return response.json()
-  // })
-  console.log("response", response)
   return response.json()
 };

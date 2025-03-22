@@ -8,14 +8,12 @@ function SidePanelContainer({children, className}) {
     <div 
       className={className}
       style={{
-        border: `0.1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`,
-        // width: '180px', 
+        border: `0.1px solid ${theme == 'light'? '#D3D3D3' : '#3C3C3C'}`,
         overflow: 'auto', 
         padding: '5px', 
         paddingTop: '0px', 
         borderRadius: '5px', 
-        maxHeight: '785px',
-        minHeight: '330px',
+        height: '100vh'
       }}
     >
     {children}

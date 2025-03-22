@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "topic": "Python",
+    "subcategory": "Object-Oriented Programming",
+    "type": "multiple-choice",
+    "question": "Which method is called when an object is instantiated in Python?",
+    "correct_answer": "__init__",
+    "incorrect_answers": [
+        "__str__",
+        "__new__",
+        "__del__"
+    ]
+  },
+  {
+      "id": 2,
+      "topic": "Python",
+      "subcategory": "Object-Oriented Programming",
+      "type": "true-false",
+      "question": "Inheritance allows a class to inherit methods and properties from another class.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+          "False"
+      ]
+  },
+  {
+      "id": 3,
+      "topic": "Python",
+      "subcategory": "File Handling & Serialization",
+      "type": "multiple-choice",
+      "question": "Which function is used to open a file in Python?",
+      "correct_answer": "open()",
+      "incorrect_answers": [
+          "read()",
+          "write()",
+          "file()"
+      ]
+  },
+  {
+      "id": 4,
+      "topic": "Python",
+      "subcategory": "File Handling & Serialization",
+      "type": "true-false",
+      "question": "The 'with' statement ensures that a file is closed properly after operations.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+          "False"
+      ]
+  }
+]

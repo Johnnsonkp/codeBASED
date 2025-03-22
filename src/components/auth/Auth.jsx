@@ -25,15 +25,12 @@ export default function Auth() {
   };
 
   const handleData = (data) => {
-    if (data && data?.status && data?.status !== 200) {
-      console.log("first if handle Data", data)
-      userLoginError(userDispatch, data.status)
-    } 
-    // else if (data && isUserAuth == false){
     if (data){
-      console.log("else handle Data", data)
       storeUserData(data, userDispatch)
       navigate('/dashboard');
+    }
+    else{
+      userLoginError(userDispatch, data.status)
     }
   }
   
@@ -50,23 +47,12 @@ export default function Auth() {
 
   const handleLogin = async (code) => {
     const data = await handleLoginWithCode(code);
-    // console.log("handleLogin", data)
-    // handleData(data);
-
-    if (data){
-      console.log("else handle Data", data)
-      storeUserData(data, userDispatch)
-      navigate('/dashboard');
-    }
-
-    // storeUserData(data, userDispatch)
-    // navigate('/dashboard');
+    handleData(data);
   }
   
   useEffect(() => {
     // if (code && isUserAuth == false) {
     if (code) {
-      console.log(code)
       handleLogin(code);
     }
   }, [code])

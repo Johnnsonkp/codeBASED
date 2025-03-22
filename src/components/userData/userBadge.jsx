@@ -64,11 +64,6 @@ function UserBadge({userInfo, theme}) {
       </button> : <UnknownUser />
     }
     
-      {/* <UserBadgeDropDown 
-        toggle={showDropDown}
-        theme={theme}
-        initiatUserSignOut={userSignout}
-      /> */}
       <DropDownMenu 
         toggle={showDropDown}
         theme={theme}

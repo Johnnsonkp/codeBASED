@@ -2,17 +2,19 @@ import React, {useContext} from 'react'
 
 import { ChallengeContext } from '../../store/context/ChallengeContext'
 import CompileBtn from '../CustomButtons/CompileBtn'
+import LangSmallDropDown from './LangSmallDropDown'
 import OutputDetails from '../outputWindow/OutputDetails'
 import OutputWindow from '../outputWindow/OutputWindow'
 import { useTheme } from '../theme-provider'
 
-function OutputWindows({handleCompile, userInput, handleSolutionCompile, count}) {
+function OutputWindows({handleCompile, userInput, handleSolutionCompile, count, languageOptions, setLanguage, language}) {
   const { theme } = useTheme();
   const {challengeState} = useContext(ChallengeContext)
   const user_stdout = challengeState.userSolutionExecutionState.userOutputDetails
   const user_processing = challengeState.userSolutionExecutionState.userProcessing 
   const solution_stdout = challengeState.solutionExecutionState.solutionOutputDetails
   const solution_processing = challengeState.solutionExecutionState.solutionProcessing
+  
 
   return (
     <div 
@@ -24,8 +26,9 @@ function OutputWindows({handleCompile, userInput, handleSolutionCompile, count})
         flexDirection: 'column', 
         textAlign: 'left', 
         flex: '0.1', 
-        marginLeft: '15px', 
+        // marginLeft: '12px',
         minHeight: '520px', 
+        maxHeight: '61vh',
         padding: '10px', 
       }}
     >
@@ -36,6 +39,9 @@ function OutputWindows({handleCompile, userInput, handleSolutionCompile, count})
             flexDirection: 'column'
           }}
         >
+          <div style={{position: 'relative', left: '30px'}}>
+            <LangSmallDropDown languageOptions={languageOptions} setLanguage={setLanguage} language={language}/>
+          </div>
           <OutputWindow outputDetails={user_stdout} title={"User Output"}/>
           <CompileBtn 
             onClick={() => handleCompile(userInput)} 

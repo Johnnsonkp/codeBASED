@@ -1,8 +1,10 @@
 import { IntergrationIcon, SettingsIcon, UserIcon } from './DropDownIcons';
 
 import React from 'react'
+import { useNavigate } from 'react-router';
 
 function DropDownMenu({toggle, theme, initiatUserSignOut, challengeState}) {
+  const navigate = useNavigate()
   
   const styles = {
     body: {
@@ -32,6 +34,8 @@ function DropDownMenu({toggle, theme, initiatUserSignOut, challengeState}) {
       borderRadius: "6px",
       transition: "background-color 0.2s",
       cursor: "pointer",
+      background: 'transparent',
+      width: '100%'
     },
     menuItemHover: {
       backgroundColor: "#e5e7eb",
@@ -58,15 +62,21 @@ function DropDownMenu({toggle, theme, initiatUserSignOut, challengeState}) {
   return (
     <div style={styles.container}>
       <nav style={styles.menuContainer}>
-        <a href="#" style={styles.menuItem}>
+        {/* <a onClick={() => navigate('/user-account')} href="/user-account" style={styles.menuItem}>
             <UserIcon style={styles.menuItemIcon}/> User Details
-        </a>
-        <a href="#" className="menu-item" style={styles.menuItem}>
-            <IntergrationIcon style={styles.menuItemIcon}/> Integrations
-        </a>
-        <a href="#" className="menu-item" style={styles.menuItem}>
+        </a> */}
+        <button onClick={() => navigate('/user-account')} style={styles.menuItem}>
+          <UserIcon style={styles.menuItemIcon}/> User Details
+        </button>
+        {/* <a href="#" className="menu-item" style={styles.menuItem}>
+            <IntergrationIcon style={styles.menuItemIcon}/> About Application
+        </a> */}
+        <button onClick={() => navigate('/user-account')} style={styles.menuItem}>
+          <IntergrationIcon style={styles.menuItemIcon}/> About Application
+        </button>
+        {/* <a href="#" className="menu-item" style={styles.menuItem}>
             <SettingsIcon style={styles.menuItemIcon}/> Settings
-        </a>
+        </a> */}
 
         <div style={{color: '#333', fontSize: '13px'}}>
           <p>User Score: {challengeState.score}</p>

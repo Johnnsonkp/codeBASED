@@ -64,13 +64,13 @@ function AuthTemplatePage({ loadDemoUser, githubAuth}) {
   };
 
   const imgBlock = {
-    width: "50%", // default width for smaller screens
+    width: "50%",
     border: '3px solid darkGray',
     borderRadius: '8px',
-    marginTop: "2rem", // equivalent to `mt-8`
+    marginTop: "2rem",
     "@media (minWidth: 768px)": {
-      width: "50%", // equivalent to `md:w-1/2`
-      marginTop: "0", // equivalent to `md:mt-0`
+      width: "50%",
+      marginTop: "0",
     },
     "@media (minWidth: 1024px)": {
       width: "66.6667%", 

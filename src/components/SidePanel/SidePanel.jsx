@@ -11,7 +11,7 @@ export default function SidePanel({selected, sideNavTitles, onClick, currentChal
     setBtnSelected(currentChallengeTitle)
   }, [currentChallengeTitle])
   return (
-      <>
+      <div style={{minWidth: '200px'}}>
         <H5Title 
           title={selected}
           defaultTitle={"Files"}
@@ -23,6 +23,6 @@ export default function SidePanel({selected, sideNavTitles, onClick, currentChal
           btnSelected={btnSelected}
           onClick={onClick}
         />
-      </>
+      </div>
   )
 }

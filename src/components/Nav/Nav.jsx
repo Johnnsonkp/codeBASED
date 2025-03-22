@@ -17,7 +17,12 @@ function Nav() {
     display: 'flex', 
     justifyContent: 'space-between', 
     alignItems: 'center',
-    margin: 'auto'
+    margin: 'auto',
+    marginBottom: '0px',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    background: 'transparent',
+    width: '98vw'
   }
   const InnerNav = {
     display: 'flex', 
@@ -29,15 +34,16 @@ function Nav() {
   const UserBadgeContainer = {
     border: '1px solid silver', 
     background: 'silver', 
-    height: '100%', 
+    height: '10%', 
     marginLeft: '10px', 
-    marginRight: '10px'
+    marginRight: '10px',
+    marginBottom: '0px'
   }
 
   const NavDivider = () => {
     return (
       <div style={UserBadgeContainer}>
-        <hr></hr>
+        <hr style={{}}></hr>
       </div>
     )
   }

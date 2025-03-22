@@ -1,0 +1,126 @@
+[
+  {
+      "id": 1,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which of the following is a valid way to print 'Hello, World!' in Python?",
+      "correct_answer": "print('Hello, World!')",
+      "incorrect_answers": [
+          "echo 'Hello, World!'",
+          "printf('Hello, World!')",
+          "console.log('Hello, World!'"
+      ]
+  },
+  {
+      "id": 2,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "true-false",
+      "question": "Python is a statically typed language.",
+      "correct_answer": "False",
+      "incorrect_answers": [
+          "True"
+      ]
+  },
+  {
+      "id": 3,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which data type is used to store a sequence of characters in Python?",
+      "correct_answer": "String",
+      "incorrect_answers": [
+          "Integer",
+          "Boolean",
+          "Float"
+      ]
+  },
+  {
+      "id": 4,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "What will `type(10.5)` return?",
+      "correct_answer": "<class 'float'>",
+      "incorrect_answers": [
+          "<class 'int'>",
+          "<class 'double'>",
+          "<class 'decimal'>"
+      ]
+  },
+  {
+      "id": 5,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "true-false",
+      "question": "Python uses indentation to define code blocks.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+          "False"
+      ]
+  },
+  {
+      "id": 6,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which of the following is NOT a valid variable name in Python?",
+      "correct_answer": "2_variable",
+      "incorrect_answers": [
+          "_variable",
+          "variable_name",
+          "Variable2"
+      ]
+  },
+  {
+      "id": 7,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which function is used to take user input in Python?",
+      "correct_answer": "input()",
+      "incorrect_answers": [
+          "scanf()",
+          "get_input()",
+          "read()"
+      ]
+  },
+  {
+      "id": 8,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "true-false",
+      "question": "Python is an interpreted language.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+          "False"
+      ]
+  },
+  {
+      "id": 9,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which keyword is used to define a function in Python?",
+      "correct_answer": "def",
+      "incorrect_answers": [
+          "function",
+          "define",
+          "fn"
+      ]
+  },
+  {
+      "id": 10,
+      "topic": "Python",
+      "subcategory": "Introduction",
+      "type": "multiple-choice",
+      "question": "Which of the following is the correct way to declare a comment in Python?",
+      "correct_answer": "# This is a comment",
+      "incorrect_answers": [
+          "// This is a comment",
+          "/* This is a comment */",
+          "-- This is a comment"
+      ]
+  }
+]

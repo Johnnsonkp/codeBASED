@@ -1,6 +1,7 @@
 import { LeftSlideButton, RightSlideButton } from '../Buttons/SliderButtons'
 import React, { useState } from 'react'
 
+import Label from '../Buttons/Label'
 import NumBubble from '../Buttons/NumBubble'
 
 // TODO: Implement the selected button css stying properly
@@ -15,25 +16,12 @@ const TopicsCarousel = ({topicTitles, selected, theme, setSelected}) => {
     transition: 'display 3s ease-in-put', 
     alignItems: 'center', 
     overflow: 'hidden', 
-    maxWidth: '68vw',
     borderLeft: '5px solid rgba(255, 255, 255, 0)', 
     borderRight: '20px solid rgba(255, 255, 255, 0)',
-    // minWidth: "calc(100% - 35%)",
-    // maxWidth: '50vw'
-    width: "calc(100% - 37%)",
+    width: "calc(100% - 10%)",
+    maxWidth: '1000px',
     boxSize: 'border-width'
   }
-  // const carouselBtn =  {
-  //   margin: '5px', 
-  //   fontSize: '12px',
-  //   border: selected === selectedButton ? '1px solid rgb(80, 250, 123)' : 
-  //     `${theme == 'light'? '1px solid #EBEBEB' : '1px solid #3C3C3C'}`, 
-  //   backgroundColor: selected == selectedButton && 'rgb(80, 250, 123)',
-  //   color: selected === selectedButton && '#333',
-  //   borderRadius: '5px',
-  //   padding: '6px',
-  //   display: 'flex'
-  // }
 
   const handleNavigationClick = (direction) => {
     if (direction === "left" && startIndex > 0) {
@@ -61,7 +49,6 @@ const TopicsCarousel = ({topicTitles, selected, theme, setSelected}) => {
         index >= startIndex && index <= endIndex &&
         <button 
           key={index} 
-          onClick={() => handleSelection(title)}
           style={{
             margin: '5px', 
             fontSize: '12px',
@@ -72,7 +59,11 @@ const TopicsCarousel = ({topicTitles, selected, theme, setSelected}) => {
             borderRadius: '5px',
             padding: '6px',
             display: 'flex',
+            alignContent: 'center',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
+          onClick={() => handleSelection(title)}
         >
           <NumBubble num={index + 1} /> {title}
         </button>
@@ -82,11 +73,9 @@ const TopicsCarousel = ({topicTitles, selected, theme, setSelected}) => {
   
   return (
     <>
-      <LeftSlideButton onClick={() => handleNavigationClick("left")}
-      />
-        <CarouselItems />
-      <RightSlideButton onClick={() => handleNavigationClick("right")}
-      />
+      <LeftSlideButton onClick={() => handleNavigationClick("left")}/>
+      <RightSlideButton onClick={() => handleNavigationClick("right")}/>
+      <CarouselItems />
     </>
   );
 }
