@@ -4,8 +4,8 @@ export async function getSelectedCodeChallenge(codingChallengeName, selected, di
   const response = await fetch(
     `${serverURL}/api/repos/challenge?` +
       new URLSearchParams({
-        selectedChallenge: selected !== null? codingChallengeName : `/${codingChallengeName}/`,
-        selected_Repo: selected !== null? `/${selected}/` : '',
+        selectedChallenge: selected !== null && selected !== false? codingChallengeName : `/${codingChallengeName}/`,
+        selected_Repo: selected !== null && selected !== false? `/${selected}/` : '',
         directory: dirUpdate
       })
   );

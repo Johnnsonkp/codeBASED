@@ -1,5 +1,5 @@
 import { LeftSlideButton, RightSlideButton } from '../Buttons/SliderButtons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Label from '../Buttons/Label'
 import NumBubble from '../Buttons/NumBubble'
@@ -42,6 +42,13 @@ const TopicsCarousel = ({topicTitles, selected, theme, setSelected}) => {
     setSelectedButton(title)
     setSelected(title)
   }
+
+  useEffect(() => {
+    if(topicTitles == null){
+      setSelected(null)
+    }
+
+  }, [topicTitles])
 
   const CarouselItems = () => (
     <div style={topicBtnContainer}>

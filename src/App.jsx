@@ -166,8 +166,9 @@ function App() {
   useEffect(() => {
     if(selected || directories){
       getSelectedRepo(selected, dirUpdate)
-        .then(data => 
+        .then(data => {
           setSideNavTitles(data)
+        }
         )
     }
   }, [selected])
