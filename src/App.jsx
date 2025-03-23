@@ -38,7 +38,7 @@ function App() {
   const [count, setCount] = useState('')
   const [userInput, setUserInput] = useState(challengeState.selectedCodeChallenge.startingCode)
   const [selected, setSelected] = useState(false)
-  const [sideNavTitles, setSideNavTitles] = useState()
+  const [sideNavTitles, setSideNavTitles] = useState([])
   const [language, setLanguage] = useState(languageOptions.filter((lang) => lang.value == 'c'))
   const [currentChallengeTitle, setCurrentChallengeTitle] = useState(challengeState.selectedCodeChallenge.title);
   const tabs = ["Code Challenge", "Code Explaination"]
@@ -111,6 +111,7 @@ function App() {
     if (dirUpdate) {
       getSelectedRepoOnDropDown(dirUpdate, userInformation.login).then(data => {
         setDirectories(data.directories?.length ? data.directories : null);
+        setSelected(null)
         setSideNavTitles(data.files?.length ? data.files : null);
       });
     }

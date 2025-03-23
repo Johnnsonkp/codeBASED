@@ -1,11 +1,18 @@
 import React from 'react'
 
 export default function SidePanelList({sideNavTitles, setBtnSelected, onClick, btnSelected}) {
+  
+  // console.log("side Array", sideNavTitles)
+  // console.log("side Array type", typeof(sideNavTitles))
+  // console.log("side:", sideNavTitles, "Type:", typeof sideNavTitles, "Is array:", Array.isArray(sideNavTitles));
+
+  console.log("SidePanelList.jsx - side:", sideNavTitles, "Type:", typeof sideNavTitles, "Is array:", Array.isArray(sideNavTitles));
+
   return (
     <ul 
       style={{listStyle: 'none', padding: '0px'}}
     >
-      {sideNavTitles && Array.isArray(sideNavTitles)? sideNavTitles?.map((title, index) => (
+      {Array.isArray(sideNavTitles) && sideNavTitles?.map((title, index) => (
         <li key={index} style={{fontSize: '12px', margin: '5px'}} 
           onClick={() => setBtnSelected(title)
         }>
@@ -22,7 +29,9 @@ export default function SidePanelList({sideNavTitles, setBtnSelected, onClick, b
           >{title}
         </button>
         </li>
-      )): ''}
+      ))
+      // : ''
+      }
     </ul>
   )
 }

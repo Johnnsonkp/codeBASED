@@ -16,12 +16,17 @@ function SidePanelComb(
   const {challengeState, challengeDispatch} = useContext(ChallengeContext)
 
   const handleLoadSelectedChallenge = (e) => {
+    console.log("handleLoadSelectedChallenge", "selected", selected, "dirUpdate", dirUpdate)
     loadSelectedChallenge(e.target.innerText, selected, dirUpdate, challengeDispatch)
   }
+
+  // console.log("SidePanelList.jsx sidePanelCombined:", sideNavTitles, "Type:", typeof sideNavTitles, "Is array:", Array.isArray(sideNavTitles));
+
+  console.log("selected", selected, "dirUpdate", dirUpdate)
   
   return (
     <>
-      {sideNavTitles?
+      {Array.isArray(sideNavTitles) && sideNavTitles?
         <SidePanel 
           onClick={(e) => handleLoadSelectedChallenge(e)} 
           selected={selected} 
