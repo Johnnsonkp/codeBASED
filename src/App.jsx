@@ -123,13 +123,17 @@ function App() {
         setSideNavTitles(data.files?.length ? data.files : null);
       });
     }
+
+  }, [dirUpdate]);
+
+  useEffect(() => {
     if(selected || directories){
       getSelectedRepo(selected, dirUpdate)
         .then(data => {
           setSideNavTitles(data)
         })
     }
-  }, [dirUpdate, selected]);
+  }, [selected])
 
   useEffect(() => {
     if (userInformation == null && isUserAuth == true){
