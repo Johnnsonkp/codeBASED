@@ -19,10 +19,17 @@ const SingleQuizCard = ({ id, topic, subcategory, type, question, correct_answer
     shuffleArray(options)
     
     return options.map((option, index) => (
-      <div key={index} className="option" onClick={() => optionSelected(option, correct_answer)}>
-        <input type="checkbox"  className="checkbox" />
-        <label className="label" value={option}>{option}</label>
-      </div>
+      solved == false?
+
+        <div key={index} className="option" onClick={() => optionSelected(option, correct_answer)}>
+          <input type="checkbox"  className="checkbox" />
+          <label className="label" value={option}>{option}</label>
+        </div>
+         :
+        <div disabled={true} key={index} className="option" onClick={() => optionSelected(option, correct_answer)}>
+          <input disabled={true} type="checkbox"  className="checkbox" />
+          <label disabled className="label" value={correct_answer}>{correct_answer}</label>
+       </div>
     ))
   }
 
