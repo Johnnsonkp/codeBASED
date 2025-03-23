@@ -21,12 +21,12 @@ const Panel = ({
   setBlur,
 }) => {
   const {theme, setTheme} = useTheme()
+  const tabs = ["Code Challenge", "Code Explaination"]
   
   const tabContent = {
-    // width: '100%',
     width: '33vw',
+    maxWidth: '465px',
     margin: '0px',
-    // background: '#282C34'
   }
   const CodeBlockOuter = {
     position: 'relative', 
@@ -41,9 +41,7 @@ const Panel = ({
     border: `${processing? "1px solid blue" : `0.1px solid ${theme == 'light'? '#EBEBEB' : '#3C3C3C'}`}`,
     display: `${tabsContainer == "Code Challenge"? 'block' : 'none'}`,
     filter: `${mode == "solution" && blur? 'blur(2px)' : ''}`,
-    // background: `${tabsContainer == "Code Challenge"? "black" : 'white'}`
   }
-  const tabs = ["Code Challenge", "Code Explaination"]
 
   return (
   <div style={{width: '32.8vw', margin: '2px',  background: `${theme == 'light'? '#fff' : '#282C34'}` }}>
@@ -68,7 +66,6 @@ const Panel = ({
                 minHeight={'725px'}
                 theme={`${theme == 'light'? 'light' : 'dark'}`}
                 className={`tab-panel ${tabsContainer == "Code Challenge"? 'activePanel' : ''} `}
-                // className={`tab-panel ${tabsContainer == "Code Challenge"? '' : 'activePanel'} `}
               /> 
               {mode == "solution" ? <ShowHideSolution theme={theme} blur={blur} setBlur={setBlur}/> : ""}
             </Suspense> 

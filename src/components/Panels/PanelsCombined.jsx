@@ -23,7 +23,7 @@ const PanelsCombined = (
     const solution_processing = challengeState.solutionExecutionState.solutionProcessing;
 
   return (
-    <div style={{display: 'flex', maxWidth: '1100px', width:'66vw'}}>
+    <div style={{display: 'flex', maxWidth: '1100px', width:'66.4vw'}}>
       <Panel
         mode={"user"} 
         theme={theme}
