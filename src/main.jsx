@@ -1,11 +1,10 @@
 import './index.css'
 
 import { BrowserRouter, Route, Routes } from 'react-router';
-import React, {Suspense, lazy} from 'react';
+import React, {Suspense, lazy, useEffect} from 'react';
 
 import ChallengeProvider from './store/challengeProvider.jsx';
 import LoadingOverlay from './components/Common/Loading/Loading.jsx';
-// import Nav from './components/Nav/Nav.jsx';
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
 import { ThemeProvider } from './components/theme-provider.tsx';

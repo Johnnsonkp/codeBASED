@@ -51,8 +51,7 @@ export default function Auth() {
   }
   
   useEffect(() => {
-    // if (code && isUserAuth == false) {
-    if (code) {
+    if (code && isUserAuth == false) {
       handleLogin(code);
     }
   }, [code])

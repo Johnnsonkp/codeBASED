@@ -22,7 +22,7 @@ function Nav() {
     paddingLeft: '10px',
     paddingRight: '10px',
     background: 'transparent',
-    width: '98vw'
+    // width: '98vw'
   }
   const InnerNav = {
     display: 'flex', 

@@ -13,6 +13,21 @@ export const compilerExecution = {
   resetOutputs: () => {}, // Resets output states after execution
 }
 
+export const selectedCodeChallenge = {
+  title: '',
+  code: '',
+  startingCode: '',
+  update: '',
+  directory: '',
+  repository: '',
+  file: '',
+  url: ''
+}
+
+export const userRepositories = {
+  repos: ''
+}
+
 export const challengeInitialState = {
   mode: "Code",
   score: 0,
@@ -23,6 +38,8 @@ export const challengeInitialState = {
   processingUserOutput: false,
   processingSolutionOutput: false,
   userCompile: {outputDetails: ''},
+  userRepositories,
+  selectedCodeChallenge,
   solutionExecutionState,
   userSolutionExecutionState
 }

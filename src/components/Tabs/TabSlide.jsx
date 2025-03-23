@@ -2,12 +2,11 @@ import './tabs.css'
 
 import React, { useState } from 'react'
 
-import LanguageNav from '../Languages/LanguageNav';
 import { useTheme } from '../theme-provider';
 
-function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelectedLangOnly}) {
+function TabSlide({tabs, language, setTabsContainer, tabsContainer}) {
   const [activeTab, setActiveTab] = useState()
-  const theme = useTheme();
+  const {theme, setTheme} = useTheme();
   
   function handleActiveTabSelect(tab){
     if(tab == tabs[0]){
@@ -19,13 +18,6 @@ function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelected
       setTabsContainer(tab);
     }
   }
-
-  const tabStyle = {
-    borderLeft: `1px solid ${theme.theme == 'light'? '#D3D3D3' : '#3C3C3C'}`,
-    borderRight: `1px solid ${theme.theme == 'light'? '#D3D3D3' : '#3C3C3C'}`,
-    fontSize: '11px'
-  }
-
   return (
     <div 
       style={{
@@ -33,25 +25,24 @@ function TabSlide({tabs, language, setTabsContainer, tabsContainer, showSelected
         maxHeight: '700px', 
         width: '100%',
         borderRadius: '5px',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        background: `${theme == "light"? "#F4F4F4" : '#242424'}`
       }}
     >
-      <div 
-        style={{
-          borderLeft: `2px solid ${theme.theme == 'light'? '#D3D3D3' : '#3C3C3C'}`,
-          borderRight: `2px solid ${theme.theme == 'light'? '#D3D3D3' : '#3C3C3C'}`,
-        }}
-        className="tab-container"
-      >
+      <div className="tab-container">
         {tabs && tabs.map((tab, index) => (
-            <button
-              style={{fontSize: '11px'}} 
-              onClick={() => handleActiveTabSelect(tab)}
-              key={index} 
-              className={`tab-button ${tabsContainer == tabs[index]? 'active' : ''}`} 
-            >
-              {tab}
-            </button>
+          <button
+            style={{
+              fontSize: '11px',
+              background: `${tabsContainer == tabs[index]? theme == "light"? '#fff' : '#282C34' : "transparent"}`,
+              color: `${theme == "light"? "#333" : '#fff'}`
+            }} 
+            onClick={() => handleActiveTabSelect(tab)}
+            key={index} 
+            className={`tab-button ${tabsContainer == tabs[index]? 'active' : ''}`} 
+          >
+            {tab}
+          </button>
         ))}
       </div>
     </div>

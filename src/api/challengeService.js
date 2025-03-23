@@ -1,16 +1,28 @@
 const serverURL = import.meta.env.VITE_APP_PROD_SERVER_URL || import.meta.env.VITE_APP_DEV_SERVER_URL
 
 export async function getSelectedCodeChallenge(codingChallengeName, selected, dirUpdate) {
-  const response = await fetch(
-    `${serverURL}/api/repos/challenge?` +
-      new URLSearchParams({
+  try {
+    const response = await fetch(`${serverURL}/api/repos/challenge`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        "Accept": "application/vnd.github+json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify({ 
         selectedChallenge: selected !== null && selected !== false? codingChallengeName : `/${codingChallengeName}/`,
         selected_Repo: selected !== null && selected !== false? `/${selected}/` : '',
         directory: dirUpdate
-      })
-  );
-  const codeChallenge = await response.text();
-  return codeChallenge; 
+      }),
+    });
+    const codeChallenge = await response.json();
+
+    if(codeChallenge){
+      return codeChallenge
+    }
+  }catch (err) {
+    console.log(err.message);
+  }
 }
 
 export async function getSelectedRepo(repo, dirUpdate) {

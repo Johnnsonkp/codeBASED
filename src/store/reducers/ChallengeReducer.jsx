@@ -44,6 +44,15 @@ export const challengeReducer = (state, action) => {
         },
       };
     }
+    case "SET_USER_REPOS":{
+      return {
+        ...state,
+        userRepositories: {
+          ...state.userRepositories,
+          repos: action.payload
+        },
+      };
+    }
     case "SET_SOLUTION_OUTPUT":{
       return {
         ...state,
@@ -51,6 +60,21 @@ export const challengeReducer = (state, action) => {
           ...state.solutionExecutionState,
           solutionOutputDetails: action.payload,
           solutionProcessing: false
+        },
+      };
+    }
+    case "SET_SOLUTION_CHALLENGE":{
+      return {
+        ...state,
+        selectedCodeChallenge: action.payload,
+      };
+    }
+    case "SOLUTION_CHALLENGE_UPDATED":{
+      return {
+        ...state,
+        selectedCodeChallenge: {
+          ...state.selectedCodeChallenge,
+          update: false
         },
       };
     }

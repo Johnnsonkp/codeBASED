@@ -1,4 +1,6 @@
-import React from "react";
+import React, {useContext} from "react";
+
+import { UserContext } from "../../store/context/UserContext";
 
 const UserAccount = () => {
   const styles = {
@@ -80,6 +82,7 @@ const UserAccount = () => {
       backgroundColor: "white",
       fontSize: "14px",
       transition: "0.2s ease-in-out",
+      color: '#333'
     },
     inputFieldFocus: {
       borderColor: "#2563eb",
@@ -106,60 +109,56 @@ const UserAccount = () => {
     },
   };
 
+  const {userState} = useContext(UserContext)
+  const userInfo = userState.user
+
+  const UserDetails = () => {
+
+    return (
+      <div style={styles.formGrid}>
+        {[
+          { label: "Username", type: "text", value: userInfo.login },
+          { label: "Email Address", type: "email", value: userInfo.email || "" },
+          { label: "Name", type: "text", value: userInfo.name },
+          { label: "City", type: "text", value: userInfo.location },
+        ].map((field, index) => (
+          <div key={index} style={styles.inputGroup}>
+            <label style={styles.label}>{field.label}</label>
+            <input type={field.type} style={styles.inputField} value={field.value} readOnly />
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   return (
     <section style={styles.accountContainer}>
       <div style={styles.accountWrapper}>
         <div style={styles.card}>
-          {/* Header */}
           <div style={styles.cardHeader}>
-            <h6 style={styles.title}>My Account</h6>
+            <div style={{display: 'flex', flexDirection: 'column', margin: '0px', alignItems: 'flex-start'}}>
+              <p style={styles.title}>{userInfo.name || userInfo.login}</p>
+              <p style={styles.title}>@{userInfo.login}</p>
+              <button>{userInfo.html_url}</button>
+            </div>
+
+            <div>
+              <img style={{width: '90px', borderRadius: '8px'}} src={userInfo.avatar_url} />
+              <div style={{display: 'flex'}}>
+                <p style={{color: '#333'}}>Following: {userInfo.following}</p>
+                <p style={{color: '#333'}}>Followers: {userInfo.followers}</p>
+              </div>
+            </div>
           </div>
 
-          {/* Form */}
           <div style={styles.formContainer}>
             <form>
-              {/* User Information */}
-              <h6 style={styles.sectionTitle}>User Information</h6>
-              <div style={styles.formGrid}>
-                {[
-                  { label: "Username", type: "text", value: "lucky.jesse" },
-                  { label: "Email Address", type: "email", value: "jesse@example.com" },
-                  { label: "First Name", type: "text", value: "Lucky" },
-                  { label: "Last Name", type: "text", value: "Jesse" },
-                ].map((field, index) => (
-                  <div key={index} style={styles.inputGroup}>
-                    <label style={styles.label}>{field.label}</label>
-                    <input type={field.type} style={styles.inputField} value={field.value} readOnly />
-                  </div>
-                ))}
-              </div>
-
+              <UserDetails />
               <hr style={styles.divider} />
-
-              {/* Contact Information */}
-              <h6 style={styles.sectionTitle}>Contact Information</h6>
-              <div style={styles.formGrid}>
-                {[
-                  { label: "Address", type: "text", value: "Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" },
-                  { label: "City", type: "text", value: "New York" },
-                  { label: "Country", type: "text", value: "United States" },
-                  { label: "Postal Code", type: "text", value: "Postal Code" },
-                ].map((field, index) => (
-                  <div key={index} style={styles.inputGroup}>
-                    <label style={styles.label}>{field.label}</label>
-                    <input type={field.type} style={styles.inputField} value={field.value} readOnly />
-                  </div>
-                ))}
-              </div>
-
-              <hr style={styles.divider} />
-
-              {/* About Me */}
-              <h6 style={styles.sectionTitle}>About Me</h6>
               <div style={styles.inputGroup}>
                 <label style={styles.label}>About Me</label>
-                <textarea style={styles.inputField} rows="4" readOnly>
-                  A beautiful UI Kit and Admin for JavaScript & Tailwind CSS. It is Free and Open Source.
+                <textarea style={styles.inputField} rows="4" readOnly value={userInfo.bio}>
+                  {userInfo.bio}
                 </textarea>
               </div>
             </form>

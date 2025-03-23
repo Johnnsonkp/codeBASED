@@ -1,13 +1,29 @@
+import { ChallengeContext } from '../../store/context/ChallengeContext'
 import React from 'react'
 import SidePanel from './SidePanel'
+import { loadSelectedChallenge } from '../../store/actions/challengeActions'
+import { useContext } from 'react';
 
-function SidePanelComb({sideNavTitles, loadSelectedChallenge, selected, directories, currentChallengeTitle, setSelected, dirUpdate}) {
+function SidePanelComb(
+  {
+    sideNavTitles, 
+    selected, 
+    directories, 
+    currentChallengeTitle, 
+    setSelected, 
+    dirUpdate, 
+  }) {
+  const {challengeState, challengeDispatch} = useContext(ChallengeContext)
+
+  const handleLoadSelectedChallenge = (e) => {
+    loadSelectedChallenge(e.target.innerText, selected, dirUpdate, challengeDispatch)
+  }
   
   return (
     <>
       {sideNavTitles?
         <SidePanel 
-          onClick={(e) => loadSelectedChallenge(e.target.innerText, selected, dirUpdate) } 
+          onClick={(e) => handleLoadSelectedChallenge(e)} 
           selected={selected} 
           sideNavTitles={sideNavTitles}
           topicTitles={directories}

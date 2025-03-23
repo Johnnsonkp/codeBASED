@@ -4,17 +4,17 @@ import './components/Tabs/tabs.css'
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import {checkSolutionStatus, checkStatus} from './components/CodeCompiler/status.js'
 import { compileHeaders, compileOptions } from './Service/CompileAPI.js';
-import { fetchDefaultRepos, getAllRepos, getSelectedCodeChallenge, getSelectedRepo, getSelectedRepoOnDropDown } from './api/challengeService.js';
+import { fetchDefaultRepos, getSelectedRepo, getSelectedRepoOnDropDown } from './api/challengeService.js';
 
 import { ChallengeContext } from './store/context/ChallengeContext.jsx';
 import LoadingOverlay from './components/Common/Loading/Loading.jsx';
 import { UserContext } from './store/context/UserContext.jsx';
 import axios from "axios";
+import { codingChallengeUpdated } from './store/actions/challengeActions.jsx';
 import { dummyTopicTitles } from './helpers/DummyData.js';
-import { extractCodeInstructions } from './helpers/CodeExtract.js';
 import { handleCompareOutput } from './store/actions/challengeActions.jsx';
-import { isEmptyObj } from './helpers/utils.js';
 import { languageOptions } from './helpers/Language';
+import { loadUserContents } from './store/actions/challengeActions.jsx';
 import { postDataToAPIv2 } from './Service/CompileAPI.js';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router';
@@ -29,27 +29,26 @@ const SidePanelContainer = lazy(() => import('./components/SidePanelComp/SidePan
 const TopicsCarousel = lazy(() => import('./components/TopicsCarousel/Topics.jsx'));
 
 function App() {
+  const theme = useTheme();
   const {userState} = useContext(UserContext)
   const {challengeState, challengeDispatch} = useContext(ChallengeContext)
   const isUserAuth = userState.authorised
   const userInfo = userState.user
-  const [userInformation, setUserInformation] = useState(userInfo)
+  const [userInformation, setUserInformation] = useState(null)
   const navigate = useNavigate()
-  
   const [count, setCount] = useState('')
-  const [userInput, setUserInput] = useState()
+  const [userInput, setUserInput] = useState(challengeState.selectedCodeChallenge.startingCode)
   const [selected, setSelected] = useState(false)
   const [sideNavTitles, setSideNavTitles] = useState()
   const [language, setLanguage] = useState(languageOptions.filter((lang) => lang.value == 'c'))
-  const [currentChallengeTitle, setCurrentChallengeTitle] = useState(null);
+  const [currentChallengeTitle, setCurrentChallengeTitle] = useState(challengeState.selectedCodeChallenge.title);
   const tabs = ["Code Challenge", "Code Explaination"]
   const [tabsContainer, setTabsContainer] = useState(tabs[0])
   const [tabsContainer1, setTabsContainer1] = useState(tabs[0])
   const [directories, setDirectories] = useState()
-  const [userRepos, setUserRepos] = useState()
+  const [userRepos, setUserRepos] = useState(challengeState.userRepositories.repos)
   const [dirUpdate, setDirUpdate] = useState()
   const [repoOnDropDownSelect, setRepoOnDropDownSelect] = useState()
-  const theme = useTheme();
   const user_stdout = challengeState.userSolutionExecutionState.userOutputDetails
   const solution_stdout = challengeState.solutionExecutionState.solutionOutputDetails
 
@@ -102,25 +101,6 @@ function App() {
     setCount(val);
   }, []);
 
-  const nextChallenge = () => {
-    sideNavTitles && sideNavTitles.map((title, index) => {
-      if (title == currentChallengeTitle){
-        let nextChallenge = sideNavTitles[index + 1] || sideNavTitles[0]
-        return loadSelectedChallenge(nextChallenge, selected)
-      }
-    })
-  }
-
-  function loadSelectedChallenge(codingChallengeName, selected, dirUpdate){
-    getSelectedCodeChallenge(codingChallengeName, selected, dirUpdate)
-    .then(data => {
-      let startingCodeBlock = extractCodeInstructions(data);
-      setUserInput(startingCodeBlock);
-      setCount(data);
-      setCurrentChallengeTitle(codingChallengeName);
-    })
-  }
-
   const handleUserContents = (data) => {
     let userRepos = data;
     let repo = userRepos?.filter((repo) => repo === "holbertonschool-low_level_programming");
@@ -136,24 +116,6 @@ function App() {
       })
   }
 
-  const loadUserContents = useCallback(() => {
-    getAllRepos(userInformation)
-    .then((data) => {
-      setUserRepos(data);
-      handleUserContents(data);
-    })
-  }, [userInformation]);
-
-  useEffect(() => {
-    if (userInformation && userInformation.id && isUserAuth && !userRepos){
-      loadUserContents()
-    } 
-    else{
-      setUserRepos(null);
-      setDirectories(dummyTopicTitles);
-    }
-  }, [userInformation, isUserAuth]);
-
   useEffect(() => {
     if (dirUpdate) {
       getSelectedRepoOnDropDown(dirUpdate, userInformation.login).then(data => {
@@ -161,37 +123,35 @@ function App() {
         setSideNavTitles(data.files?.length ? data.files : null);
       });
     }
-  }, [dirUpdate]);
-
-  useEffect(() => {
     if(selected || directories){
       getSelectedRepo(selected, dirUpdate)
         .then(data => {
           setSideNavTitles(data)
-        }
-        )
+        })
     }
-  }, [selected])
+  }, [dirUpdate, selected]);
 
   useEffect(() => {
-    if (isEmptyObj(userInformation) && isUserAuth == true){
+    if (userInformation == null && isUserAuth == true){
       setUserInformation(userInfo)
+      loadUserContents(userInfo, setUserRepos, handleUserContents, challengeDispatch, dummyTopicTitles)
+    }
+    else{
+      alert("user not authorised")
+      navigate("/");
     }
   }, [isUserAuth])
 
   useEffect(() => {
-    if (!isUserAuth){
-      alert("user not authorised")
-      navigate("/");
+    if(challengeState.selectedCodeChallenge.update == true){
+      let cchallenge = challengeState.selectedCodeChallenge
+      
+      setCount(cchallenge.code)
+      setUserInput(challengeState.selectedCodeChallenge.startingCode)
+      setCurrentChallengeTitle(cchallenge.title)
+      codingChallengeUpdated(challengeDispatch)
     }
-  }, [])
-
-  const container = {
-    display: 'flex',
-    flexDirection: 'row',
-    position: 'absolute'
-  }
-
+  }, [challengeState.selectedCodeChallenge.update])
   
   return (
     <Suspense fallback={<LoadingOverlay />}>
@@ -205,12 +165,17 @@ function App() {
         userRepos={userRepos}
         repoOnDropDownSelect={repoOnDropDownSelect}
       />
-      <div style={container}>
-        <div >
+      <div 
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          position: 'absolute'
+        }}
+      >
+        <div>
           <SidePanelContainer>
-            <SidePanelComb 
+            <SidePanelComb
               sideNavTitles={sideNavTitles} 
-              loadSelectedChallenge={loadSelectedChallenge} 
               selected={selected} 
               directories={directories} 
               currentChallengeTitle={currentChallengeTitle} 
@@ -244,7 +209,10 @@ function App() {
       </div>
       <Footer 
         compareOutputs={compareOutputs}
-        nextChallenge={nextChallenge}   
+        sideNavTitles={sideNavTitles} 
+        currentChallengeTitle={currentChallengeTitle} 
+        selected={selected} 
+        dirUpdate={dirUpdate}
       /> 
   </Suspense>
   )

@@ -2,10 +2,15 @@ import '../../App.css'
 
 import { ChallengeContext } from '../../store/context/ChallengeContext'
 import DefaultButton from '../Buttons/DefaultButton'
+import { nextChallenge } from '../../store/actions/challengeActions'
 import { useContext } from 'react'
 
-function Footer({ compareOutputs, nextChallenge}) {
-  const {challengeState} = useContext(ChallengeContext)
+function Footer({ compareOutputs, sideNavTitles, currentChallengeTitle, selected, dirUpdate}) {
+  const {challengeState, challengeDispatch} = useContext(ChallengeContext)
+
+  const handleNextChallenge = () => {
+    nextChallenge(sideNavTitles, currentChallengeTitle, selected, dirUpdate, challengeDispatch)
+  }
   
   return (
     <div 
@@ -30,7 +35,7 @@ function Footer({ compareOutputs, nextChallenge}) {
           </div>
           <div style={{textAlign: 'right', width: '', display: 'flex', justifyContent: 'space-evenly'}}>
             <DefaultButton title={'Check Output'} onClick={() => compareOutputs()}/>
-            <DefaultButton title={'Next'} onClick={() => nextChallenge()}/>
+            <DefaultButton title={'Next'} onClick={() => handleNextChallenge()}/>
           </div>
         </div>
       </div>
