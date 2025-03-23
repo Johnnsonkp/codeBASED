@@ -5,7 +5,7 @@ export default function SidePanelList({sideNavTitles, setBtnSelected, onClick, b
     <ul 
       style={{listStyle: 'none', padding: '0px'}}
     >
-      {sideNavTitles && sideNavTitles.map((title, index) => (
+      {sideNavTitles && Array.isArray(sideNavTitles)? sideNavTitles?.map((title, index) => (
         <li key={index} style={{fontSize: '12px', margin: '5px'}} 
           onClick={() => setBtnSelected(title)
         }>
@@ -22,7 +22,7 @@ export default function SidePanelList({sideNavTitles, setBtnSelected, onClick, b
           >{title}
         </button>
         </li>
-      ))}
+      )): ''}
     </ul>
   )
 }
