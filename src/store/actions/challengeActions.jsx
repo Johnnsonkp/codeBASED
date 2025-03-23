@@ -62,6 +62,12 @@ export const loadUserContents = (userInformation, setUserRepos, handleUserConten
   })
 }
 
+export const handleCompile = (user_stdout, solution_stdout, challengeDispatch) => {
+  const userOutput = btoa(user_stdout?.stdout);
+  const solutionOutput = btoa(solution_stdout?.stdout);
+  handleCompareOutput(userOutput, solutionOutput, challengeDispatch)
+}
+
 export const codingChallengeUpdated = (challengeDispatch) => {
   challengeDispatch({type: "SOLUTION_CHALLENGE_UPDATED"})
 }

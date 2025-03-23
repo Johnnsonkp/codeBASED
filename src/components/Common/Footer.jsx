@@ -2,14 +2,22 @@ import '../../App.css'
 
 import { ChallengeContext } from '../../store/context/ChallengeContext'
 import DefaultButton from '../Buttons/DefaultButton'
+import { handleCompile } from '../../store/actions/challengeActions'
 import { nextChallenge } from '../../store/actions/challengeActions'
 import { useContext } from 'react'
 
-function Footer({ compareOutputs, sideNavTitles, currentChallengeTitle, selected, dirUpdate}) {
+function Footer({ sideNavTitles, currentChallengeTitle, selected, dirUpdate}) {
   const {challengeState, challengeDispatch} = useContext(ChallengeContext)
 
   const handleNextChallenge = () => {
     nextChallenge(sideNavTitles, currentChallengeTitle, selected, dirUpdate, challengeDispatch)
+  }
+
+  const actionCompareOutput = () => {
+    const user_stdout = challengeState.userSolutionExecutionState.userOutputDetails
+    const solution_stdout = challengeState.solutionExecutionState.solutionOutputDetails
+
+    handleCompile(user_stdout.stdout, solution_stdout.stdout, challengeDispatch)
   }
   
   return (
@@ -34,7 +42,7 @@ function Footer({ compareOutputs, sideNavTitles, currentChallengeTitle, selected
             <DefaultButton title={`Score: ${challengeState.score}`} />
           </div>
           <div style={{textAlign: 'right', width: '', display: 'flex', justifyContent: 'space-evenly'}}>
-            <DefaultButton title={'Check Output'} onClick={() => compareOutputs()}/>
+            <DefaultButton title={'Check Output'} onClick={() => actionCompareOutput()}/>
             <DefaultButton title={'Next'} onClick={() => handleNextChallenge()}/>
           </div>
         </div>

@@ -12,7 +12,6 @@ import { UserContext } from './store/context/UserContext.jsx';
 import axios from "axios";
 import { codingChallengeUpdated } from './store/actions/challengeActions.jsx';
 import { dummyTopicTitles } from './helpers/DummyData.js';
-import { handleCompareOutput } from './store/actions/challengeActions.jsx';
 import { languageOptions } from './helpers/Language';
 import { loadUserContents } from './store/actions/challengeActions.jsx';
 import { postDataToAPIv2 } from './Service/CompileAPI.js';
@@ -49,14 +48,6 @@ function App() {
   const [userRepos, setUserRepos] = useState(challengeState.userRepositories.repos)
   const [dirUpdate, setDirUpdate] = useState()
   const [repoOnDropDownSelect, setRepoOnDropDownSelect] = useState()
-  const user_stdout = challengeState.userSolutionExecutionState.userOutputDetails
-  const solution_stdout = challengeState.solutionExecutionState.solutionOutputDetails
-
-  const compareOutputs = () => {
-    const userOutput = btoa(user_stdout?.stdout);
-    const solutionOutput = btoa(solution_stdout?.stdout);
-    handleCompareOutput(userOutput, solutionOutput, challengeDispatch)
-  }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
   const handleCompile = (userInput) => {
@@ -212,7 +203,6 @@ function App() {
           />
       </div>
       <Footer 
-        compareOutputs={compareOutputs}
         sideNavTitles={sideNavTitles} 
         currentChallengeTitle={currentChallengeTitle} 
         selected={selected} 
