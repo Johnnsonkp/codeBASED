@@ -150,7 +150,8 @@ function App() {
   }, [challengeState.selectedCodeChallenge.update])
   
   return (
-    <Suspense fallback={<LoadingOverlay />}>
+    <Suspense 
+      fallback={<LoadingOverlay />}>
       <Divider />
       <TopicsCarousel 
         dirUpdate={dirUpdate}

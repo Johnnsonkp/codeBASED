@@ -22,6 +22,7 @@ function Nav() {
     paddingLeft: '10px',
     paddingRight: '10px',
     background: 'transparent',
+    maxWidth: '1550px'
     // width: '98vw'
   }
   const InnerNav = {

@@ -8,7 +8,7 @@ import { useTheme } from '../theme-provider'
 
 const Topicbutton = ({dirUpdate, setDirUpdate, topicTitles, selected, setSelected, userRepos, repoOnDropDownSelect}) => {
   
-  const {theme} = useTheme();
+  const {theme, setTheme} = useTheme();
   const defaultSelect = repoOnDropDownSelect || userRepos && userRepos[0].length; 
 
   const carouselContainer = {

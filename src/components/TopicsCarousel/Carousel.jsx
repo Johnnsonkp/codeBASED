@@ -60,7 +60,7 @@ const TopicsCarousel = ({topicTitles, selected, theme, setSelected}) => {
             margin: '5px', 
             fontSize: '12px',
             border: selected === title ? '1px solid rgb(80, 250, 123)' : 
-              `${theme == 'light'? '1px solid #EBEBEB' : '1px solid #3C3C3C'}`, 
+              `${theme == 'light'? '1px solid lightgray' : '1px solid #3C3C3C'}`, 
             backgroundColor: selected == title && 'rgb(80, 250, 123)',
             color: selected === title && '#333',
             borderRadius: '5px',

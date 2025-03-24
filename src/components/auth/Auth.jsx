@@ -57,9 +57,11 @@ export default function Auth() {
   }, [code])
 
   return (
-    <AuthTemplatePage 
-      githubAuth={loginWithGitHub}
-      loadDemoUser={handleLoadDemoUserData}
-    />
+    // <div style={{margin: 'auto', border: '1px solid green', display: 'flex'}}>
+      <AuthTemplatePage 
+        githubAuth={loginWithGitHub}
+        loadDemoUser={handleLoadDemoUserData}
+      />
+    // </div>
   );
 };

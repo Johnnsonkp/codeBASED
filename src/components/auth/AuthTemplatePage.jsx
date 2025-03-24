@@ -1,3 +1,5 @@
+import "./../../App.css"
+
 import DemoButton from './DemoButton';
 import GithubButton from './GithubButton';
 import React from 'react';
@@ -8,7 +10,7 @@ function AuthTemplatePage({ loadDemoUser, githubAuth}) {
     height: "85vh",
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     borderRadius: '8px',
     width: '100%',
   };
@@ -127,17 +129,18 @@ function AuthTemplatePage({ loadDemoUser, githubAuth}) {
 
   return (
     <div style={bgStyle}>
-        <div style={{ position: "relative", display: 'flex' }}>
-          <div
-            style={{
-              background:
-                "linear-gradient(180deg, #7C3AED 0%, rgba(152, 103, 240, 0.984375) 0.01%, rgba(237, 78, 80, 0.2) 100%)",
-              ...gradient,
-            }}
-          ></div>
-          <InnerForm />
-          <AppImage />
-        </div>
+      <div style={{ position: "relative", display: 'flex'}}>
+        <div
+          style=
+          {{
+            background:
+              "linear-gradient(180deg, #7C3AED 0%, rgba(152, 103, 240, 0.984375) 0.01%, rgba(237, 78, 80, 0.2) 100%)",
+            ...gradient,
+          }}
+        ></div>
+        <InnerForm />
+        <AppImage />
+      </div>
     </div>
   );
 }

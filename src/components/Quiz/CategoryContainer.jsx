@@ -3,7 +3,7 @@ import React from 'react'
 import { useTheme } from '../theme-provider'
 
 function CategoryContainer({subcategories, selectedSubcategory, setSelectedSubcategory}) {
-  const theme = useTheme()
+  const {theme, setTheme} = useTheme()
   
   return (
     <div style={{width: '100%', display: 'flex'}}>
@@ -18,7 +18,7 @@ function CategoryContainer({subcategories, selectedSubcategory, setSelectedSubca
             borderRadius: '5px',
             backgroundColor: selectedSubcategory == title? "rgb(80, 250, 123)" : '',
             border: selectedSubcategory === title ? '1px solid rgb(80, 250, 123)' : 
-              `${theme == 'light'? '1px solid #EBEBEB' : '1px solid #3C3C3C'}`, 
+              `${theme == 'light'? '1px solid lightgray' : '1px solid #3C3C3C'}`, 
             color: selectedSubcategory === title && '#333',
           }} 
           key={index}

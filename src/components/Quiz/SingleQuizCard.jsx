@@ -5,10 +5,15 @@ import React, {useState} from 'react';
 import { shuffleArray } from '../../helpers/utils';
 
 const SingleQuizCard = ({ id, topic, subcategory, type, question, correct_answer, incorrect_answers}) => {
-  const [solved, setSolved] = useState(false)
+  const [solved, setSolved] = useState({
+    status: false,
+    backgroundColor: ''
+  })
 
   const optionSelected = (option, correct_answer) => {
-    option == correct_answer? setSolved(true) : setSolved(false)
+    option == correct_answer? 
+      setSolved({status: true, backgroundColor: "#40C86A"}) : 
+      setSolved({status: false, backgroundColor: "rgba(243, 90, 84, 1)"})
   }
 
   const DisplayOptions = ({optionSelected}) => {
@@ -19,7 +24,7 @@ const SingleQuizCard = ({ id, topic, subcategory, type, question, correct_answer
     shuffleArray(options)
     
     return options.map((option, index) => (
-      solved == false?
+      solved.status == false?
 
         <div key={index} className="option" onClick={() => optionSelected(option, correct_answer)}>
           <input type="checkbox"  className="checkbox" />
@@ -33,16 +38,13 @@ const SingleQuizCard = ({ id, topic, subcategory, type, question, correct_answer
     ))
   }
 
-  const handleSubmit = (e) => {
-    console.log(e.target)
-  }
-
   return (
       <div 
         key={id}
         className="form-box"
-        style={{backgroundColor: `${solved? "#40C86A" : "rgba(217, 83, 79, 0.3)"}`}}
+        style={{backgroundColor: `${solved.backgroundColor}`}}
       >
+        {/* <button style={{fontSize: '12px', float: 'left', display: 'block'}}>{topic}/ {subcategory}</button> */}
         <p className="header">{question || ""}</p>
         <div className="options">
           <DisplayOptions optionSelected={optionSelected}/>

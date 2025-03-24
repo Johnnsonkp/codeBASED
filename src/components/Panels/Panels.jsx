@@ -25,8 +25,11 @@ const Panel = ({
   
   const tabContent = {
     width: '33vw',
-    maxWidth: '465px',
+    // maxWidth: '465px',
     margin: '0px',
+    // border: '1px solid red',
+    width: '100%',
+    overflow: 'hidden'
   }
   const CodeBlockOuter = {
     position: 'relative', 
@@ -44,7 +47,14 @@ const Panel = ({
   }
 
   return (
-  <div style={{width: '32.8vw', margin: '2px',  background: `${theme == 'light'? '#fff' : '#282C34'}` }}>
+    <div 
+      style={{
+        width: '33.2vw', 
+        margin: '2px',  
+        background: `${theme == 'light'? '#fff' : '#282C34'}`, 
+        // width: '100%' 
+      }}
+    >
       <TabSlide
         language={language} 
         tabs={tabs}
@@ -52,7 +62,7 @@ const Panel = ({
         tabsContainer={tabsContainer}
         showSelectedLangOnly={showSelectedLangOnly}
       />
-      <div className="tab-content" style={tabContent}>
+      <div style={tabContent}>
         {tabsContainer == "Code Challenge"?
           <div style={CodeBlockOuter}>
             <Suspense fallback={<div>loading...</div>}>
