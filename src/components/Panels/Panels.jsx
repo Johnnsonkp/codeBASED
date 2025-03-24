@@ -24,10 +24,7 @@ const Panel = ({
   const tabs = ["Code Challenge", "Code Explaination"]
   
   const tabContent = {
-    width: '33vw',
-    // maxWidth: '465px',
     margin: '0px',
-    // border: '1px solid red',
     width: '100%',
     overflow: 'hidden'
   }
@@ -52,7 +49,6 @@ const Panel = ({
         width: '33.2vw', 
         margin: '2px',  
         background: `${theme == 'light'? '#fff' : '#282C34'}`, 
-        // width: '100%' 
       }}
     >
       <TabSlide
@@ -75,15 +71,15 @@ const Panel = ({
                 height={'100vh'}
                 minHeight={'725px'}
                 theme={`${theme == 'light'? 'light' : 'dark'}`}
-                className={`tab-panel ${tabsContainer == "Code Challenge"? 'activePanel' : ''} `}
+                className={`tab-panel ${tabsContainer == "Code Challenge" && 'activePanel'}`}
               /> 
-              {mode == "solution" ? <ShowHideSolution theme={theme} blur={blur} setBlur={setBlur}/> : ""}
+              {mode == "solution" && <ShowHideSolution theme={theme} blur={blur} setBlur={setBlur}/>}
             </Suspense> 
           </div>:
           <TextAreaComp 
             tabsContainer1={tabsContainer} 
             processingChecker1={processing}
-            className={`tab-panel ${tabsContainer == "Code Explaination"? 'activePanel' : ''} `}
+            className={`tab-panel ${tabsContainer == "Code Explaination" && 'activePanel'}`}
           />}
       </div>
     </div>

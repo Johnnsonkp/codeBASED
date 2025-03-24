@@ -22,6 +22,7 @@ function QuizPage() {
   const [subTopics, setSubtopics] = useState()
   const [categories, setCategories] = useState()
   const [subcategories, setSubCategories] = useState()
+  const [smoothTransition, setSmoothTransition] = useState(null)
 
   const serverURL = import.meta.env.VITE_APP_PROD_SERVER_URL 
 
@@ -106,9 +107,18 @@ function QuizPage() {
       setQuizData(data)
     })
 
-    return () => {
-      isMounted = false; // Cleanup function to avoid memory leaks
-    };
+    const timer = setTimeout(() => {
+      setSmoothTransition({
+        opacity: 1,
+        transform: "translateY(0)"
+      });
+
+    }, 200);
+    return () => clearTimeout(timer);
+
+    // return () => {
+    //   isMounted = false; // Cleanup function to avoid memory leaks
+    // };
   }, [])
 
   useEffect(() => {
@@ -164,8 +174,6 @@ function QuizPage() {
           transform: 'translateY(-50%)',
       }
     };
-
-
     return (
       <div style={timelineStyles.lineContainer}>
         {quizData && quizData.map((items, index) => {
@@ -182,7 +190,14 @@ function QuizPage() {
  }
 
   return (
-    <div style={{}}>
+    <>
+    <div 
+      style={{
+        opacity:  smoothTransition !== null? smoothTransition.opacity : 0,
+        transform: smoothTransition !== null? smoothTransition.transform : "translateY(10px)",
+        transition: "opacity 0.2s ease, transform 0.5s ease",
+      }}
+    >
       <Divider />
       <div style={{display: 'flex', marginBottom: '30px'}}>
         <DropDownSelect 
@@ -228,9 +243,9 @@ function QuizPage() {
           )
           })}
         </div>
-
-      <Footer />
     </div>
+    <Footer />
+    </>
   )
 }
 

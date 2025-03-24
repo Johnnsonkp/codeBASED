@@ -48,6 +48,7 @@ function App() {
   const [userRepos, setUserRepos] = useState(challengeState.userRepositories.repos)
   const [dirUpdate, setDirUpdate] = useState()
   const [repoOnDropDownSelect, setRepoOnDropDownSelect] = useState()
+  const [smoothTransition, setSmoothTransition] = useState(null)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
   const handleCompile = (userInput) => {
@@ -131,11 +132,19 @@ function App() {
     if (userInformation == null && isUserAuth == true){
       setUserInformation(userInfo)
       loadUserContents(userInfo, setUserRepos, handleUserContents, challengeDispatch, dummyTopicTitles)
+
+      const timer = setTimeout(() => {
+        setSmoothTransition({
+          opacity: 1,
+          transform: "translateY(0)"
+        });
+
+      }, 200);
+      return () => clearTimeout(timer);
     }
-    else{
-      alert("user not authorised")
-      navigate("/");
-    }
+    
+    alert("user not authorised")
+    navigate("/");
   }, [isUserAuth])
 
   useEffect(() => {
@@ -150,8 +159,14 @@ function App() {
   }, [challengeState.selectedCodeChallenge.update])
   
   return (
-    <Suspense 
-      fallback={<LoadingOverlay />}>
+    <Suspense fallback={<LoadingOverlay />} >
+      <div
+        style={{
+          opacity:  smoothTransition !== null? smoothTransition.opacity : 0,
+          transform: smoothTransition !== null? smoothTransition.transform : "translateY(10px)",
+          transition: "opacity 0.2s ease, transform 0.5s ease",
+        }}
+      >
       <Divider />
       <TopicsCarousel 
         dirUpdate={dirUpdate}
@@ -203,6 +218,7 @@ function App() {
             handleSolutionCompile={handleSolutionCompile} 
             count={count} 
           />
+      </div>
       </div>
       <Footer 
         sideNavTitles={sideNavTitles} 

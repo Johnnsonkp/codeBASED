@@ -1,8 +1,9 @@
 import "./../../App.css"
 
+import React, { useEffect, useState } from 'react';
+
 import DemoButton from './DemoButton';
 import GithubButton from './GithubButton';
-import React from 'react';
 
 function AuthTemplatePage({ loadDemoUser, githubAuth}) {
   const bgStyle = {
@@ -64,7 +65,7 @@ function AuthTemplatePage({ loadDemoUser, githubAuth}) {
     pointerEvents: "none",
     color: "transparent",
   };
-
+  
   const imgBlock = {
     width: "50%",
     border: '3px solid darkGray',
@@ -84,10 +85,13 @@ function AuthTemplatePage({ loadDemoUser, githubAuth}) {
     height: "100%",
     objectFit: "cover"
   };
+  
+
 
   const InnerForm = () => {
+
     return (
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative"}}>
         <div style={{ position: "relative", paddingTop: "60px", padding: '10px', width: "100%" }}>
           <div style={{ position: "relative", zIndex: 10, transition: "opacity 1s ease-in-out", padding: '30px' }}>
             <div style={textCenter}>
@@ -117,6 +121,7 @@ function AuthTemplatePage({ loadDemoUser, githubAuth}) {
   }
 
   const AppImage = () => {
+    
     return (
       <div className="md:w-1/2 lg:w-2/3 mt-8 md:mt-0" style={imgBlock}>
         <img 
@@ -131,8 +136,7 @@ function AuthTemplatePage({ loadDemoUser, githubAuth}) {
     <div style={bgStyle}>
       <div style={{ position: "relative", display: 'flex'}}>
         <div
-          style=
-          {{
+          style={{
             background:
               "linear-gradient(180deg, #7C3AED 0%, rgba(152, 103, 240, 0.984375) 0.01%, rgba(237, 78, 80, 0.2) 100%)",
             ...gradient,

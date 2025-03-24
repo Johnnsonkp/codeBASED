@@ -56,21 +56,21 @@ const TopicsCarousel = ({topicTitles, selected, theme, setSelected}) => {
         index >= startIndex && index <= endIndex &&
         <button 
           key={index} 
+          onClick={() => handleSelection(title)}
           style={{
             margin: '5px', 
             fontSize: '12px',
-            border: selected === title ? '1px solid rgb(80, 250, 123)' : 
-              `${theme == 'light'? '1px solid lightgray' : '1px solid #3C3C3C'}`, 
-            backgroundColor: selected == title && 'rgb(80, 250, 123)',
-            color: selected === title && '#333',
             borderRadius: '5px',
             padding: '6px',
             display: 'flex',
             alignContent: 'center',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            color: selected === title && '#333',
+            border: selected === title ? '1px solid rgb(80, 250, 123)' : 
+              `${theme == 'light'? '1px solid lightgray' : '1px solid #3C3C3C'}`, 
+            backgroundColor: selected == title && 'rgb(80, 250, 123)',
           }}
-          onClick={() => handleSelection(title)}
         >
           <NumBubble num={index + 1} /> {title}
         </button>
