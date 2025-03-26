@@ -12,12 +12,9 @@ export default function Auth() {
   
   const {userState, userDispatch} = useContext(UserContext)
   const isUserAuth = userState.authorised
-
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const code = urlParams.get('code');
-  
-  // const code = getCodeFromURL();
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const code = urlParams.get('code');
   const navigate = useNavigate()
 
   const loginWithGitHub = () => {
@@ -28,10 +25,9 @@ export default function Auth() {
     if (data){
       storeUserData(data, userDispatch)
       navigate('/dashboard');
+      return;
     }
-    else{
-      userLoginError(userDispatch, data.status)
-    }
+    userLoginError(userDispatch, data.status)
   }
   
   const handleLoadDemoUserData = async () => {
@@ -42,6 +38,7 @@ export default function Auth() {
       console.error("An error occurred while loading demo user data:", error);
       userLoginError(userDispatch, "An error occurred while loading user data ")
       navigate('/');
+      return;
     }
   };
 
@@ -57,11 +54,9 @@ export default function Auth() {
   }, [code])
 
   return (
-    // <div style={{margin: 'auto', border: '1px solid green', display: 'flex'}}>
-      <AuthTemplatePage 
-        githubAuth={loginWithGitHub}
-        loadDemoUser={handleLoadDemoUserData}
-      />
-    // </div>
+    <AuthTemplatePage 
+      githubAuth={loginWithGitHub}
+      loadDemoUser={handleLoadDemoUserData}
+    />
   );
 };

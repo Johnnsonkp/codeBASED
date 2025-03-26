@@ -110,7 +110,8 @@ function App() {
 
   useEffect(() => {
     if (dirUpdate) {
-      getSelectedRepoOnDropDown(dirUpdate, userInformation.login).then(data => {
+      getSelectedRepoOnDropDown(dirUpdate, userInformation.login)
+      .then(data => {
         setDirectories(data.directories?.length ? data.directories : null);
         setSelected(null)
         setSideNavTitles(data.files?.length ? data.files : null);

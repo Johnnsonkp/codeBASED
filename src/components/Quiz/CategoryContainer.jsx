@@ -7,9 +7,9 @@ function CategoryContainer({subcategories, selectedSubcategory, setSelectedSubca
   
   return (
     <div style={{width: '100%', display: 'flex'}}>
-    {
-      subcategories && subcategories.map((title, index) => (
+    {subcategories && subcategories.map((title, index) => (
         <button
+          key={index}
           onClick={() => setSelectedSubcategory(title)}
           style={{
             margin: '5px', 
@@ -21,12 +21,10 @@ function CategoryContainer({subcategories, selectedSubcategory, setSelectedSubca
               `${theme == 'light'? '1px solid lightgray' : '1px solid #3C3C3C'}`, 
             color: selectedSubcategory === title && '#333',
           }} 
-          key={index}
         >
             <NumBubble num={index + 1} />
             {title}
-        </button>))
-    }
+        </button>))}
     </div>
   )
 }
